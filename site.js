@@ -6,11 +6,11 @@
   var DKEY = 'familyTreeDone';
 
   var STAGE_LESSONS = {
-    'first-roots.html':   ['first-roots-earning.html','first-roots-saving.html','first-roots-needs.html'],
-    'growing.html':       ['growing-budget.html','growing-goal.html','growing-banks.html'],
+    'first-roots.html':   ['first-roots-earning.html','first-roots-saving.html','first-roots-needs.html','first-roots-giving.html'],
+    'growing.html':       ['growing-budget.html','growing-goal.html','growing-banks.html','growing-spending.html','growing-safety.html'],
     'branching-out.html': ['branching-paycheck.html','branching-credit.html','branching-accounts.html','branching-aid.html','branching-apartment.html','branching-invest.html'],
-    'taking-root.html':   ['taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html'],
-    'canopy.html':        ['canopy-investing.html','canopy-insurance.html','canopy-estate.html']
+    'taking-root.html':   ['taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html','taking-emergency.html','taking-taxes.html'],
+    'canopy.html':        ['canopy-investing.html','canopy-insurance.html','canopy-estate.html','canopy-teaching.html','canopy-heirs.html','canopy-giving.html']
   };
   var ALL_LESSONS = [];
   Object.keys(STAGE_LESSONS).forEach(function(k){ ALL_LESSONS = ALL_LESSONS.concat(STAGE_LESSONS[k]); });
@@ -39,6 +39,15 @@
     {u:'canopy-investing.html', t:'Investing for the long run', c:'Lesson', k:'invest diversify rebalance fees'},
     {u:'canopy-insurance.html', t:'Family and insurance', c:'Lesson', k:'insurance emergency life health disability'},
     {u:'canopy-estate.html', t:'Estate planning and what to pass on', c:'Lesson', k:'estate will beneficiary legacy inheritance'},
+    {u:'first-roots-giving.html', t:'Sharing and giving', c:'Lesson', k:'give giving generosity sharing charity kids'},
+    {u:'growing-spending.html', t:'Smart spending and ads', c:'Lesson', k:'spending ads advertising marketing wants comparison'},
+    {u:'growing-safety.html', t:'Money online: apps and scams', c:'Lesson', k:'online scams fraud apps safety digital passwords'},
+    {u:'taking-emergency.html', t:'Building your emergency fund', c:'Lesson', k:'emergency fund savings cushion months'},
+    {u:'taking-taxes.html', t:'Understanding your taxes', c:'Lesson', k:'taxes brackets marginal withholding deduction credit w4'},
+    {u:'canopy-teaching.html', t:'Teaching your kids about money', c:'Lesson', k:'teaching kids children money parents heirs'},
+    {u:'canopy-heirs.html', t:'Preparing your heirs', c:'Lesson', k:'heirs prepare wealth transfer values estate legacy'},
+    {u:'canopy-giving.html', t:'Giving and philanthropy', c:'Lesson', k:'giving philanthropy donor advised charity legacy'},
+    {u:'activity-first-month.html', t:'Your first month on your own', c:'Activity', k:'game budget paycheck simulator rent savings'},
     {u:'compound-interest.html', t:'Compound interest', c:'Tool', k:'compound interest growth invest save'},
     {u:'budget.html', t:'Budget builder', c:'Tool', k:'budget 50 30 20 needs wants savings'},
     {u:'debt-payoff.html', t:'Debt payoff', c:'Tool', k:'debt payoff credit card interest'},
@@ -380,6 +389,46 @@
   function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
 
   var QUIZZES = {
+    "first-roots-giving.html": [
+      {q:"Giving some of your money means...", a:["helping others","losing it forever","it disappears"], c:0, e:"Giving helps someone else, and it often feels good too."},
+      {q:"A good way to give is to...", a:["keep a give jar and pick a cause you care about","give away everything you own","never give"], c:0, e:"A give jar plus a cause you care about makes giving a habit."},
+      {q:"Besides money, you can also give your...", a:["time by helping","password","homework"], c:0, e:"Helping others with your time is a kind of giving too."}
+    ],
+    "growing-spending.html": [
+      {q:"Advertising is designed to...", a:["make you feel you need something","help you save money","only tell the truth"], c:0, e:"Ads exist to sell, so they make wants feel like needs."},
+      {q:"A smart-spending habit is to...", a:["wait a day or two before buying","buy the first thing you see","ignore the price"], c:0, e:"A short wait lets fake wants fade."},
+      {q:"The popular brand is...", a:["always the best buy","not always the better value","free"], c:1, e:"Hype is not the same as value; compare before you buy."}
+    ],
+    "growing-safety.html": [
+      {q:"A message saying you won a prize and asking for payment is...", a:["probably a scam","always real","a great deal"], c:0, e:"Prizes that ask you to pay first are a classic scam."},
+      {q:"Real companies will never ask for your...", a:["password","first name","favorite color"], c:0, e:"Never share a password; real companies do not ask for it."},
+      {q:"Scams usually work by creating...", a:["rush and excitement","calm and patience","boredom"], c:0, e:"Slowing down is your best protection."}
+    ],
+    "taking-emergency.html": [
+      {q:"An emergency fund is best kept...", a:["invested in risky stocks","in an accessible high-yield savings account","spent right away"], c:1, e:"It should be safe and easy to reach, not invested."},
+      {q:"A common target is...", a:["3 to 6 months of essential expenses","one day of expenses","ten years of income"], c:0, e:"Three to six months of essentials is the usual goal."},
+      {q:"The main job of an emergency fund is to...", a:["earn the highest return","keep a surprise from becoming debt","impress people"], c:1, e:"It protects your plan when life throws a curveball."}
+    ],
+    "taking-taxes.html": [
+      {q:"With marginal tax brackets, a raise...", a:["never lowers your take-home pay","cuts your whole paycheck","is taxed at 100 percent"], c:0, e:"Only the income within a higher bracket is taxed more."},
+      {q:"A tax credit...", a:["reduces your tax bill dollar for dollar","is the same as a deduction","raises your taxes"], c:0, e:"Credits are more powerful than deductions of the same size."},
+      {q:"A very large refund usually means you...", a:["over-withheld during the year","won a prize","paid too little"], c:0, e:"A big refund is an interest-free loan you gave the government."}
+    ],
+    "canopy-teaching.html": [
+      {q:"Kids learn about money mostly by...", a:["watching and doing","one big talk","ignoring it"], c:0, e:"Small lessons over years beat a single lecture."},
+      {q:"A good approach is to let children...", a:["earn, choose, and make small mistakes","never touch money","only inherit it"], c:0, e:"Low-stakes practice builds real skill."},
+      {q:"The most valuable financial gift to a child is...", a:["the ability to handle money","a large lump sum","a credit card"], c:0, e:"Capability lasts; a lump sum without it often does not."}
+    ],
+    "canopy-heirs.html": [
+      {q:"Preparing heirs means preparing...", a:["the people, not just the assets","only the paperwork","only the taxes"], c:0, e:"Prepared people are what preserve wealth."},
+      {q:"Family wealth is most often lost because...", a:["heirs were not prepared","the will was too long","of one bad year"], c:0, e:"It is usually about readiness, not the plan itself."},
+      {q:"A good step is to...", a:["introduce heirs to your advisors gradually","keep everything secret","never discuss money"], c:0, e:"Early, gradual involvement builds trust and skill."}
+    ],
+    "canopy-giving.html": [
+      {q:"A tax-smart way to give is to donate...", a:["appreciated investments instead of cash","only pennies","borrowed money"], c:0, e:"Gifting appreciated stock avoids capital-gains tax."},
+      {q:"A donor-advised fund lets you...", a:["contribute now and grant to charities over time","avoid all giving","spend it on yourself"], c:0, e:"You deduct now and give out over time."},
+      {q:"Involving kids in giving decisions helps...", a:["pass on values","hide money","raise taxes"], c:0, e:"Giving together is a powerful way to teach values."}
+    ],
     "first-roots-earning.html": [
       {q:"How do most people get money?", a:["It grows on trees","They earn it by doing work","They find it on the ground"], c:1, e:"Money comes from effort — doing something useful and being paid for it."},
       {q:"You did your chores and earned two dollars. What is a good first thing to do?", a:["Spend it all right away without thinking","Stop and think about whether to save or spend it","Throw it away"], c:1, e:"Even little kids can pause and choose. Choosing on purpose is the whole lesson."},
@@ -546,11 +595,11 @@
   function getDone(){ try{ var v=localStorage.getItem('familyTreeDone'); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
 
   var STAGES = [
-    {slug:'first-roots.html', name:'First Roots', lessons:['first-roots-earning.html','first-roots-saving.html','first-roots-needs.html']},
-    {slug:'growing.html', name:'Growing', lessons:['growing-budget.html','growing-goal.html','growing-banks.html']},
+    {slug:'first-roots.html', name:'First Roots', lessons:['first-roots-earning.html','first-roots-saving.html','first-roots-needs.html','first-roots-giving.html']},
+    {slug:'growing.html', name:'Growing', lessons:['growing-budget.html','growing-goal.html','growing-banks.html','growing-spending.html','growing-safety.html']},
     {slug:'branching-out.html', name:'Branching Out', lessons:['branching-paycheck.html','branching-credit.html','branching-accounts.html','branching-aid.html','branching-apartment.html','branching-invest.html']},
-    {slug:'taking-root.html', name:'Taking Root', lessons:['taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html']},
-    {slug:'canopy.html', name:'The Canopy', lessons:['canopy-investing.html','canopy-insurance.html','canopy-estate.html']}
+    {slug:'taking-root.html', name:'Taking Root', lessons:['taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html','taking-emergency.html','taking-taxes.html']},
+    {slug:'canopy.html', name:'The Canopy', lessons:['canopy-investing.html','canopy-insurance.html','canopy-estate.html','canopy-teaching.html','canopy-heirs.html','canopy-giving.html']}
   ];
 
   function op(f){ return (0.18 + 0.82 * f).toFixed(2); }
@@ -643,17 +692,33 @@
   });
 })();
 
-/* ---- Stage add-ons: new Branching Out lessons + young-stage games ---- */
+/* ---- Stage add-ons: extra lessons + games injected onto stage pages ---- */
 (function () {
   function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
   function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
   function getDone(){ try{ var v=localStorage.getItem('familyTreeDone'); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
 
   var NEW_LESSONS = {
+    'first-roots.html': [
+      ['first-roots-giving.html','Sharing and giving','Why giving feels good, and how to start.']
+    ],
+    'growing.html': [
+      ['growing-spending.html','Smart spending and ads','Spot the tricks that make you want to buy.'],
+      ['growing-safety.html','Money online: apps and scams','Stay safe with money on screens.']
+    ],
     'branching-out.html': [
       ['branching-aid.html','Paying for college: aid, FAFSA & loans','FAFSA, grants, and how to borrow smart.'],
       ['branching-apartment.html','Your first apartment','What you can afford, and the hidden upfront costs.'],
       ['branching-invest.html','Start investing early','The head start that is hard to catch up to.']
+    ],
+    'taking-root.html': [
+      ['taking-emergency.html','Building your emergency fund','The cushion that protects every other plan.'],
+      ['taking-taxes.html','Understanding your taxes','Brackets, withholding, and the big myth.']
+    ],
+    'canopy.html': [
+      ['canopy-teaching.html','Teaching your kids about money','The highest-return gift you can give.'],
+      ['canopy-heirs.html','Preparing your heirs','The other, often-missed half of estate planning.'],
+      ['canopy-giving.html','Giving and philanthropy','Where wealth becomes meaning.']
     ]
   };
   var GAMES = {
@@ -664,6 +729,9 @@
     'growing.html': [
       ['activity-jars.html','Spend, Save, Give','Plan how to split your money.'],
       ['activity-grow.html','Watch your money grow','See how saving adds up over time.']
+    ],
+    'taking-root.html': [
+      ['activity-first-month.html','Your first month on your own','Budget a real paycheck and see if it balances.']
     ]
   };
 
@@ -681,8 +749,7 @@
       '<span class="eyebrow">' + eyebrow + '</span>' +
       '<h2 class="sec-title">' + title + '</h2>' +
       '<div class="grid" style="margin-top:16px;">' + cardsHtml + '</div>' +
-      (footHtml || '') +
-      '</div>';
+      (footHtml || '') + '</div>';
     return sec;
   }
   function afterLessons(el){
@@ -699,16 +766,16 @@
     var path = fname();
     var done = getDone();
 
+    // games injected first so that, after both insert, "Keep going" sits above "Play"
+    if (GAMES[path]) {
+      var g = GAMES[path].map(function(x){ return card(x[0], x[1], x[2], false); }).join('');
+      afterLessons(section('band-paper', 'Play &amp; practice', 'Learn by doing', g,
+        '<p class="muted" style="margin-top:12px;font-size:13px;">Great for doing together — perfect for younger learners.</p>'));
+    }
     if (NEW_LESSONS[path]) {
       var cards = NEW_LESSONS[path].map(function(x){ return card(x[0], x[1], x[2], !!done[x[0]]); }).join('');
       afterLessons(section('band-sand', 'More in this stage', 'Keep going', cards,
         '<p style="margin-top:14px;"><a href="tools.html">Explore the calculators &rarr;</a></p>'));
-    }
-
-    if (GAMES[path]) {
-      var g = GAMES[path].map(function(x){ return card(x[0], x[1], x[2], false); }).join('');
-      afterLessons(section('band-sand', 'Play &amp; practice', 'Learn by doing', g,
-        '<p style="margin-top:14px;" class="muted" style="font-size:13px;">Great for doing together — perfect for younger learners.</p>'));
     }
   });
 })();
