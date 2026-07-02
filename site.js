@@ -517,3 +517,107 @@
     });
   });
 })();
+
+/* ---- The growing Family Tree (progress visual) ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  function getDone(){ try{ var v=localStorage.getItem('familyTreeDone'); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
+
+  var STAGES = [
+    {slug:'first-roots.html', name:'First Roots', lessons:['first-roots-earning.html','first-roots-saving.html','first-roots-needs.html']},
+    {slug:'growing.html', name:'Growing', lessons:['growing-budget.html','growing-goal.html','growing-banks.html']},
+    {slug:'branching-out.html', name:'Branching Out', lessons:['branching-paycheck.html','branching-credit.html','branching-accounts.html']},
+    {slug:'taking-root.html', name:'Taking Root', lessons:['taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html']},
+    {slug:'canopy.html', name:'The Canopy', lessons:['canopy-investing.html','canopy-insurance.html','canopy-estate.html']}
+  ];
+
+  function op(f){ return (0.18 + 0.82 * f).toFixed(2); }
+  function leaves(x, y, color){
+    return '<ellipse cx="'+x+'" cy="'+y+'" rx="16" ry="13" fill="'+color+'"/>' +
+           '<ellipse cx="'+(x-14)+'" cy="'+(y+6)+'" rx="12" ry="10" fill="'+color+'"/>' +
+           '<ellipse cx="'+(x+12)+'" cy="'+(y+4)+'" rx="12" ry="10" fill="'+color+'"/>';
+  }
+  function buildTree(fr){
+    var s = '<svg viewBox="0 0 400 430" width="100%" style="max-width:340px;display:block;margin:0 auto;" xmlns="http://www.w3.org/2000/svg">';
+    s += '<ellipse cx="200" cy="349" rx="150" ry="13" fill="#EFEBDF"/>';
+    // roots
+    s += '<g opacity="'+op(fr[0])+'" fill="none" stroke="#6E4A2F" stroke-width="7" stroke-linecap="round">' +
+         '<path d="M198,346 C190,374 168,384 150,410"/>' +
+         '<path d="M202,346 C210,374 232,384 250,410"/>' +
+         '<path d="M200,347 C200,378 200,392 200,414"/></g>';
+    // trunk
+    s += '<g opacity="'+op(fr[1])+'"><polygon points="190,348 196,208 204,208 210,348" fill="#6E4A2F"/></g>';
+    // lower branches + leaves
+    s += '<g opacity="'+op(fr[2])+'">' +
+         '<path d="M200,300 C172,292 152,280 130,266" fill="none" stroke="#6E4A2F" stroke-width="7" stroke-linecap="round"/>' +
+         '<path d="M200,300 C228,292 248,280 270,266" fill="none" stroke="#6E4A2F" stroke-width="7" stroke-linecap="round"/>' +
+         leaves(122,258,'#8FB75B') + leaves(278,258,'#8FB75B') + '</g>';
+    // upper branches + leaves
+    s += '<g opacity="'+op(fr[3])+'">' +
+         '<path d="M200,255 C178,246 162,236 144,224" fill="none" stroke="#6E4A2F" stroke-width="6" stroke-linecap="round"/>' +
+         '<path d="M200,255 C222,246 238,236 256,224" fill="none" stroke="#6E4A2F" stroke-width="6" stroke-linecap="round"/>' +
+         leaves(138,218,'#2F5D46') + leaves(262,218,'#2F5D46') + '</g>';
+    // canopy
+    s += '<g opacity="'+op(fr[4])+'">' +
+         '<ellipse cx="200" cy="180" rx="46" ry="40" fill="#8FB75B"/>' +
+         '<ellipse cx="168" cy="196" rx="30" ry="26" fill="#7CA84C"/>' +
+         '<ellipse cx="232" cy="196" rx="30" ry="26" fill="#7CA84C"/>' +
+         '<ellipse cx="184" cy="158" rx="26" ry="24" fill="#9BC06A"/>' +
+         '<ellipse cx="216" cy="158" rx="26" ry="24" fill="#9BC06A"/></g>';
+    s += '</svg>';
+    return s;
+  }
+  function buildLegend(done){
+    var total = 0, dn = 0, fr = [];
+    STAGES.forEach(function(st){
+      var d = 0; st.lessons.forEach(function(l){ if(done[l]) d++; });
+      st._d = d; total += st.lessons.length; dn += d; fr.push(st.lessons.length ? d/st.lessons.length : 0);
+    });
+    var h = '<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--stone);margin-bottom:6px;"><span>Your progress</span><span>' + dn + ' of ' + total + ' lessons</span></div>';
+    h += '<div style="height:10px;background:var(--sand);border-radius:99px;overflow:hidden;"><div style="height:100%;width:' + (dn/total*100) + '%;background:var(--sprout);border-radius:99px;"></div></div>';
+    STAGES.forEach(function(st){
+      var full = st._d === st.lessons.length && st.lessons.length > 0;
+      h += '<div style="display:flex;align-items:center;gap:9px;margin-top:9px;font-size:14px;">' +
+           '<span style="width:11px;height:11px;border-radius:50%;background:' + (full ? 'var(--sprout)' : 'var(--dim)') + ';flex:none;"></span>' +
+           '<a href="' + st.slug + '" style="color:var(--forest);text-decoration:none;flex:1;">' + st.name + '</a>' +
+           '<span style="color:var(--stone);">' + st._d + '/' + st.lessons.length + (full ? ' \u2713' : '') + '</span></div>';
+    });
+    return { html: h, fr: fr, done: dn, total: total };
+  }
+  function band(heading){
+    var done = getDone();
+    var leg = buildLegend(done);
+    var sec = document.createElement('section');
+    sec.className = 'section';
+    sec.style.background = 'linear-gradient(180deg,#F4F7EE,#FBFAF5)';
+    sec.innerHTML = '<div class="inner">' +
+      '<span class="eyebrow">Your Family Tree</span>' +
+      '<h2 class="sec-title">' + heading + '</h2>' +
+      '<p class="subhead" style="max-width:620px;">Complete lessons across the five stages and watch your tree grow — from first roots to full canopy.</p>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:28px;align-items:center;margin-top:20px;">' +
+        '<div style="flex:1;min-width:260px;">' + buildTree(leg.fr) + '</div>' +
+        '<div style="flex:1;min-width:240px;">' + leg.html +
+          '<p style="margin-top:16px;"><a class="btn" href="start-here.html">Continue learning &rarr;</a></p>' +
+        '</div>' +
+      '</div></div>';
+    return { el: sec, done: leg.done, total: leg.total };
+  }
+  function beforeFooter(el){
+    var f = document.querySelector('.sitefoot') || document.querySelector('.bigfoot');
+    if (f && f.parentNode) { f.parentNode.insertBefore(el, f); } else { document.body.appendChild(el); }
+  }
+
+  ready(function () {
+    var path = fname();
+    var doneCount = Object.keys(getDone()).filter(function(k){ return getDone()[k]; }).length;
+
+    if (path === 'profile.html') {
+      var heading = doneCount === 0 ? 'Plant your first seed.' : (doneCount >= 16 ? 'Fully grown — beautiful work.' : 'Your Family Tree is growing.');
+      beforeFooter(band(heading).el);
+    } else if ((path === '' || path === 'index.html') && doneCount >= 1) {
+      var h2 = doneCount >= 16 ? 'Fully grown — beautiful work.' : 'Your Family Tree is growing.';
+      beforeFooter(band(h2).el);
+    }
+  });
+})();
