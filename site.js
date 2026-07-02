@@ -82,6 +82,7 @@
     {u:'resources.html', t:'Resources', c:'Page', k:'resources links'},
     {u:'guides.html', t:'All guides', c:'Guides', k:'guides library topics reference'},
     {u:'tracks.html', t:'Tracks — follow a skill across stages', c:'Page', k:'tracks skills earn save spend invest grow protect give path'},
+    {u:'adventure.html', t:'Your Money Journey (game)', c:'Activity', k:'game adventure money journey life choices simulator interactive'},
     {u:'guide-estate.html', t:'Estate planning and protecting your family', c:'Guide', k:'estate will trust beneficiary power of attorney legacy heirs'},
     {u:'guide-behavioral.html', t:'Why smart people make bad money decisions', c:'Guide', k:'behavioral psychology bias loss aversion lifestyle creep'},
     {u:'guide-kids.html', t:'What changes when children arrive', c:'Guide', k:'kids children baby 529 guardianship life insurance'},
@@ -187,6 +188,7 @@
       '<a href="tools.html">Tools</a>' +
       '<a href="guides.html">Guides</a>' +
       '<a href="tracks.html">Tracks</a>' +
+      '<a href="adventure.html">Money Journey</a>' +
       '<a href="start-here.html">Start here</a>' +
       '<a href="about.html">About</a>' +
       '<a href="glossary.html">Glossary</a>' +
@@ -307,7 +309,7 @@
           if (done[path]) { mb.textContent='\u2713 Completed'; mb.style.background='var(--sprout)'; mb.style.color='#12352b'; }
           else { mb.textContent='Mark as complete'; mb.style.background='var(--moss)'; mb.style.color='#fff'; }
         }
-        mb.addEventListener('click', function(){ done[path] = !done[path]; setDone(done); renderMark(); });
+        mb.addEventListener('click', function(){ done[path] = !done[path]; setDone(done); renderMark(); if (done[path] && window.ftCelebrate) window.ftCelebrate('Nice! Your tree just grew.'); });
         renderMark();
         boxEl.appendChild(mb);
         var note = document.createElement('span'); note.className='muted'; note.style.fontSize='13px'; note.textContent='Saved on this device.';
@@ -608,7 +610,7 @@
           opts.forEach(function(b){ b.disabled = true; });
           if(exp) exp.style.display = 'block';
           if(answered < total){ scoreEl.textContent = answered + ' of ' + total + ' answered · ' + correct + ' correct'; }
-          else if(correct === total){ scoreEl.textContent = 'Perfect — ' + correct + ' of ' + total + ' correct!'; }
+          else if(correct === total){ scoreEl.textContent = 'Perfect — ' + correct + ' of ' + total + ' correct!'; if(window.ftCelebrate) window.ftCelebrate('Perfect score!'); }
           else if(correct >= Math.ceil(total/2)){ scoreEl.textContent = 'Nice work — ' + correct + ' of ' + total + ' correct.'; }
           else { scoreEl.textContent = 'Good try — ' + correct + ' of ' + total + '. Give the lesson another read!'; }
         });
@@ -673,8 +675,8 @@
       var d = 0; st.lessons.forEach(function(l){ if(done[l]) d++; });
       st._d = d; total += st.lessons.length; dn += d; fr.push(st.lessons.length ? d/st.lessons.length : 0);
     });
-    var h = '<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--stone);margin-bottom:6px;"><span>Your progress</span><span>' + dn + ' of ' + total + ' lessons</span></div>';
-    h += '<div style="height:10px;background:var(--sand);border-radius:99px;overflow:hidden;"><div style="height:100%;width:' + (dn/total*100) + '%;background:var(--sprout);border-radius:99px;"></div></div>';
+    var h = '<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--stone);margin-bottom:6px;"><span>Your progress</span><span><span class="ft-count" data-n="' + dn + '">0</span> of ' + total + ' lessons</span></div>';
+    h += '<div style="height:10px;background:var(--sand);border-radius:99px;overflow:hidden;"><div class="ft-treebar" data-w="' + (dn/total*100) + '" style="height:100%;width:0;background:var(--sprout);border-radius:99px;transition:width 1s cubic-bezier(.2,.8,.2,1);"></div></div>';
     STAGES.forEach(function(st){
       var full = st._d === st.lessons.length && st.lessons.length > 0;
       h += '<div style="display:flex;align-items:center;gap:9px;margin-top:9px;font-size:14px;">' +
@@ -914,5 +916,418 @@
     if (!cls) return;
     injectCSS();
     document.body.classList.add(cls);
+  });
+})();
+
+/* ---- Tier 1: motion, count-ups, and celebration ---- */
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+
+  function injectCSS(){
+    if (document.getElementById('ft-motion-css')) return;
+    var s = document.createElement('style'); s.id = 'ft-motion-css';
+    s.textContent = [
+      '.ft-reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}',
+      '.ft-reveal.in{opacity:1;transform:none;}',
+      '.btn,.btn-lg,.btn-ghost{transition:transform .12s ease,box-shadow .15s ease,background .15s ease;}',
+      'a.card{transition:transform .15s ease,box-shadow .15s ease;}',
+      '.ft-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--forest);color:#fff;padding:12px 22px;border-radius:999px;font-family:var(--sans);font-weight:600;font-size:15px;box-shadow:0 12px 34px rgba(15,42,34,.28);opacity:0;transition:opacity .35s ease,transform .35s ease;z-index:10000;}',
+      '.ft-toast.in{opacity:1;transform:translateX(-50%) translateY(0);}',
+      '.ft-confetti{position:fixed;left:50%;top:42%;width:0;height:0;pointer-events:none;z-index:9999;}',
+      '.ft-confetti span{position:absolute;left:0;top:0;width:9px;height:9px;border-radius:2px;opacity:0;animation:ftpop 1.4s cubic-bezier(.15,.7,.3,1) forwards;}',
+      '@keyframes ftpop{0%{opacity:1;transform:translate(0,0) rotate(0);}70%{opacity:1;}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(400deg);}}',
+      '@media (prefers-reduced-motion: reduce){.ft-reveal{opacity:1!important;transform:none!important;transition:none!important;}}'
+    ].join('\n');
+    document.head.appendChild(s);
+  }
+
+  function animateIn(scope){
+    scope.querySelectorAll('.ft-count').forEach(function(el){
+      if (el.getAttribute('data-anim')) return; el.setAttribute('data-anim','1');
+      var n = +el.getAttribute('data-n') || 0;
+      if (reduce || n === 0){ el.textContent = n; return; }
+      var start = null, dur = 900;
+      function tick(t){ if(!start) start=t; var p=Math.min(1,(t-start)/dur); el.textContent=Math.round(p*n); if(p<1) requestAnimationFrame(tick); }
+      requestAnimationFrame(tick);
+    });
+    scope.querySelectorAll('.ft-treebar').forEach(function(el){
+      if (el.getAttribute('data-anim')) return; el.setAttribute('data-anim','1');
+      var w = (el.getAttribute('data-w') || 0) + '%';
+      if (reduce){ el.style.width = w; return; }
+      requestAnimationFrame(function(){ el.style.width = w; });
+    });
+  }
+
+  function toast(msg){
+    var t = document.createElement('div'); t.className = 'ft-toast'; t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ t.classList.add('in'); });
+    setTimeout(function(){ t.classList.remove('in'); setTimeout(function(){ t.remove(); }, 400); }, 3000);
+  }
+  function confetti(){
+    var colors = ['#8FB75B','#2F5D46','#C96F3F','#F0B44A','#3E9E86','#7CA84C'];
+    var c = document.createElement('div'); c.className = 'ft-confetti';
+    for (var i=0;i<44;i++){
+      var p = document.createElement('span');
+      p.style.background = colors[i % colors.length];
+      var ang = Math.random()*Math.PI*2, dist = 90 + Math.random()*180;
+      p.style.setProperty('--dx', (Math.cos(ang)*dist).toFixed(0)+'px');
+      p.style.setProperty('--dy', (Math.sin(ang)*dist - 120).toFixed(0)+'px');
+      p.style.animationDelay = (Math.random()*0.12).toFixed(2)+'s';
+      c.appendChild(p);
+    }
+    document.body.appendChild(c);
+    setTimeout(function(){ c.remove(); }, 1700);
+  }
+  window.ftCelebrate = function(msg){ toast(msg || 'Nice!'); if(!reduce) confetti(); };
+
+  ready(function () {
+    injectCSS();
+    var reveals = Array.prototype.slice.call(document.querySelectorAll('.section > .inner'));
+    reveals.forEach(function(el){ el.classList.add('ft-reveal'); });
+    if (reduce || !('IntersectionObserver' in window)) {
+      reveals.forEach(function(el){ el.classList.add('in'); animateIn(el); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); animateIn(e.target); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el){ io.observe(el); });
+  });
+})();
+
+/* ---- Tier 2: Sprout, the friendly guide ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var STAGES = ['first-roots.html','growing.html','branching-out.html','taking-root.html','canopy.html'];
+
+  function cuteSVG(){
+    return '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="M32 26 C32 19 32 17 32 14" stroke="#5f8f3e" stroke-width="3" stroke-linecap="round" fill="none"/>' +
+      '<path d="M32 18 C36 15 40 17 39 22 C34 23 32 21 32 18 Z" fill="#8FB75B"/>' +
+      '<ellipse cx="32" cy="42" rx="16" ry="17" fill="#7CA84C"/>' +
+      '<path d="M18 43 C10 40 10 49 18 49 Z" fill="#5f8f3e"/>' +
+      '<path d="M46 43 C54 40 54 49 46 49 Z" fill="#5f8f3e"/>' +
+      '<ellipse cx="32" cy="46" rx="10" ry="10" fill="#8FB75B"/>' +
+      '<circle cx="23" cy="45" r="2.4" fill="#E79A7A" opacity=".6"/>' +
+      '<circle cx="41" cy="45" r="2.4" fill="#E79A7A" opacity=".6"/>' +
+      '<circle cx="27" cy="40" r="3.2" fill="#1E241F"/><circle cx="37" cy="40" r="3.2" fill="#1E241F"/>' +
+      '<circle cx="28.2" cy="39" r="1" fill="#fff"/><circle cx="38.2" cy="39" r="1" fill="#fff"/>' +
+      '<path d="M28 46 Q32 50 36 46" stroke="#1E241F" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+  function refinedSVG(){
+    return '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:var(--moss)">' +
+      '<path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>' +
+      '<path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/>' +
+      '<path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/>' +
+      '<circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg>';
+  }
+
+  function themeName(){
+    var m = document.body.className.match(/ft-(kids|tween|young|adult|pro)/);
+    return m ? m[1] : null;
+  }
+  function shouldShow(){
+    var f = fname();
+    return !!themeName() || f === '' || f === 'index.html' || f === 'profile.html';
+  }
+
+  function greeting(){
+    var f = fname(), th = themeName();
+    if (f === '' || f === 'index.html') return "Hi, I'm <b>Sprout</b>! I help your whole family grow money-smart. Build a profile to begin.";
+    if (f === 'profile.html') return "This is your <b>Family Tree</b>. Finish lessons and watch it grow \u2014 I'll cheer you on!";
+    if (f.indexOf('activity-') === 0) return "Have fun \u2014 money can be a game! Give it a try.";
+    if (STAGES.indexOf(f) >= 0) {
+      if (th === 'kids') return "Yay! Tap a lesson and let's learn about money together.";
+      if (th === 'pro') return "Welcome. Lessons on investing, protection, and legacy are ready when you are.";
+      return "Pick a lesson to start \u2014 every one grows your tree.";
+    }
+    // lesson pages
+    if (th === 'kids' || th === 'tween') return "Great pick! Read along, then try the Quick Check at the end.";
+    if (th === 'pro') return "Take your time \u2014 the Quick Check is here whenever you're ready.";
+    return "Nice choice. Read on, then test yourself with the Quick Check.";
+  }
+  var TIPS = [
+    "Saving a little, often, beats saving a lot once.",
+    "Money invested young has the most time to grow.",
+    "Every lesson you finish grows your tree a bit more.",
+    "Needs come first. Wants can wait \u2014 and that's okay!",
+    "Giving a little is one of the happiest things money does."
+  ];
+  var CHEERS = ["Woohoo! Your tree just grew!", "Amazing \u2014 keep going!", "Look at you go! Another one done."];
+
+  function injectCSS(){
+    if (document.getElementById('ft-sprout-css')) return;
+    var s = document.createElement('style'); s.id = 'ft-sprout-css';
+    s.textContent = [
+      '#ft-sprout{position:fixed;right:18px;bottom:18px;z-index:9998;}',
+      '#ft-sprout.hidden{display:none;}',
+      '.ft-sprout-btn{width:60px;height:60px;border:none;background:#fff;border-radius:50%;box-shadow:0 8px 24px rgba(15,42,34,.22);cursor:pointer;padding:7px;position:relative;}',
+      '.ft-sprout-btn svg{width:100%;height:100%;display:block;}',
+      '.ft-sprout-bubble{position:absolute;right:72px;bottom:6px;width:230px;background:#fff;border:1px solid var(--line);border-radius:16px 16px 4px 16px;padding:12px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);line-height:1.45;box-shadow:0 12px 32px rgba(15,42,34,.18);opacity:0;transform:translateY(8px) scale(.96);transform-origin:bottom right;transition:opacity .3s ease,transform .3s ease;pointer-events:none;}',
+      '.ft-sprout-bubble.in{opacity:1;transform:none;pointer-events:auto;}',
+      '.ft-sprout-bubble b{color:var(--forest);}',
+      '.ft-sprout-x{position:absolute;top:-7px;right:-7px;width:22px;height:22px;border-radius:50%;background:var(--stone);color:#fff;border:none;font-size:13px;line-height:20px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);padding:0;}',
+      '@keyframes ftbob{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}',
+      '@keyframes ftjump{0%{transform:translateY(0);}30%{transform:translateY(-16px);}55%{transform:translateY(0);}72%{transform:translateY(-7px);}100%{transform:translateY(0);}}',
+      '.ft-sprout-btn{animation:ftbob 3s ease-in-out infinite;}',
+      'body.ft-kids .ft-sprout-btn{animation:ftbob 1.7s ease-in-out infinite;}',
+      'body.ft-tween .ft-sprout-btn{animation:ftbob 2.2s ease-in-out infinite;}',
+      'body.ft-pro .ft-sprout-btn,body.ft-adult .ft-sprout-btn{animation:none;}',
+      '.ft-sprout-btn.jump{animation:ftjump .7s ease;}',
+      '@media (max-width:560px){.ft-sprout-bubble{width:180px;}}',
+      '@media (prefers-reduced-motion: reduce){.ft-sprout-btn{animation:none!important;}}'
+    ].join('\n');
+    document.head.appendChild(s);
+  }
+
+  ready(function () {
+    if (!shouldShow()) return;
+    try { if (sessionStorage.getItem('ftSproutOff')) return; } catch(e){}
+    injectCSS();
+
+    var refined = /ft-(adult|pro)/.test(document.body.className);
+    var wrap = document.createElement('div'); wrap.id = 'ft-sprout';
+    wrap.innerHTML =
+      '<div class="ft-sprout-bubble" id="ft-sprout-bubble"></div>' +
+      '<button class="ft-sprout-btn" id="ft-sprout-btn" aria-label="Sprout, your guide">' + (refined ? refinedSVG() : cuteSVG()) + '</button>' +
+      '<button class="ft-sprout-x" id="ft-sprout-x" aria-label="Hide Sprout">\u00D7</button>';
+    document.body.appendChild(wrap);
+
+    var bubble = document.getElementById('ft-sprout-bubble');
+    var btn = document.getElementById('ft-sprout-btn');
+    var hideTimer = null;
+    function showBubble(html, ms){
+      bubble.innerHTML = html; bubble.classList.add('in');
+      if (hideTimer) clearTimeout(hideTimer);
+      if (ms) hideTimer = setTimeout(function(){ bubble.classList.remove('in'); }, ms);
+    }
+    function jump(){ if(reduce) return; btn.classList.remove('jump'); void btn.offsetWidth; btn.classList.add('jump'); }
+
+    var tipI = 0;
+    btn.addEventListener('click', function(){
+      showBubble(TIPS[tipI % TIPS.length], 6000); tipI++; jump();
+    });
+    document.getElementById('ft-sprout-x').addEventListener('click', function(){
+      wrap.classList.add('hidden');
+      try { sessionStorage.setItem('ftSproutOff','1'); } catch(e){}
+    });
+
+    // greet shortly after load
+    setTimeout(function(){ showBubble(greeting(), 7000); }, 700);
+
+    // react to celebrations
+    var prev = window.ftCelebrate;
+    window.ftCelebrate = function(msg){
+      if (prev) prev(msg);
+      if (wrap.classList.contains('hidden')) return;
+      jump();
+      showBubble(CHEERS[Math.floor(Math.random()*CHEERS.length)], 4000);
+    };
+  });
+})();
+
+/* ---- Tier 3: gamification — levels, streaks, badges, sharing ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  function getDone(){ try{ var v=localStorage.getItem('familyTreeDone'); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
+  function getJSON(k,d){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
+  function setJSON(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+
+  var STAGES = [
+    {key:'first-roots', name:'First Roots', lessons:['first-roots-earning.html','first-roots-saving.html','first-roots-needs.html','first-roots-giving.html']},
+    {key:'growing', name:'Growing', lessons:['growing-budget.html','growing-goal.html','growing-banks.html','growing-spending.html','growing-safety.html','growing-earning.html']},
+    {key:'branching-out', name:'Branching Out', lessons:['branching-paycheck.html','branching-credit.html','branching-accounts.html','branching-aid.html','branching-apartment.html','branching-invest.html','branching-car.html']},
+    {key:'taking-root', name:'Taking Root', lessons:['taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html','taking-emergency.html','taking-taxes.html','taking-family.html']},
+    {key:'canopy', name:'The Canopy', lessons:['canopy-investing.html','canopy-insurance.html','canopy-estate.html','canopy-teaching.html','canopy-heirs.html','canopy-giving.html','canopy-healthcare.html']}
+  ];
+  var TOTAL = STAGES.reduce(function(a,s){ return a + s.lessons.length; }, 0);
+
+  function state(){
+    var done = getDone(), dc = 0;
+    STAGES.forEach(function(s){ s._d = s.lessons.filter(function(l){ return done[l]; }).length; dc += s._d; });
+    return { done: dc, total: TOTAL };
+  }
+  function stageDone(key){ for (var i=0;i<STAGES.length;i++){ if(STAGES[i].key===key) return STAGES[i]._d===STAGES[i].lessons.length; } return false; }
+
+  var LEVELS = [
+    {min:0,name:'Seed'},{min:1,name:'Seedling'},{min:5,name:'Sprout'},
+    {min:11,name:'Sapling'},{min:18,name:'Young Tree'},{min:25,name:'Mighty Tree'},{min:TOTAL,name:'Full Canopy'}
+  ];
+  function levelFor(done){
+    var cur=LEVELS[0], idx=0;
+    for (var i=0;i<LEVELS.length;i++){ if(done>=LEVELS[i].min){ cur=LEVELS[i]; idx=i; } }
+    var next = LEVELS[idx+1] || null;
+    return { cur:cur, next:next, idx:idx };
+  }
+
+  var BADGES = [
+    {id:'first', name:'First Sprout', desc:'Finish your first lesson', test:function(s){ return s.done>=1; }},
+    {id:'five', name:'Growing Strong', desc:'Finish five lessons', test:function(s){ return s.done>=5; }},
+    {id:'half', name:'Halfway There', desc:'Finish half the lessons', test:function(s){ return s.done>=Math.ceil(s.total/2); }},
+    {id:'all', name:'Money Master', desc:'Finish every lesson', test:function(s){ return s.done>=s.total; }},
+    {id:'s0', name:'Rooted', desc:'Complete First Roots', test:function(){ return stageDone('first-roots'); }},
+    {id:'s1', name:'Branching Up', desc:'Complete Growing', test:function(){ return stageDone('growing'); }},
+    {id:'s2', name:'Out on a Limb', desc:'Complete Branching Out', test:function(){ return stageDone('branching-out'); }},
+    {id:'s3', name:'Deeply Rooted', desc:'Complete Taking Root', test:function(){ return stageDone('taking-root'); }},
+    {id:'s4', name:'Reached the Canopy', desc:'Complete The Canopy', test:function(){ return stageDone('canopy'); }}
+  ];
+
+  function dayNum(str){ var p=str.split('-'); return Math.floor(Date.UTC(+p[0],+p[1]-1,+p[2])/86400000); }
+  function today(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+  function updateStreak(){
+    var s = getJSON('ftStreak', {last:'', count:0, best:0}), t = today();
+    if (s.last === t) return s;
+    var diff = s.last ? dayNum(t) - dayNum(s.last) : 999;
+    s.count = (diff === 1) ? (s.count + 1) : 1;
+    s.last = t; s.best = Math.max(s.best || 0, s.count);
+    setJSON('ftStreak', s); return s;
+  }
+  function displayStreak(){
+    var s = getJSON('ftStreak', {last:'', count:0, best:0});
+    var cur = 0;
+    if (s.last){ var diff = dayNum(today()) - dayNum(s.last); cur = (diff <= 1) ? s.count : 0; }
+    return { cur:cur, best:s.best||0 };
+  }
+
+  function showTop(html){
+    var t = document.createElement('div'); t.className = 'ft-top-toast'; t.innerHTML = html;
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ t.classList.add('in'); });
+    setTimeout(function(){ t.classList.remove('in'); setTimeout(function(){ t.remove(); }, 400); }, 3600);
+  }
+  function checkBadges(){
+    var s = state();
+    var earned = BADGES.filter(function(b){ return b.test(s); }).map(function(b){ return b.id; });
+    var storedRaw = null; try { storedRaw = localStorage.getItem('ftBadges'); } catch(e){}
+    if (storedRaw === null){ setJSON('ftBadges', earned); return; } // seed silently, no retro spam
+    var stored = getJSON('ftBadges', []);
+    var fresh = earned.filter(function(id){ return stored.indexOf(id) < 0; });
+    if (fresh.length){
+      setJSON('ftBadges', earned);
+      fresh.forEach(function(id, i){
+        var b = BADGES.filter(function(x){ return x.id===id; })[0];
+        setTimeout(function(){ showTop('<b>Badge unlocked:</b> ' + b.name); }, i*900);
+      });
+    }
+  }
+
+  function injectCSS(){
+    if (document.getElementById('ft-game-css')) return;
+    var s = document.createElement('style'); s.id = 'ft-game-css';
+    s.textContent = [
+      '.ft-top-toast{position:fixed;left:50%;top:22px;transform:translateX(-50%) translateY(-16px);background:var(--forest);color:#fff;padding:11px 20px;border-radius:999px;font-family:var(--sans);font-size:14.5px;box-shadow:0 12px 34px rgba(15,42,34,.28);opacity:0;transition:opacity .35s,transform .35s;z-index:10001;}',
+      '.ft-top-toast.in{opacity:1;transform:translateX(-50%) translateY(0);}',
+      '.ft-top-toast b{color:var(--sprout);}',
+      '.ach-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;}',
+      '@media (max-width:560px){.ach-cards{grid-template-columns:1fr;}}',
+      '.ach-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;}',
+      '.ach-card .k{font-size:13px;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;font-weight:600;}',
+      '.ach-card .v{font-family:var(--serif);font-size:28px;color:var(--forest);margin-top:4px;}',
+      '.ach-card .sub{font-size:13px;color:var(--stone);margin-top:4px;}',
+      '.lvlbar{height:9px;background:var(--sand);border-radius:99px;overflow:hidden;margin-top:12px;}',
+      '.lvlbar > div{height:100%;background:var(--sprout);border-radius:99px;transition:width 1s cubic-bezier(.2,.8,.2,1);}',
+      '.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:20px;}',
+      '.badge{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;}',
+      '.badge .m{width:46px;height:46px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;}',
+      '.badge.on .m{background:var(--sprout);}',
+      '.badge.off .m{background:#E4E1D5;}',
+      '.badge .m svg{width:24px;height:24px;}',
+      '.badge.off{opacity:.72;}',
+      '.badge .bn{font-family:var(--serif);color:var(--forest);font-size:15px;}',
+      '.badge .bd{font-size:12px;color:var(--stone);margin-top:3px;}',
+      '.badge .lk{font-size:11px;color:var(--stone);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;}'
+    ].join('\n');
+    document.head.appendChild(s);
+  }
+
+  function checkSVG(color){ return '<svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10" stroke="' + color + '" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
+
+  function renderPanel(){
+    injectCSS();
+    var s = state(), lv = levelFor(s.done), st = displayStreak();
+    var stored = getJSON('ftBadges', []);
+    var nextTxt = lv.next ? ('Next: ' + lv.next.name + ' at ' + lv.next.min + ' lessons') : 'Top level reached';
+    var pct = lv.next ? Math.min(100, (s.done - lv.cur.min) / (lv.next.min - lv.cur.min) * 100) : 100;
+
+    var badgesHtml = BADGES.map(function(b){
+      var on = stored.indexOf(b.id) >= 0 || b.test(s);
+      return '<div class="badge ' + (on?'on':'off') + '"><div class="m">' + checkSVG(on?'#fff':'#B7B09A') + '</div>' +
+        '<div class="bn">' + b.name + '</div><div class="bd">' + b.desc + '</div>' +
+        (on ? '' : '<div class="lk">Locked</div>') + '</div>';
+    }).join('');
+
+    var sec = document.createElement('section');
+    sec.className = 'section';
+    sec.style.background = 'linear-gradient(180deg,#F4F7EE,#FBFAF5)';
+    sec.innerHTML = '<div class="inner">' +
+      '<span class="eyebrow">Achievements</span>' +
+      '<h2 class="sec-title">Your rewards</h2>' +
+      '<div class="ach-cards">' +
+        '<div class="ach-card"><div class="k">Level</div><div class="v">' + lv.cur.name + '</div>' +
+          '<div class="sub">' + s.done + ' of ' + s.total + ' lessons \u00B7 ' + nextTxt + '</div>' +
+          '<div class="lvlbar"><div style="width:' + pct + '%"></div></div></div>' +
+        '<div class="ach-card"><div class="k">Streak</div><div class="v">' + st.cur + (st.cur===1?' day':' days') + '</div>' +
+          '<div class="sub">Longest: ' + st.best + (st.best===1?' day':' days') + ' \u00B7 learn something daily to keep it alive</div></div>' +
+      '</div>' +
+      '<div class="badges">' + badgesHtml + '</div>' +
+      '<p style="margin-top:20px;"><button class="btn" id="ft-share">Share my progress</button></p>' +
+      '</div>';
+
+    var f = document.querySelector('.sitefoot') || document.querySelector('.bigfoot');
+    if (f && f.parentNode) f.parentNode.insertBefore(sec, f); else document.body.appendChild(sec);
+
+    var shareBtn = document.getElementById('ft-share');
+    shareBtn.addEventListener('click', function(){
+      var txt = "I'm growing my Family Tree! Level: " + lv.cur.name + " (" + s.done + "/" + s.total + " lessons). Financial learning for every stage of life.";
+      var url = location.href.replace(/profile\.html.*$/, 'index.html');
+      if (navigator.share){ navigator.share({ title:'My Family Tree', text:txt, url:url }).catch(function(){}); }
+      else if (navigator.clipboard){ navigator.clipboard.writeText(txt + ' ' + url).then(function(){ showTop('Progress copied to clipboard'); }).catch(function(){ showTop(txt); }); }
+      else { showTop('Share: ' + txt); }
+    });
+  }
+
+  ready(function () {
+    checkBadges();
+    if (fname() === 'profile.html') renderPanel();
+    var prev = window.ftCelebrate;
+    window.ftCelebrate = function(msg){
+      if (prev) prev(msg);
+      updateStreak();
+      checkBadges();
+    };
+  });
+})();
+
+/* ---- Tier 4: homepage feature band for the Money Journey ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  ready(function () {
+    var f = fname();
+    if (f !== '' && f !== 'index.html') return;
+    if (document.getElementById('ft-adv-band')) return;
+    var sec = document.createElement('section');
+    sec.className = 'section'; sec.id = 'ft-adv-band';
+    sec.style.background = 'linear-gradient(120deg,#123529 0%,#2F5D46 55%,#C96F3F 130%)';
+    sec.innerHTML = '<div class="inner" style="text-align:center;">' +
+      '<span class="eyebrow" style="color:var(--sprout);">Try the interactive</span>' +
+      '<h2 class="display" style="font-size:clamp(26px,5vw,42px);color:#fff;">Play Your Money Journey</h2>' +
+      '<p class="subhead" style="color:#EAF1E3;max-width:600px;margin:8px auto 0;">Make life\u2019s big money choices from age 16 to 40 and see where you land. Three minutes, surprisingly revealing \u2014 and fun.</p>' +
+      '<div class="cta-row" style="justify-content:center;margin-top:18px;"><a class="btn btn-lg" href="adventure.html">Start the journey \u2192</a></div>' +
+      '</div>';
+    var first = document.querySelector('section.section');
+    if (first) first.insertAdjacentElement('afterend', sec);
+    else {
+      var f2 = document.querySelector('.sitefoot') || document.querySelector('.bigfoot');
+      if (f2 && f2.parentNode) f2.parentNode.insertBefore(sec, f2); else document.body.appendChild(sec);
+    }
   });
 })();
