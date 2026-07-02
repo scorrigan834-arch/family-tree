@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Build your credit — Family Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script src="site.js" defer></script>
+<style>
+  .game{max-width:520px;margin:0 auto;}
+  .score{text-align:center;margin-bottom:18px;}
+  .score .n{font-family:var(--serif);font-size:52px;color:var(--forest);line-height:1;transition:color .3s;}
+  .score .l{color:var(--stone);font-size:14px;}
+  .card2{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(15,42,34,.06);}
+  .q{font-family:var(--serif);font-size:19px;color:var(--forest);margin-bottom:14px;}
+  .opt{display:block;width:100%;text-align:left;padding:12px 15px;margin:8px 0;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-family:var(--sans);font-size:15px;color:var(--ink);cursor:pointer;}
+  .opt:hover:not(:disabled){border-color:var(--moss);}
+  .fb{margin-top:10px;font-size:14px;min-height:20px;}
+  .delta{font-weight:600;}
+  .up{color:var(--moss);} .down{color:var(--clay);}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+<section class="section band-forest">
+  <div class="inner">
+    <span class="eyebrow" style="color:var(--sprout);">Play &middot; Branching Out</span>
+    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Build your credit</h1>
+    <p class="subhead">You're starting out with a credit score of 650. Make a few choices and watch how each one moves it — the same way real habits do.</p>
+  </div>
+</section>
+<section class="section band-paper">
+  <div class="inner">
+    <div class="game">
+      <div class="score"><div class="n" id="score">650</div><div class="l" id="rating">Fair</div></div>
+      <div class="card2">
+        <div class="q" id="q"></div>
+        <div id="opts"></div>
+        <div class="fb" id="fb"></div>
+        <div id="next" style="margin-top:12px;"></div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:26px;"><a href="branching-credit.html">Read the lesson</a> &middot; <a href="guide-credit.html">Read the credit guide</a></p>
+  </div>
+</section>
+<script>
+(function(){
+  var STEPS=[
+    {q:"Your first credit card bill arrives. What do you do?", o:[
+      {t:"Pay the full balance",d:35,e:"On-time, in-full payments are the biggest driver of a good score."},
+      {t:"Pay only the minimum",d:-10,e:"You avoid a late mark, but interest piles up and progress stalls."},
+      {t:"Skip it this month",d:-70,e:"A missed payment is the single most damaging thing for your score."}
+    ]},
+    {q:"Your card limit is $1,000. How much of it do you use each month?", o:[
+      {t:"Under $300 (low usage)",d:30,e:"Keeping usage low \u2014 under about 30% \u2014 helps your score."},
+      {t:"About $700",d:-15,e:"High usage signals risk and pulls your score down."},
+      {t:"Max it out at $1,000",d:-40,e:"Maxing out a card hurts; keep balances well below the limit."}
+    ]},
+    {q:"A store offers a discount if you open several new cards today.", o:[
+      {t:"Open none",d:15,e:"Avoiding a burst of new accounts keeps your score steady."},
+      {t:"Open one useful card",d:-5,e:"One new account dips your score briefly, then can help."},
+      {t:"Open all five",d:-35,e:"Many applications at once looks risky to lenders."}
+    ]},
+    {q:"You've had your very first card for several years now.", o:[
+      {t:"Keep it open and active",d:20,e:"A long credit history helps \u2014 keep old accounts open."},
+      {t:"Close it for no reason",d:-25,e:"Closing your oldest card shortens your history and can hurt."}
+    ]},
+    {q:"An unexpected bill hits during a tight month.", o:[
+      {t:"Pay on time, even if it's tight",d:30,e:"Protecting your payment history is always worth it."},
+      {t:"Pay it two weeks late",d:-60,e:"Late payments are reported and sting for a long time."}
+    ]}
+  ];
+  var score=650, i=0;
+  var scEl=document.getElementById("score"), rtEl=document.getElementById("rating"),
+      qEl=document.getElementById("q"), optsEl=document.getElementById("opts"),
+      fbEl=document.getElementById("fb"), nextEl=document.getElementById("next");
+  function clamp(n){ return Math.max(300,Math.min(850,n)); }
+  function rating(s){ return s>=800?"Excellent":s>=740?"Very good":s>=670?"Good":s>=580?"Fair":"Poor"; }
+  function paint(){ scEl.textContent=score; rtEl.textContent=rating(score); scEl.style.color = score>=670?"var(--moss)":score>=580?"var(--forest)":"var(--clay)"; }
+  function show(){
+    var st=STEPS[i]; qEl.textContent=(i+1)+". "+st.q; optsEl.innerHTML=""; fbEl.textContent=""; nextEl.innerHTML="";
+    st.o.forEach(function(opt){
+      var b=document.createElement("button"); b.className="opt"; b.textContent=opt.t;
+      b.onclick=function(){ choose(opt,st); };
+      optsEl.appendChild(b);
+    });
+  }
+  function choose(opt,st){
+    score=clamp(score+opt.d); paint();
+    Array.prototype.forEach.call(optsEl.querySelectorAll("button"),function(b){ b.disabled=true; });
+    var sign=opt.d>=0?"+":"";
+    fbEl.innerHTML='<span class="delta '+(opt.d>=0?"up":"down")+'">'+sign+opt.d+' points</span> \u00B7 '+opt.e;
+    i++;
+    var btn=document.createElement("button"); btn.className="btn";
+    btn.textContent = i<STEPS.length ? "Next" : "See your result";
+    btn.onclick = i<STEPS.length ? show : finish;
+    nextEl.appendChild(btn);
+  }
+  function finish(){
+    qEl.textContent="Your credit score: "+score+" ("+rating(score)+")";
+    optsEl.innerHTML=""; nextEl.innerHTML='<button class="btn" onclick="location.reload()">Play again</button>';
+    fbEl.innerHTML = score>=740 ? "Excellent habits \u2014 this score unlocks the best rates on loans and cards." : score>=670 ? "Solid work. Keep paying on time and using little of your limit to climb higher." : "Every score can recover. On-time payments and low balances rebuild it over time.";
+  }
+  paint(); show();
+})();
+</script>
+</body>
+</html>
