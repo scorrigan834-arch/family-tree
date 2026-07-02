@@ -9,20 +9,50 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
-  </head>
+</head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
-  <main class="container">
-    <p class="ages">AGES 10–15</p>
-    <h1>Growing</h1>
-    <p class="muted" style="max-width:52ch;">Choices add up. Plan ahead, and tell wants from needs.</p>
-    <h2 style="margin-top:32px;">Lessons for this stage</h2>
-    <div class="grid" style="grid-template-columns:1fr; margin-top:14px;">
-      <a class="card" href="growing-budget.html" style="text-decoration:none; color:inherit;">Making a simple budget</a>
-      <a class="card" href="growing-goal.html" style="text-decoration:none; color:inherit;">Setting a savings goal</a>
-      <a class="card" href="growing-banks.html" style="text-decoration:none; color:inherit;">How banks and interest work</a>
+  <section class="section band-forest">
+    <div class="inner hero2">
+      <div class="hero2-copy">
+        <span class="eyebrow" style="color:var(--sprout);">Stage &middot; Ages 10–15</span>
+        <h1 class="display" style="font-size:clamp(32px,6vw,52px);">Growing</h1>
+        <p class="subhead">Choices add up. Learn to plan ahead, save for what matters, and tell wants from needs.</p>
+        <div class="cta-row">
+          <a class="btn btn-lg" href="#lessons">Start the lessons</a>
+          <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
+        </div>
+      </div>
+      <div class="hero2-art"><svg viewBox="0 0 40 40" fill="none" style="color:var(--sprout);width:150px;max-width:60%;"><path d="M20 37 C20 32 20 28 20 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M20 28 C15.5 28.5 13 25 13.5 21 C17.5 21.5 19.5 24.5 20 28 Z" fill="currentColor"/><path d="M20 24 C24.5 24.5 27 21 26.5 17 C22.5 17.5 20.5 20.5 20 24 Z" fill="currentColor"/><circle cx="20" cy="19" r="2.4" fill="currentColor"/></svg></div>
     </div>
-    <p style="margin-top:28px;"><a href="index.html">← All stages</a></p>
-  </main>
+  </section>
+  <section class="section band-paper" id="lessons">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow">Lessons</span><h2 class="sec-title">What you'll learn</h2></div>
+      <div class="feature-grid">
+        <a class="card stage-card" href="growing-budget.html"><div class="stagename">Making a simple budget</div><p class="stage-desc">A plan for your money.</p><span class="arrow">→</span></a>        <a class="card stage-card" href="growing-goal.html"><div class="stagename">Setting a savings goal</div><p class="stage-desc">Turn a wish into a plan.</p><span class="arrow">→</span></a>        <a class="card stage-card" href="growing-banks.html"><div class="stagename">How banks and interest work</div><p class="stage-desc">What a bank does, and interest.</p><span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+  <section class="section band-sand">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow">Tools</span><h2 class="sec-title">Put it into practice</h2></div>
+      <div class="grid">
+        <a class="card" href="savings-goal.html"><div class="stagename" style="font-size:17px;">Savings goal</div><div class="muted" style="font-size:14px;margin-top:5px;">How long to reach a goal.</div></a>        <a class="card" href="budget.html"><div class="stagename" style="font-size:17px;">Budget builder</div><div class="muted" style="font-size:14px;margin-top:5px;">Split money with 50/30/20.</div></a>        <a class="card" href="compound-interest.html"><div class="stagename" style="font-size:17px;">Compound interest</div><div class="muted" style="font-size:14px;margin-top:5px;">How money can grow.</div></a>
+      </div>
+    </div>
+  </section>
+  <section class="section tight band-forest">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow" style="color:var(--sprout);">The journey</span><h2 class="sec-title">Explore other stages</h2></div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));">
+        <a class="card" href="first-roots.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">First Roots</div><div class="ages">5–10</div></a>
+        <a class="card" href="growing.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Growing</div><div class="ages">10–15</div></a>
+        <a class="card" href="branching-out.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Branching Out</div><div class="ages">15–22</div></a>
+        <a class="card" href="taking-root.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Taking Root</div><div class="ages">22–30</div></a>
+        <a class="card" href="canopy.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">The Canopy</div><div class="ages">30+</div></a>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
