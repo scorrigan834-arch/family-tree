@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Am I on track for retirement? — Family Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script src="site.js" defer></script>
+<style>
+  .calc{max-width:620px;margin:0 auto;}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:560px){.fields{grid-template-columns:1fr;}}
+  .field label{display:block;font-weight:600;color:var(--forest);font-size:14px;margin-bottom:5px;}
+  .field input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:15px;background:#fff;}
+  .field input:focus{outline:2px solid var(--sprout);}
+  .result{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:22px;box-shadow:0 10px 30px rgba(15,42,34,.06);}
+  .pill{display:inline-block;font-weight:700;font-size:13px;padding:5px 14px;border-radius:99px;}
+  .pill.ok{background:#EAF1E3;color:var(--forest);}
+  .pill.mid{background:#FBF0DF;color:#8a5a1a;}
+  .pill.low{background:#F7E7DF;color:#9a4a24;}
+  .bnum{font-family:var(--serif);font-size:15px;color:var(--stone);margin-top:14px;}
+  .bnum b{color:var(--forest);font-size:16px;}
+  .bar{height:16px;border-radius:99px;background:var(--sand);overflow:hidden;margin-top:8px;}
+  .bar .fill{height:100%;background:var(--sprout);border-radius:99px;transition:width .3s;}
+  .proj{font-family:var(--serif);font-size:30px;color:var(--moss);line-height:1.1;margin-top:6px;}
+  .advice{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:15px;color:var(--ink);}
+  .advice b{color:var(--forest);}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="bar" style="height:auto"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+<section class="section band-forest">
+  <div class="inner">
+    <span class="eyebrow" style="color:var(--sprout);">Tool</span>
+    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Am I on track for retirement?</h1>
+    <p class="subhead">A quick check against common savings guidelines, a projection to retirement, and a clear next step.</p>
+  </div>
+</section>
+<section class="section band-paper">
+  <div class="inner">
+    <div class="calc">
+      <div class="fields">
+        <div class="field"><label>Your age</label><input type="number" id="age" value="30" min="18" max="75"></div>
+        <div class="field"><label>Planned retirement age</label><input type="number" id="ret" value="67" min="40" max="80"></div>
+        <div class="field"><label>Annual income ($)</label><input type="number" id="income" value="60000" min="0" step="1000"></div>
+        <div class="field"><label>Current retirement savings ($)</label><input type="number" id="savings" value="20000" min="0" step="1000"></div>
+        <div class="field"><label>You save each month ($)</label><input type="number" id="monthly" value="500" min="0" step="50"></div>
+        <div class="field"><label>Expected return (%/yr)</label><input type="number" id="rate" value="6" min="0" max="12" step="0.5"></div>
+      </div>
+
+      <div class="result">
+        <div><span class="pill" id="pill">—</span></div>
+        <div class="bnum" id="bench"></div>
+        <div class="bar"><div class="fill" id="fill" style="width:0"></div></div>
+        <div style="margin-top:18px;">
+          <div class="muted" style="font-size:14px;">On your current path, by retirement you'd have about</div>
+          <div class="proj" id="proj">$0</div>
+        </div>
+        <div class="advice" id="advice"></div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:24px;"><a href="guide-checkup.html">Read: Am I on track for my age?</a> &middot; <a href="tools.html">All calculators</a></p>
+    <p class="muted" style="text-align:center;font-size:12px;margin-top:10px;">Rough estimates for education, not personalized advice. Guidelines are general and ignore Social Security, pensions, and taxes.</p>
+  </div>
+</section>
+<script>
+(function(){
+  var ids=["age","ret","income","savings","monthly","rate"], el={};
+  ids.forEach(function(i){ el[i]=document.getElementById(i); el[i].addEventListener("input",calc); });
+  function money(n){ if(!isFinite(n))n=0; return "$"+Math.round(n).toLocaleString(); }
+  function benchMultiple(age){
+    var pts=[[25,0],[30,1],[40,3],[50,6],[60,8],[67,10]];
+    if(age<=25) return 0;
+    if(age>=67) return 10;
+    for(var i=0;i<pts.length-1;i++){
+      if(age>=pts[i][0] && age<=pts[i+1][0]){
+        var t=(age-pts[i][0])/(pts[i+1][0]-pts[i][0]);
+        return pts[i][1]+t*(pts[i+1][1]-pts[i][1]);
+      }
+    }
+    return 10;
+  }
+  function calc(){
+    var age=+el.age.value, ret=+el.ret.value, income=+el.income.value,
+        savings=+el.savings.value, monthly=+el.monthly.value, rate=(+el.rate.value)/100;
+    // benchmark
+    var mult=benchMultiple(age), target=income*mult;
+    var ratio = target>0 ? savings/target : 1;
+    var pill=document.getElementById("pill");
+    if(target<=0){ pill.className="pill ok"; pill.textContent="Just getting started"; }
+    else if(ratio>=1.1){ pill.className="pill ok"; pill.textContent="Ahead of the guideline"; }
+    else if(ratio>=0.8){ pill.className="pill ok"; pill.textContent="On track"; }
+    else if(ratio>=0.5){ pill.className="pill mid"; pill.textContent="A bit behind"; }
+    else { pill.className="pill low"; pill.textContent="Behind the guideline"; }
+    document.getElementById("bench").innerHTML = target>0
+      ? "A common guideline suggests about <b>"+mult.toFixed(1)+"\u00D7</b> your income saved by age "+age+" (~<b>"+money(target)+"</b>). You have <b>"+money(savings)+"</b>."
+      : "Guidelines start around age 30 \u2014 the best move now is simply to begin and be consistent.";
+    document.getElementById("fill").style.width = Math.max(0,Math.min(100, target>0? savings/target*100 : 5))+"%";
+    // projection
+    var months=Math.max(0,(ret-age))*12, r=rate/12;
+    var fv;
+    if(months<=0){ fv=savings; }
+    else if(r===0){ fv=savings+monthly*months; }
+    else { fv=savings*Math.pow(1+r,months)+monthly*((Math.pow(1+r,months)-1)/r); }
+    document.getElementById("proj").textContent=money(fv);
+    // target at retirement (~10x income) and advice
+    var goal=income*10, gap=goal-fv, adv=document.getElementById("advice");
+    if(months<=0){ adv.innerHTML="You're at (or past) your retirement age. A common guideline is about <b>10\u00D7</b> your income (~"+money(goal)+")."; return; }
+    if(gap<=0){ adv.innerHTML="You're on track to reach a common target of about <b>10\u00D7</b> your income ("+money(goal)+"). Nicely done \u2014 keep it up."; }
+    else {
+      var add=gap/((Math.pow(1+r,months)-1)/r);
+      adv.innerHTML="A common target is about <b>10\u00D7</b> your income (~"+money(goal)+"). You're projected to be "+money(gap)+" short. Saving about <b>"+money(add)+" more per month</b> would close the gap \u2014 and even a smaller increase helps.";
+    }
+  }
+  calc();
+})();
+</script>
+</body>
+</html>

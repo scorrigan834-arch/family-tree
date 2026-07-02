@@ -63,6 +63,7 @@
     {u:'take-home-pay.html', t:'Take-home pay', c:'Tool', k:'take home pay net salary taxes'},
     {u:'mortgage.html', t:'Mortgage payment', c:'Tool', k:'mortgage payment home loan interest'},
     {u:'retirement.html', t:'Retirement projection', c:'Tool', k:'retirement 401k savings projection'},
+    {u:'retirement-check.html', t:'Am I on track for retirement?', c:'Tool', k:'retirement on track benchmark savings age readiness check'},
     {u:'rent-vs-buy.html', t:'Rent vs. buy', c:'Tool', k:'rent buy home compare'},
     {u:'inflation.html', t:'Inflation and buying power', c:'Tool', k:'inflation buying power future cost'},
     {u:'college-savings.html', t:'College savings', c:'Tool', k:'college savings 529 education'},
@@ -810,6 +811,27 @@
       var cards = NEW_LESSONS[path].map(function(x){ return card(x[0], x[1], x[2], !!done[x[0]]); }).join('');
       afterLessons(section('band-sand', 'More in this stage', 'Keep going', cards,
         '<p style="margin-top:14px;"><a href="tools.html">Explore the calculators &rarr;</a></p>'));
+    }
+  });
+})();
+
+/* ---- Surface the retirement-check tool on the tools index ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  ready(function () {
+    if (fname() !== 'tools.html') return;
+    if (document.getElementById('ft-retcheck')) return;
+    var html = '<a class="card" href="retirement-check.html" id="ft-retcheck" style="margin-bottom:8px;">' +
+      '<div style="font-family:var(--serif);color:var(--forest);font-size:17px;">Am I on track for retirement?</div>' +
+      '<div class="muted" style="font-size:14px;margin-top:5px;">Benchmark your savings and see your next step.</div></a>';
+    var grids = document.querySelectorAll('.grid');
+    if (grids.length) { grids[grids.length - 1].insertAdjacentHTML('beforeend', html); }
+    else {
+      var sec = document.createElement('section'); sec.className = 'section band-sand';
+      sec.innerHTML = '<div class="inner"><span class="eyebrow">New tool</span><h2 class="sec-title">Retirement readiness</h2><div class="grid" style="margin-top:16px;">' + html + '</div></div>';
+      var f = document.querySelector('.sitefoot') || document.querySelector('.bigfoot');
+      if (f && f.parentNode) f.parentNode.insertBefore(sec, f); else document.body.appendChild(sec);
     }
   });
 })();
