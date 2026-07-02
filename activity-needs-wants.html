@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Needs &amp; Wants game — Family Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script src="site.js" defer></script>
+<style>
+  .game{max-width:460px;margin:0 auto;text-align:center;}
+  .nw-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:34px 20px;box-shadow:0 10px 30px rgba(15,42,34,.08);}
+  .nw-ico{font-size:64px;line-height:1;}
+  .nw-name{font-family:var(--serif);font-size:26px;color:var(--forest);margin-top:12px;}
+  .nw-btns{display:flex;gap:14px;justify-content:center;margin-top:20px;}
+  .nw-btns button{flex:1;max-width:180px;font-family:var(--sans);font-weight:600;font-size:17px;padding:16px;border-radius:14px;border:2px solid var(--moss);cursor:pointer;}
+  #btn-need{background:var(--moss);color:#fff;}
+  #btn-want{background:#fff;color:var(--moss);}
+  .nw-fb{min-height:26px;margin-top:16px;font-weight:600;font-size:15px;}
+  .nw-fb.ok{color:var(--moss);}
+  .nw-fb.no{color:var(--clay);}
+  .nw-prog{margin-top:14px;color:var(--stone);font-size:14px;}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+<section class="section band-forest">
+  <div class="inner">
+    <span class="eyebrow" style="color:var(--sprout);">Play &middot; First Roots</span>
+    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Needs &amp; Wants</h1>
+    <p class="subhead">Something we <em>need</em> helps us live and stay safe. Something we <em>want</em> is nice to have. Tap the right one for each thing!</p>
+  </div>
+</section>
+<section class="section band-paper">
+  <div class="inner">
+    <div class="game">
+      <div id="nw-card" class="nw-card"></div>
+      <div id="nw-btns" class="nw-btns">
+        <button id="btn-need">Need</button>
+        <button id="btn-want">Want</button>
+      </div>
+      <div id="nw-fb" class="nw-fb"></div>
+      <div id="nw-prog" class="nw-prog"></div>
+    </div>
+    <p style="text-align:center;margin-top:26px;"><a href="first-roots-needs.html">Read the lesson</a> &middot; <a href="first-roots.html">Back to First Roots</a></p>
+  </div>
+</section>
+<script>
+(function(){
+  var ITEMS=[
+    {icon:"\uD83C\uDF4E",name:"Food",need:true},
+    {icon:"\uD83D\uDCA7",name:"Water",need:true},
+    {icon:"\uD83E\uDDE5",name:"A warm coat",need:true},
+    {icon:"\uD83C\uDFE0",name:"A home",need:true},
+    {icon:"\uD83D\uDC8A",name:"Medicine",need:true},
+    {icon:"\uD83C\uDF6C",name:"Candy",need:false},
+    {icon:"\uD83C\uDFAE",name:"A video game",need:false},
+    {icon:"\uD83D\uDEB2",name:"A shiny new bike",need:false},
+    {icon:"\uD83E\uDDF8",name:"A new toy",need:false},
+    {icon:"\uD83C\uDF66",name:"Ice cream",need:false}
+  ];
+  var order=ITEMS.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+  var idx=0, score=0, lock=false;
+  var card=document.getElementById("nw-card"), fb=document.getElementById("nw-fb"),
+      prog=document.getElementById("nw-prog"), btns=document.getElementById("nw-btns");
+  function show(){
+    lock=false;
+    if(idx>=order.length){ return done(); }
+    var it=ITEMS[order[idx]];
+    card.innerHTML='<div class="nw-ico">'+it.icon+'</div><div class="nw-name">'+it.name+'</div>';
+    fb.textContent=""; fb.className="nw-fb";
+    prog.textContent="Item "+(idx+1)+" of "+order.length+"  \u00B7  Score "+score;
+  }
+  function answer(saidNeed){
+    if(lock) return; lock=true;
+    var it=ITEMS[order[idx]];
+    if(saidNeed===it.need){ score++; fb.textContent="\u2713 Yes! "+(it.need?"That is a need.":"That is a want."); fb.className="nw-fb ok"; }
+    else { fb.textContent=it.need?"That one is a need \u2014 we need it to live.":"That one is a want \u2014 fun to have, but we can live without it."; fb.className="nw-fb no"; }
+    idx++; setTimeout(show,1200);
+  }
+  document.getElementById("btn-need").onclick=function(){answer(true);};
+  document.getElementById("btn-want").onclick=function(){answer(false);};
+  function done(){
+    card.innerHTML='<div class="nw-ico">\uD83C\uDF1F</div><div class="nw-name">You scored '+score+' of '+order.length+'!</div>';
+    fb.textContent="Great sorting!"; fb.className="nw-fb ok"; btns.style.display="none";
+    prog.innerHTML='<button class="btn" onclick="location.reload()">Play again</button>';
+  }
+  show();
+})();
+</script>
+</body>
+</html>

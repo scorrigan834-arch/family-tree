@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spend, Save, Give — Family Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script src="site.js" defer></script>
+<style>
+  .game{max-width:520px;margin:0 auto;}
+  .coins{text-align:center;font-weight:600;color:var(--forest);font-size:16px;margin-bottom:16px;}
+  .jars{display:flex;gap:14px;justify-content:center;}
+  .jar{flex:1;max-width:150px;text-align:center;}
+  .jarbox{height:150px;border:2px solid var(--line);border-radius:0 0 14px 14px;border-top:none;position:relative;overflow:hidden;background:#fff;}
+  .fill{position:absolute;left:0;right:0;bottom:0;transition:height .25s;}
+  .jar.spend .fill{background:var(--clay);}
+  .jar.save .fill{background:var(--sprout);}
+  .jar.give .fill{background:var(--moss);}
+  .jarlbl{font-family:var(--serif);font-size:18px;color:var(--forest);margin-top:8px;}
+  .jaramt{color:var(--stone);font-size:14px;}
+  .jar button{margin-top:8px;width:100%;padding:10px;border-radius:10px;border:1px solid var(--moss);background:var(--paper);color:var(--forest);font-family:var(--sans);font-weight:600;cursor:pointer;}
+  .jar button:hover{background:var(--sand);}
+  .msg{text-align:center;margin-top:18px;font-weight:600;color:var(--moss);min-height:24px;}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+<section class="section band-forest">
+  <div class="inner">
+    <span class="eyebrow" style="color:var(--sprout);">Play &middot; First Roots &amp; Growing</span>
+    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Spend, Save, Give</h1>
+    <p class="subhead">You have 12 coins. Put each one in a jar. Try to save some for later and give a little too!</p>
+  </div>
+</section>
+<section class="section band-paper">
+  <div class="inner">
+    <div class="game">
+      <div class="coins">Coins left: <span id="left">12</span></div>
+      <div class="jars">
+        <div class="jar spend"><div class="jarbox"><div class="fill" id="f-spend" style="height:0"></div></div><div class="jarlbl">Spend</div><div class="jaramt"><span id="a-spend">0</span> coins</div><button data-j="spend">+ coin</button></div>
+        <div class="jar save"><div class="jarbox"><div class="fill" id="f-save" style="height:0"></div></div><div class="jarlbl">Save</div><div class="jaramt"><span id="a-save">0</span> coins</div><button data-j="save">+ coin</button></div>
+        <div class="jar give"><div class="jarbox"><div class="fill" id="f-give" style="height:0"></div></div><div class="jarlbl">Give</div><div class="jaramt"><span id="a-give">0</span> coins</div><button data-j="give">+ coin</button></div>
+      </div>
+      <div class="msg" id="msg"></div>
+      <div style="text-align:center;margin-top:10px;"><button class="btn-ghost" id="reset">Start over</button></div>
+    </div>
+    <p style="text-align:center;margin-top:26px;"><a href="growing-budget.html">Read the lesson</a> &middot; <a href="growing.html">Back to Growing</a></p>
+  </div>
+</section>
+<script>
+(function(){
+  var TOTAL=12, j={spend:0,save:0,give:0};
+  function used(){ return j.spend+j.save+j.give; }
+  function render(){
+    ["spend","save","give"].forEach(function(k){
+      document.getElementById("a-"+k).textContent=j[k];
+      document.getElementById("f-"+k).style.height=(j[k]/TOTAL*100)+"%";
+    });
+    var left=TOTAL-used();
+    document.getElementById("left").textContent=left;
+    var msg=document.getElementById("msg");
+    if(left===0){
+      if(j.save>0 && j.give>0) msg.textContent="Wonderful! You saved some and gave some \u2014 that is a great plan.";
+      else if(j.save>0) msg.textContent="Nice \u2014 you saved some for later! Could you also give a little?";
+      else msg.textContent="All spent! Next time, try saving a few coins for something bigger.";
+    } else { msg.textContent=""; }
+  }
+  document.querySelectorAll(".jar button").forEach(function(b){
+    b.onclick=function(){ if(used()<TOTAL){ j[b.getAttribute("data-j")]++; render(); } };
+  });
+  document.getElementById("reset").onclick=function(){ j={spend:0,save:0,give:0}; render(); };
+  render();
+})();
+</script>
+</body>
+</html>

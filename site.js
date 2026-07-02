@@ -8,7 +8,7 @@
   var STAGE_LESSONS = {
     'first-roots.html':   ['first-roots-earning.html','first-roots-saving.html','first-roots-needs.html'],
     'growing.html':       ['growing-budget.html','growing-goal.html','growing-banks.html'],
-    'branching-out.html': ['branching-paycheck.html','branching-credit.html','branching-accounts.html'],
+    'branching-out.html': ['branching-paycheck.html','branching-credit.html','branching-accounts.html','branching-aid.html','branching-apartment.html','branching-invest.html'],
     'taking-root.html':   ['taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html'],
     'canopy.html':        ['canopy-investing.html','canopy-insurance.html','canopy-estate.html']
   };
@@ -26,6 +26,12 @@
     {u:'branching-paycheck.html', t:'Your first paycheck and taxes', c:'Lesson', k:'paycheck gross net taxes pay stub'},
     {u:'branching-credit.html', t:'Student loans and credit', c:'Lesson', k:'credit score apr loan student debt card'},
     {u:'branching-accounts.html', t:'Opening real accounts', c:'Lesson', k:'checking savings debit credit account'},
+    {u:'branching-aid.html', t:'Paying for college: aid, FAFSA, and loans', c:'Lesson', k:'fafsa financial aid grants scholarships student loans college'},
+    {u:'branching-apartment.html', t:'Your first apartment', c:'Lesson', k:'apartment rent lease deposit roommates renters insurance'},
+    {u:'branching-invest.html', t:'Start investing early', c:'Lesson', k:'invest roth ira index fund young compound early'},
+    {u:'activity-needs-wants.html', t:'Needs & Wants game', c:'Activity', k:'game play needs wants sorting kids first roots'},
+    {u:'activity-jars.html', t:'Spend, Save, Give game', c:'Activity', k:'game play jars spend save give allowance coins kids'},
+    {u:'activity-grow.html', t:'Watch your money grow', c:'Activity', k:'game play compound interest grow money savings visual'},
     {u:'taking-budget.html', t:'Budgeting a real salary', c:'Lesson', k:'budget 50 30 20 salary automate'},
     {u:'taking-debt.html', t:'Paying down debt', c:'Lesson', k:'debt avalanche snowball credit card interest'},
     {u:'taking-investing.html', t:'Investing for the first time', c:'Lesson', k:'invest 401k roth ira index fund stocks'},
@@ -419,6 +425,21 @@
       {q:"A high-yield savings account is good because it...", a:["pays more interest for the same safety","is riskier","charges more fees"], c:0, e:"Same safety, more interest — a simple upgrade over a standard account."},
       {q:"When choosing a bank account, look for...", a:["high monthly fees","no monthly fee and no minimum balance","hidden charges"], c:1, e:"Avoiding fees keeps more of your money working for you."}
     ],
+    "branching-aid.html": [
+      {q:"What is the single most important form for college aid?", a:["The FAFSA","A credit card application","A lease"], c:0, e:"The FAFSA is free and unlocks grants, work-study, and federal loans."},
+      {q:"Which money is best to use first?", a:["Private loans","Grants and scholarships","Credit cards"], c:1, e:"Grants and scholarships are free money you never repay \u2014 chase those first."},
+      {q:"A good rule for borrowing is to keep total loans at or below...", a:["your first-year salary after graduating","ten times your salary","any amount offered"], c:0, e:"Staying at or below your expected first-year pay keeps repayment manageable."}
+    ],
+    "branching-apartment.html": [
+      {q:"A common guideline is to keep rent at or below about...", a:["30% of your take-home pay","80% of your take-home pay","all of your pay"], c:0, e:"Keeping rent near 30% of take-home leaves room for everything else."},
+      {q:"Moving in usually costs, all at once, about...", a:["nothing extra","two to three times the monthly rent","one dollar"], c:1, e:"Deposit plus first (and sometimes last) month add up fast."},
+      {q:"Renters insurance is...", a:["a waste of money","usually cheap and protects your belongings","only for homeowners"], c:1, e:"It is inexpensive and covers your things plus some liability."}
+    ],
+    "branching-invest.html": [
+      {q:"The biggest advantage in investing is usually...", a:["picking perfect stocks","starting young","getting lucky"], c:1, e:"Time lets compounding do the heavy lifting."},
+      {q:"With earned income from a job, you can open a...", a:["Roth IRA","mortgage","car lease"], c:0, e:"A Roth IRA grows tax-free and is perfect for young earners."},
+      {q:"To start investing simply, a good choice is a...", a:["single hot stock","low-cost index fund","lottery ticket"], c:1, e:"An index fund spreads your money across the whole market."}
+    ],
     "taking-budget.html": [
       {q:"In the 50/30/20 rule, the 50% goes to...", a:["wants","needs","savings"], c:1, e:"Half to needs, 30% to wants, 20% to saving and extra debt payoff."},
       {q:"The single most effective budgeting move is to...", a:["automate saving on payday","check your balance daily","spend first, save what's left"], c:0, e:"Automating transfers before you can spend the money is what actually works."},
@@ -527,7 +548,7 @@
   var STAGES = [
     {slug:'first-roots.html', name:'First Roots', lessons:['first-roots-earning.html','first-roots-saving.html','first-roots-needs.html']},
     {slug:'growing.html', name:'Growing', lessons:['growing-budget.html','growing-goal.html','growing-banks.html']},
-    {slug:'branching-out.html', name:'Branching Out', lessons:['branching-paycheck.html','branching-credit.html','branching-accounts.html']},
+    {slug:'branching-out.html', name:'Branching Out', lessons:['branching-paycheck.html','branching-credit.html','branching-accounts.html','branching-aid.html','branching-apartment.html','branching-invest.html']},
     {slug:'taking-root.html', name:'Taking Root', lessons:['taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html']},
     {slug:'canopy.html', name:'The Canopy', lessons:['canopy-investing.html','canopy-insurance.html','canopy-estate.html']}
   ];
@@ -618,6 +639,76 @@
     } else if ((path === '' || path === 'index.html') && doneCount >= 1) {
       var h2 = doneCount >= 16 ? 'Fully grown — beautiful work.' : 'Your Family Tree is growing.';
       beforeFooter(band(h2).el);
+    }
+  });
+})();
+
+/* ---- Stage add-ons: new Branching Out lessons + young-stage games ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  function getDone(){ try{ var v=localStorage.getItem('familyTreeDone'); return v?JSON.parse(v):{}; }catch(e){ return {}; } }
+
+  var NEW_LESSONS = {
+    'branching-out.html': [
+      ['branching-aid.html','Paying for college: aid, FAFSA & loans','FAFSA, grants, and how to borrow smart.'],
+      ['branching-apartment.html','Your first apartment','What you can afford, and the hidden upfront costs.'],
+      ['branching-invest.html','Start investing early','The head start that is hard to catch up to.']
+    ]
+  };
+  var GAMES = {
+    'first-roots.html': [
+      ['activity-needs-wants.html','Needs &amp; Wants game','Tap to sort needs from wants.'],
+      ['activity-jars.html','Spend, Save, Give','Split 12 coins into three jars.']
+    ],
+    'growing.html': [
+      ['activity-jars.html','Spend, Save, Give','Plan how to split your money.'],
+      ['activity-grow.html','Watch your money grow','See how saving adds up over time.']
+    ]
+  };
+
+  function card(u, t, desc, doneMark){
+    return '<a class="card" href="' + u + '" style="margin-bottom:8px;">' +
+      '<div style="font-family:var(--serif);color:var(--forest);font-size:17px;">' + t + '</div>' +
+      '<div class="muted" style="font-size:14px;margin-top:5px;">' + desc + '</div>' +
+      (doneMark ? '<div style="color:var(--moss);font-weight:600;font-size:13px;margin-top:8px;">\u2713 Completed</div>' : '') +
+      '</a>';
+  }
+  function section(cls, eyebrow, title, cardsHtml, footHtml){
+    var sec = document.createElement('section');
+    sec.className = 'section ' + cls;
+    sec.innerHTML = '<div class="inner">' +
+      '<span class="eyebrow">' + eyebrow + '</span>' +
+      '<h2 class="sec-title">' + title + '</h2>' +
+      '<div class="grid" style="margin-top:16px;">' + cardsHtml + '</div>' +
+      (footHtml || '') +
+      '</div>';
+    return sec;
+  }
+  function afterLessons(el){
+    var l = document.getElementById('lessons');
+    var sec = l ? (l.closest('section') || l) : null;
+    if (sec) { sec.insertAdjacentElement('afterend', el); }
+    else {
+      var f = document.querySelector('.sitefoot') || document.querySelector('.bigfoot');
+      if (f && f.parentNode) f.parentNode.insertBefore(el, f); else document.body.appendChild(el);
+    }
+  }
+
+  ready(function () {
+    var path = fname();
+    var done = getDone();
+
+    if (NEW_LESSONS[path]) {
+      var cards = NEW_LESSONS[path].map(function(x){ return card(x[0], x[1], x[2], !!done[x[0]]); }).join('');
+      afterLessons(section('band-sand', 'More in this stage', 'Keep going', cards,
+        '<p style="margin-top:14px;"><a href="tools.html">Explore the calculators &rarr;</a></p>'));
+    }
+
+    if (GAMES[path]) {
+      var g = GAMES[path].map(function(x){ return card(x[0], x[1], x[2], false); }).join('');
+      afterLessons(section('band-sand', 'Play &amp; practice', 'Learn by doing', g,
+        '<p style="margin-top:14px;" class="muted" style="font-size:13px;">Great for doing together — perfect for younger learners.</p>'));
     }
   });
 })();
