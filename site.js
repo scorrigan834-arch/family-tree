@@ -293,3 +293,77 @@
     }
   });
 })();
+
+/* ---- Discovery add-ons: advisors band + guide recommendations ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  function getProfile(){ try{ var v=localStorage.getItem('familyTreeProfile'); return v?JSON.parse(v):null; }catch(e){ return null; } }
+  function stageFromAge(a){
+    if(a<=10) return 'first-roots.html';
+    if(a<=15) return 'growing.html';
+    if(a<=22) return 'branching-out.html';
+    if(a<=30) return 'taking-root.html';
+    return 'canopy.html';
+  }
+  var SG = {
+    'first-roots.html': [['guide-kids.html','When children arrive'],['guide-college.html','Is college worth it?'],['guide-behavioral.html','Why smart people make bad money decisions']],
+    'growing.html': [['guide-banking.html','Banking basics'],['guide-behavioral.html','Why smart people make bad money decisions'],['guide-college.html','Is college worth it?']],
+    'branching-out.html': [['guide-college.html','Is college worth it?'],['guide-student-debt.html','How much student debt?'],['guide-credit.html','How credit scores work'],['guide-paycheck.html','Your first paycheck, line by line']],
+    'taking-root.html': [['guide-investing.html','Should I start investing now?'],['guide-retirement-accounts.html','Roth vs Traditional vs HSA'],['guide-rent-buy.html','Rent or buy a home?'],['guide-salary.html','Negotiate your salary']],
+    'canopy.html': [['guide-estate.html','Estate planning & your family'],['guide-insurance.html','What insurance do you need?'],['guide-index-vs-stocks.html','Index funds vs stocks'],['guide-couples.html','Couples & money']]
+  };
+  var GENERAL = [['guide-estate.html','Estate planning & your family'],['guide-investing.html','Should I start investing now?'],['guide-behavioral.html','Why smart people make bad money decisions'],['guide-kids.html','When children arrive']];
+
+  function cardRow(pairs){
+    return pairs.map(function(p){
+      return '<a class="card" href="' + p[0] + '" style="margin-bottom:8px;"><strong style="font-family:var(--serif);color:var(--forest);font-size:16px;">' + p[1] + '</strong></a>';
+    }).join('');
+  }
+  function band(cls, inner){
+    var s = document.createElement('section'); s.className = 'section ' + cls;
+    var d = document.createElement('div'); d.className = 'inner'; d.innerHTML = inner;
+    s.appendChild(d); return s;
+  }
+  function beforeFooter(el){
+    var f = document.querySelector('.sitefoot') || document.querySelector('.bigfoot');
+    if (f && f.parentNode) { f.parentNode.insertBefore(el, f); } else { document.body.appendChild(el); }
+  }
+
+  ready(function () {
+    var path = fname();
+
+    // (1) homepage — advisors & families band
+    if (path === '' || path === 'index.html') {
+      beforeFooter(band('band-sand',
+        '<div style="text-align:center;">' +
+          '<span class="eyebrow">For advisors &amp; families</span>' +
+          '<h2 class="sec-title">Built for advisors, their clients, and every parent.</h2>' +
+          '<p class="subhead" style="max-width:640px;margin:8px auto 0;">Whether you manage wealth for client families or you\'re raising a money-smart kid, see exactly what Family Tree offers you and your children.</p>' +
+          '<div class="cta-row" style="justify-content:center;margin-top:18px;"><a class="btn btn-lg" href="advisors.html">See what\'s in it for you &rarr;</a></div>' +
+        '</div>'));
+    }
+
+    // (2) stage pages — guides for this stage
+    if (SG[path]) {
+      beforeFooter(band('band-sand',
+        '<span class="eyebrow">Guides for this stage</span>' +
+        '<h2 class="sec-title">Go deeper with related guides.</h2>' +
+        '<div class="grid" style="margin-top:16px;">' + cardRow(SG[path]) + '</div>' +
+        '<p style="margin-top:16px;"><a href="guides.html">Browse all guides &rarr;</a></p>'));
+    }
+
+    // (3) profile page — recommended guides (personalized when a profile exists)
+    if (path === 'profile.html') {
+      var p = getProfile();
+      var pairs, heading;
+      if (p && p.age) { pairs = SG[stageFromAge(p.age)] || GENERAL; heading = 'Guides for your stage.'; }
+      else { pairs = GENERAL; heading = 'Guides worth starting with.'; }
+      beforeFooter(band('band-paper',
+        '<span class="eyebrow">Recommended guides</span>' +
+        '<h2 class="sec-title">' + heading + '</h2>' +
+        '<div class="grid" style="margin-top:16px;">' + cardRow(pairs) + '</div>' +
+        '<p style="margin-top:16px;"><a href="guides.html">Browse all 33 guides &rarr;</a></p>'));
+    }
+  });
+})();
