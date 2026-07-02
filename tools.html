@@ -8,63 +8,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    label{ display:block; font-size:13px; color:var(--stone); font-weight:500; margin-bottom:12px; }
-    input{ display:block; width:100%; margin-top:5px; font-family:var(--sans); font-size:15px; padding:10px 12px; border:1px solid var(--line); border-radius:9px; background:#fff; color:var(--ink); }
-    input:focus{ outline:2px solid var(--sprout); outline-offset:1px; }
-  </style>
 </head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
   <main class="container">
     <p class="eyebrow">Tools</p>
-    <h1>Try the numbers.</h1>
+    <h1>Calculators</h1>
     <p class="muted" style="max-width:52ch;">Every tool is instant and private — nothing is saved or sent anywhere.</p>
-
-    <div class="card" id="ci-card" style="max-width:440px; margin-top:20px;">
-      <h2 style="font-size:19px;">Compound interest</h2>
-      <label>Starting amount ($)<input id="ci-p" type="number" value="1000" /></label>
-      <label>Monthly contribution ($)<input id="ci-m" type="number" value="100" /></label>
-      <label>Annual return (%)<input id="ci-r" type="number" value="7" /></label>
-      <label>Years<input id="ci-y" type="number" value="10" /></label>
-      <p style="font-size:18px; margin:6px 0 0;">Future value: <strong id="ci-out" style="color:var(--moss);">—</strong></p>
+    <div class="grid" style="margin-top:16px;">
+      <a class="card" href="compound-interest.html"><div class="stagename">Compound interest</div><div class="muted" style="font-size:14px;margin-top:5px;">Watch saving grow over time.</div></a>
+      <a class="card" href="budget.html"><div class="stagename">Budget builder</div><div class="muted" style="font-size:14px;margin-top:5px;">Split pay with 50/30/20.</div></a>
+      <a class="card" href="debt-payoff.html"><div class="stagename">Debt payoff</div><div class="muted" style="font-size:14px;margin-top:5px;">Time and interest to clear a balance.</div></a>
+      <a class="card" href="savings-goal.html"><div class="stagename">Savings goal</div><div class="muted" style="font-size:14px;margin-top:5px;">How long to reach a goal.</div></a>
+      <a class="card" href="net-worth.html"><div class="stagename">Net worth</div><div class="muted" style="font-size:14px;margin-top:5px;">What you own minus what you owe.</div></a>
+      <a class="card" href="emergency-fund.html"><div class="stagename">Emergency fund</div><div class="muted" style="font-size:14px;margin-top:5px;">Set a safety-net target.</div></a>
+      <a class="card" href="take-home-pay.html"><div class="stagename">Take-home pay</div><div class="muted" style="font-size:14px;margin-top:5px;">Rough net from gross salary.</div></a>
+      <a class="card" href="mortgage.html"><div class="stagename">Mortgage payment</div><div class="muted" style="font-size:14px;margin-top:5px;">Estimate a monthly payment.</div></a>
+      <a class="card" href="retirement.html"><div class="stagename">Retirement</div><div class="muted" style="font-size:14px;margin-top:5px;">Project savings to retirement.</div></a>
+      <a class="card" href="rent-vs-buy.html"><div class="stagename">Rent vs. buy</div><div class="muted" style="font-size:14px;margin-top:5px;">Compare monthly costs.</div></a>
+      <a class="card" href="inflation.html"><div class="stagename">Inflation</div><div class="muted" style="font-size:14px;margin-top:5px;">Future cost and buying power.</div></a>
+      <a class="card" href="college-savings.html"><div class="stagename">College savings</div><div class="muted" style="font-size:14px;margin-top:5px;">Grow a college fund.</div></a>
+      <a class="card" href="salary-vs-hourly.html"><div class="stagename">Salary and hourly</div><div class="muted" style="font-size:14px;margin-top:5px;">Convert between the two.</div></a>
     </div>
-
-    <div class="card" id="bd-card" style="max-width:440px; margin-top:16px;">
-      <h2 style="font-size:19px;">Budget builder (50/30/20)</h2>
-      <label>Monthly take-home pay ($)<input id="bd-income" type="number" value="3000" /></label>
-      <div style="display:grid; gap:8px; font-size:16px;">
-        <div>Needs (50%): <strong id="bd-needs" style="color:var(--moss);">—</strong></div>
-        <div>Wants (30%): <strong id="bd-wants" style="color:var(--moss);">—</strong></div>
-        <div>Savings (20%): <strong id="bd-save" style="color:var(--moss);">—</strong></div>
-      </div>
-    </div>
-
-    <div class="card" id="dp-card" style="max-width:440px; margin-top:16px;">
-      <h2 style="font-size:19px;">Debt payoff</h2>
-      <label>Balance ($)<input id="dp-bal" type="number" value="5000" /></label>
-      <label>Interest rate (APR %)<input id="dp-apr" type="number" value="19" /></label>
-      <label>Monthly payment ($)<input id="dp-pay" type="number" value="200" /></label>
-      <p style="font-size:16px; margin:6px 0 0;"><strong id="dp-out" style="color:var(--moss);">—</strong></p>
-    </div>
-
     <p style="margin-top:26px;"><a href="index.html">← Home</a></p>
   </main>
-  <script>
-    function money(x){ return x.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0}); }
-    function v(id){ var e=document.getElementById(id); return e ? parseFloat(e.value)||0 : 0; }
-    function t(id,val){ var e=document.getElementById(id); if(e) e.textContent=val; }
-    function ci(){ var P=v('ci-p'),M=v('ci-m'),r=v('ci-r')/100/12,n=v('ci-y')*12; var fv=r?P*Math.pow(1+r,n)+M*((Math.pow(1+r,n)-1)/r):P+M*n; t('ci-out',money(fv)); }
-    function bd(){ var inc=v('bd-income'); t('bd-needs',money(inc*0.5)); t('bd-wants',money(inc*0.3)); t('bd-save',money(inc*0.2)); }
-    function dp(){ var b=v('dp-bal'),apr=v('dp-apr')/100/12,pay=v('dp-pay'),o=document.getElementById('dp-out');
-      if(b<=0){ o.textContent='Enter a balance to begin.'; return; }
-      if(pay<=b*apr){ o.textContent='That payment is too low to ever pay it off — try a higher amount.'; return; }
-      var m=0,tot=0,bb=b; while(bb>0&&m<1200){ var i=bb*apr; bb=bb+i-pay; tot+=i; m++; }
-      o.textContent='Paid off in '+m+' months ('+Math.floor(m/12)+' yr '+(m%12)+' mo) · total interest '+money(tot); }
-    document.querySelectorAll('#ci-card input').forEach(function(x){ x.addEventListener('input',ci); });
-    document.querySelectorAll('#bd-card input').forEach(function(x){ x.addEventListener('input',bd); });
-    document.querySelectorAll('#dp-card input').forEach(function(x){ x.addEventListener('input',dp); });
-    ci(); bd(); dp();
-  </script>
 </body>
 </html>
