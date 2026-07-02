@@ -3,25 +3,40 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Needs &amp; Wants game — Family Tree</title>
+<title>Needs &amp; Wants &mdash; Family Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <script src="site.js" defer></script>
 <style>
-  .game{max-width:460px;margin:0 auto;text-align:center;}
-  .nw-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:34px 20px;box-shadow:0 10px 30px rgba(15,42,34,.08);}
-  .nw-ico{font-size:64px;line-height:1;}
-  .nw-name{font-family:var(--serif);font-size:26px;color:var(--forest);margin-top:12px;}
-  .nw-btns{display:flex;gap:14px;justify-content:center;margin-top:20px;}
-  .nw-btns button{flex:1;max-width:180px;font-family:var(--sans);font-weight:600;font-size:17px;padding:16px;border-radius:14px;border:2px solid var(--moss);cursor:pointer;}
-  #btn-need{background:var(--moss);color:#fff;}
-  #btn-want{background:#fff;color:var(--moss);}
-  .nw-fb{min-height:26px;margin-top:16px;font-weight:600;font-size:15px;}
-  .nw-fb.ok{color:var(--moss);}
-  .nw-fb.no{color:var(--clay);}
-  .nw-prog{margin-top:14px;color:var(--stone);font-size:14px;}
+  .stage{max-width:480px;margin:0 auto;text-align:center;}
+  .hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-family:var(--sans);}
+  .hud .score{font-family:var(--serif);font-size:24px;color:var(--forest);}
+  .hud .streak{font-weight:600;color:var(--clay);font-size:15px;min-height:20px;transition:transform .2s;}
+  .hud .streak.pop{transform:scale(1.35);}
+  .pbar{height:8px;background:var(--sand);border-radius:99px;overflow:hidden;margin-bottom:20px;}
+  .pbar > div{height:100%;background:linear-gradient(90deg,var(--sprout),var(--moss));border-radius:99px;transition:width .4s ease;}
+  .card{background:#fff;border:2px solid var(--line);border-radius:26px;padding:38px 20px;box-shadow:0 18px 40px rgba(15,42,34,.10);transition:transform .35s cubic-bezier(.34,1.3,.5,1),opacity .35s;}
+  .card.in{animation:pop .4s cubic-bezier(.34,1.5,.5,1);}
+  .card.right{transform:translateX(320px) rotate(16deg);opacity:0;}
+  .card.left{transform:translateX(-320px) rotate(-16deg);opacity:0;}
+  .card.buzz{animation:buzz .4s;}
+  @keyframes pop{0%{transform:scale(.7);opacity:0;}100%{transform:scale(1);opacity:1;}}
+  @keyframes buzz{0%,100%{transform:translateX(0);}20%{transform:translateX(-9px);}40%{transform:translateX(9px);}60%{transform:translateX(-6px);}80%{transform:translateX(6px);}}
+  .emoji{font-size:78px;line-height:1;}
+  .iname{font-family:var(--serif);font-size:28px;color:var(--forest);margin-top:14px;}
+  .btns{display:flex;gap:14px;margin-top:22px;}
+  .btns button{flex:1;font-family:var(--sans);font-weight:700;font-size:19px;padding:20px;border-radius:18px;border:none;cursor:pointer;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.15);transition:transform .1s,box-shadow .1s;}
+  .btns button:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.15);}
+  #bNeed{background:var(--moss);}
+  #bWant{background:var(--clay);}
+  .btns button:disabled{opacity:.85;}
+  .fb{min-height:26px;margin-top:16px;font-weight:700;font-size:16px;}
+  .fb.ok{color:var(--moss);} .fb.no{color:var(--clay);}
+  .end .stars{font-size:44px;letter-spacing:6px;}
+  .end h2{font-family:var(--serif);color:var(--forest);font-size:30px;margin:10px 0 4px;}
+  .end p{color:var(--stone);}
 </style>
 </head>
 <body>
@@ -29,65 +44,75 @@
 <section class="section band-forest">
   <div class="inner">
     <span class="eyebrow" style="color:var(--sprout);">Play &middot; First Roots</span>
-    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Needs &amp; Wants</h1>
-    <p class="subhead">Something we <em>need</em> helps us live and stay safe. Something we <em>want</em> is nice to have. Tap the right one for each thing!</p>
+    <h1 class="display" style="font-size:clamp(30px,6vw,46px);">Needs &amp; Wants</h1>
+    <p class="subhead">A <b>need</b> keeps us healthy and safe. A <b>want</b> is just nice to have. Tap the right one and build a streak!</p>
   </div>
 </section>
 <section class="section band-paper">
   <div class="inner">
-    <div class="game">
-      <div id="nw-card" class="nw-card"></div>
-      <div id="nw-btns" class="nw-btns">
-        <button id="btn-need">Need</button>
-        <button id="btn-want">Want</button>
+    <div class="stage">
+      <div class="hud">
+        <div class="score">⭐ <span id="score">0</span></div>
+        <div class="streak" id="streak"></div>
       </div>
-      <div id="nw-fb" class="nw-fb"></div>
-      <div id="nw-prog" class="nw-prog"></div>
+      <div class="pbar"><div id="pbar" style="width:0"></div></div>
+      <div id="board"></div>
     </div>
-    <p style="text-align:center;margin-top:26px;"><a href="first-roots-needs.html">Read the lesson</a> &middot; <a href="first-roots.html">Back to First Roots</a></p>
+    <p style="text-align:center;margin-top:28px;"><a href="first-roots-needs.html">Read the lesson</a> &middot; <a href="games.html">All games</a></p>
   </div>
 </section>
 <script>
 (function(){
   var ITEMS=[
-    {icon:"\uD83C\uDF4E",name:"Food",need:true},
-    {icon:"\uD83D\uDCA7",name:"Water",need:true},
-    {icon:"\uD83E\uDDE5",name:"A warm coat",need:true},
-    {icon:"\uD83C\uDFE0",name:"A home",need:true},
-    {icon:"\uD83D\uDC8A",name:"Medicine",need:true},
-    {icon:"\uD83C\uDF6C",name:"Candy",need:false},
-    {icon:"\uD83C\uDFAE",name:"A video game",need:false},
-    {icon:"\uD83D\uDEB2",name:"A shiny new bike",need:false},
-    {icon:"\uD83E\uDDF8",name:"A new toy",need:false},
-    {icon:"\uD83C\uDF66",name:"Ice cream",need:false}
+    {e:"🍎",n:"Food",need:true},{e:"💧",n:"Clean water",need:true},{e:"🧥",n:"A warm coat",need:true},
+    {e:"🏠",n:"A home",need:true},{e:"💊",n:"Medicine",need:true},{e:"🛏️",n:"A bed to sleep in",need:true},
+    {e:"🍬",n:"Candy",need:false},{e:"🎮",n:"A video game",need:false},{e:"🚲",n:"A shiny new bike",need:false},
+    {e:"🧸",n:"Another toy",need:false},{e:"🍦",n:"Ice cream",need:false},{e:"📺",n:"A bigger TV",need:false}
   ];
-  var order=ITEMS.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
-  var idx=0, score=0, lock=false;
-  var card=document.getElementById("nw-card"), fb=document.getElementById("nw-fb"),
-      prog=document.getElementById("nw-prog"), btns=document.getElementById("nw-btns");
-  function show(){
+  var order=ITEMS.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;}).slice(0,10);
+  var i=0, score=0, streak=0, correct=0, lock=false;
+  var board=document.getElementById("board"), scoreEl=document.getElementById("score"),
+      streakEl=document.getElementById("streak"), pbar=document.getElementById("pbar");
+  function render(){
     lock=false;
-    if(idx>=order.length){ return done(); }
-    var it=ITEMS[order[idx]];
-    card.innerHTML='<div class="nw-ico">'+it.icon+'</div><div class="nw-name">'+it.name+'</div>';
-    fb.textContent=""; fb.className="nw-fb";
-    prog.textContent="Item "+(idx+1)+" of "+order.length+"  \u00B7  Score "+score;
+    pbar.style.width=(i/order.length*100)+"%";
+    if(i>=order.length){ return end(); }
+    var it=ITEMS[order[i]];
+    board.innerHTML='<div class="card in" id="card"><div class="emoji">'+it.e+'</div><div class="iname">'+it.n+'</div>'+
+      '<div class="btns"><button id="bNeed">Need</button><button id="bWant">Want</button></div>'+
+      '<div class="fb" id="fb"></div></div>';
+    document.getElementById("bNeed").onclick=function(){pick(true);};
+    document.getElementById("bWant").onclick=function(){pick(false);};
   }
-  function answer(saidNeed){
+  function pick(saidNeed){
     if(lock) return; lock=true;
-    var it=ITEMS[order[idx]];
-    if(saidNeed===it.need){ score++; fb.textContent="\u2713 Yes! "+(it.need?"That is a need.":"That is a want."); fb.className="nw-fb ok"; }
-    else { fb.textContent=it.need?"That one is a need \u2014 we need it to live.":"That one is a want \u2014 fun to have, but we can live without it."; fb.className="nw-fb no"; }
-    idx++; setTimeout(show,1200);
+    var it=ITEMS[order[i]], card=document.getElementById("card"), fb=document.getElementById("fb");
+    document.getElementById("bNeed").disabled=true; document.getElementById("bWant").disabled=true;
+    if(saidNeed===it.need){
+      correct++; streak++; var pts=10+(streak>=3?5:0); score+=pts; scoreEl.textContent=score;
+      fb.textContent="✓ Yes! +"+pts; fb.className="fb ok";
+      streakEl.textContent = streak>=2 ? "🔥 "+streak+" in a row!" : "";
+      streakEl.classList.add("pop"); setTimeout(function(){streakEl.classList.remove("pop");},200);
+      card.classList.add(saidNeed?"left":"right");
+      if(streak===4 && window.ftCelebrate) window.ftCelebrate("On fire! 4 in a row!");
+      i++; setTimeout(render,420);
+    } else {
+      streak=0; streakEl.textContent="";
+      fb.textContent = it.need ? "That one is a need — we need it to live." : "That one is a want — fun, but not needed.";
+      fb.className="fb no"; card.classList.add("buzz");
+      i++; setTimeout(render,1500);
+    }
   }
-  document.getElementById("btn-need").onclick=function(){answer(true);};
-  document.getElementById("btn-want").onclick=function(){answer(false);};
-  function done(){
-    card.innerHTML='<div class="nw-ico">\uD83C\uDF1F</div><div class="nw-name">You scored '+score+' of '+order.length+'!</div>';
-    fb.textContent="Great sorting!"; fb.className="nw-fb ok"; btns.style.display="none";
-    prog.innerHTML='<button class="btn" onclick="location.reload()">Play again</button>';
+  function end(){
+    var pct=correct/order.length, fullStars=Math.round(pct*3);
+    var stars=""; for(var k=0;k<3;k++){ stars+= k<fullStars?"⭐":"☆"; }
+    var msg = pct>=0.9?"Amazing! You really know your needs from your wants." : pct>=0.6?"Great job! You're getting the hang of it." : "Good try! Play again to beat your score.";
+    board.innerHTML='<div class="card in end"><div class="stars">'+stars+'</div><h2>'+correct+' of '+order.length+' right</h2><p>'+msg+'</p>'+
+      '<div class="btns" style="margin-top:20px;"><button id="bNeed" onclick="location.reload()">Play again</button></div></div>';
+    pbar.style.width="100%";
+    if(window.ftCelebrate) window.ftCelebrate("Nice work: "+correct+"/"+order.length+"!");
   }
-  show();
+  render();
 })();
 </script>
 </body>
