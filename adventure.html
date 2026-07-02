@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Money Journey — Family Tree</title>
+<meta name="description" content="Make life's big money choices from age 16 to 40 and see where you land. A fun, shareable money adventure." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script src="site.js" defer></script>
+<style>
+  .adv{max-width:640px;margin:0 auto;}
+  .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:22px;}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;}
+  .stat .lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--stone);}
+  .stat .track{height:9px;background:var(--sand);border-radius:99px;overflow:hidden;margin-top:8px;}
+  .stat .track > div{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1);}
+  .stat.sav .track > div{background:var(--sprout);}
+  .stat.sec .track > div{background:var(--moss);}
+  .stat.hap .track > div{background:#E8912F;}
+  .prog{font-size:13px;color:var(--stone);font-weight:600;margin-bottom:8px;}
+  .scene{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(15,42,34,.08);}
+  .scene h2{font-family:var(--serif);color:var(--forest);font-size:23px;margin:0 0 6px;}
+  .scene p.q{font-size:16px;color:var(--ink);line-height:1.5;margin:0 0 16px;}
+  .choice{display:block;width:100%;text-align:left;padding:14px 16px;margin:10px 0;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-family:var(--sans);font-size:15px;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s;}
+  .choice:hover:not(:disabled){border-color:var(--moss);transform:translateY(-2px);}
+  .choice:disabled{cursor:default;}
+  .choice.picked{border-color:var(--sprout);background:#EAF1E3;font-weight:600;}
+  .note{margin-top:12px;font-size:14px;color:var(--stone);background:var(--sand);border-radius:10px;padding:11px 14px;display:none;}
+  .note.show{display:block;}
+  .nextwrap{margin-top:14px;text-align:right;}
+  .end h2{font-family:var(--serif);color:var(--forest);font-size:30px;margin:0 0 6px;}
+  .end .tag{display:inline-block;background:var(--sprout);color:#12352b;font-weight:700;padding:5px 14px;border-radius:99px;font-size:13px;margin-bottom:12px;}
+  .end .links{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+<section class="section band-forest">
+  <div class="inner">
+    <span class="eyebrow" style="color:var(--sprout);">Interactive</span>
+    <h1 class="display" style="font-size:clamp(30px,6vw,48px);">Your Money Journey</h1>
+    <p class="subhead">Make life's big money choices from age 16 to 40. Every decision shapes your Savings, Security, and Happiness. Where will you land?</p>
+  </div>
+</section>
+<section class="section band-paper">
+  <div class="inner">
+    <div class="adv">
+      <div class="stats">
+        <div class="stat sav"><div class="lbl">Savings</div><div class="track"><div id="bar-sav"></div></div></div>
+        <div class="stat sec"><div class="lbl">Security</div><div class="track"><div id="bar-sec"></div></div></div>
+        <div class="stat hap"><div class="lbl">Happiness</div><div class="track"><div id="bar-hap"></div></div></div>
+      </div>
+      <div class="prog" id="prog"></div>
+      <div class="scene" id="scene"></div>
+    </div>
+    <p style="text-align:center;margin-top:24px;"><a href="profile.html">Build your real profile</a> &middot; <a href="index.html">Home</a></p>
+  </div>
+</section>
+<script>
+(function(){
+  var S={sav:15,sec:45,hap:55};
+  var STEPS=[
+    {age:'Age 16', title:'Your first $200', q:'You made $200 from a summer job. What now?', c:[
+      {t:'Blow it all on fun stuff', d:{sav:-8,sec:-5,hap:15}, n:'Fun now — but nothing set aside for later.'},
+      {t:'Spend some, save some', d:{sav:10,sec:3,hap:8}, n:'A balanced start. Saving even a little builds the habit.'},
+      {t:'Save almost all of it', d:{sav:16,sec:6,hap:2}, n:'Impressive discipline! Your future self says thanks.'}
+    ]},
+    {age:'Age 18', title:'Your first real paycheck', q:'You landed a job. How do you handle the money?', c:[
+      {t:'Live it up every weekend', d:{sav:-10,sec:-8,hap:12}, n:'Great memories, but the money vanished fast.'},
+      {t:'Make a simple budget', d:{sav:12,sec:10,hap:4}, n:'A plan means your money goes where you want it to.'},
+      {t:'Automate saving 20% first', d:{sav:16,sec:8,hap:2}, n:'Paying yourself first is the pros\u2019 secret.'}
+    ]},
+    {age:'Age 19', title:'A credit card offer', q:'A shiny credit card arrives in the mail.', c:[
+      {t:'Max it out on things I want', d:{sav:-14,sec:-18,hap:10}, n:'High-interest debt is the most expensive money there is.'},
+      {t:'Use a little, pay in full monthly', d:{sav:2,sec:14,hap:2}, n:'Perfect — you build credit for free and pay no interest.'},
+      {t:'Avoid it entirely, cash only', d:{sav:4,sec:2,hap:-2}, n:'Safe, though a little credit history helps you later.'}
+    ]},
+    {age:'Age 20', title:'Paying for school', q:'You want more education. How do you fund it?', c:[
+      {t:'Big loans for the dream school', d:{sav:-18,sec:-12,hap:8}, n:'Prestige is nice, but heavy debt follows you for years.'},
+      {t:'Affordable path + scholarships', d:{sav:8,sec:10,hap:2}, n:'Smart — you get the degree without the debt anchor.'},
+      {t:'Skip it, learn a trade and work', d:{sav:10,sec:4,hap:4}, n:'A great path for many — earning early, no debt.'}
+    ]},
+    {age:'Age 23', title:'You need a car', q:'Time for your own wheels.', c:[
+      {t:'Brand-new car, big monthly payment', d:{sav:-16,sec:-12,hap:12}, n:'That new-car smell costs thousands in depreciation.'},
+      {t:'Reliable used car, mostly cash', d:{sav:-2,sec:8,hap:4}, n:'Someone else took the depreciation hit. Smart buy.'},
+      {t:'Skip it — bike and transit for now', d:{sav:8,sec:4,hap:-4}, n:'Cheapest option, if it fits your life.'}
+    ]},
+    {age:'Age 25', title:'Where to live', q:'You\u2019re moving out on your own.', c:[
+      {t:'Fancy solo place downtown', d:{sav:-14,sec:-10,hap:12}, n:'Living large, but rent is eating your future savings.'},
+      {t:'Reasonable place with a roommate', d:{sav:8,sec:8,hap:4}, n:'Keeping housing affordable frees up money for goals.'}
+    ]},
+    {age:'Age 27', title:'A $2,000 surprise', q:'Your car breaks down and needs $2,000, now.', c:[
+      {t:'Pay from my emergency fund', d:{sav:-4,sec:4,hap:-2}, n:'This is exactly what an emergency fund is for.'},
+      {t:'Put it on a credit card', d:{sav:-10,sec:-16,hap:-8}, n:'A surprise just became long-term high-interest debt.'},
+      {t:'Borrow from family, stressed', d:{sav:-2,sec:-6,hap:-10}, n:'It works, but it\u2019s stressful and strains relationships.'}
+    ]},
+    {age:'Age 30', title:'Time to invest?', q:'You have some extra money each month.', c:[
+      {t:'Start investing a bit every month', d:{sav:6,sec:16,hap:4}, n:'Compounding now has decades to work its magic.'},
+      {t:'Wait until I earn more', d:{sav:2,sec:-4,hap:0}, n:'Waiting costs you the most valuable ingredient: time.'},
+      {t:'Spend it — retirement is far away', d:{sav:-8,sec:-10,hap:10}, n:'Fun today, but future-you misses out on big growth.'}
+    ]},
+    {age:'Age 40', title:'A big raise arrives', q:'You\u2019re doing well and your income jumps.', c:[
+      {t:'Upgrade everything — bigger house, new cars', d:{sav:-16,sec:-14,hap:14}, n:'Lifestyle creep: spending rose to swallow the raise.'},
+      {t:'Bank most of it, enjoy a little', d:{sav:16,sec:12,hap:8}, n:'Letting your lifestyle grow slower than your income builds wealth.'},
+      {t:'Invest it and teach my kids about money', d:{sav:12,sec:16,hap:10}, n:'You\u2019re building a legacy, not just a balance.'}
+    ]}
+  ];
+  var i=0;
+  function clamp(n){ return Math.max(0,Math.min(100,n)); }
+  function paint(){
+    document.getElementById('bar-sav').style.width=clamp(S.sav)+'%';
+    document.getElementById('bar-sec').style.width=clamp(S.sec)+'%';
+    document.getElementById('bar-hap').style.width=clamp(S.hap)+'%';
+  }
+  function render(){
+    if(i>=STEPS.length) return end();
+    var st=STEPS[i];
+    document.getElementById('prog').textContent='Step '+(i+1)+' of '+STEPS.length+'  \u00B7  '+st.age;
+    var html='<h2>'+st.title+'</h2><p class="q">'+st.q+'</p>';
+    st.c.forEach(function(ch,ci){ html+='<button class="choice" data-i="'+ci+'">'+ch.t+'</button>'; });
+    html+='<div class="note" id="note"></div><div class="nextwrap" id="nextwrap"></div>';
+    var scene=document.getElementById('scene'); scene.innerHTML=html;
+    scene.querySelectorAll('.choice').forEach(function(b){
+      b.addEventListener('click', function(){ pick(st, +b.getAttribute('data-i'), b, scene); });
+    });
+  }
+  function pick(st, ci, btn, scene){
+    var ch=st.c[ci];
+    S.sav=clamp(S.sav+ch.d.sav); S.sec=clamp(S.sec+ch.d.sec); S.hap=clamp(S.hap+ch.d.hap);
+    paint();
+    scene.querySelectorAll('.choice').forEach(function(b){ b.disabled=true; });
+    btn.classList.add('picked');
+    var note=document.getElementById('note'); note.textContent=ch.n; note.classList.add('show');
+    var nw=document.getElementById('nextwrap');
+    var nb=document.createElement('button'); nb.className='btn';
+    nb.textContent = (i<STEPS.length-1)?'Next \u2192':'See how you did \u2192';
+    nb.addEventListener('click', function(){ i++; render(); });
+    nw.appendChild(nb);
+  }
+  function end(){
+    document.getElementById('prog').textContent='Your journey \u00B7 Age 40';
+    var score=S.sav*0.45+S.sec*0.45+S.hap*0.10;
+    var tag,title,desc,link;
+    if(score>=72){ tag='Financially Free'; title='You made it to financial freedom!'; desc='You built real savings and security while still enjoying life. Your money now works for you \u2014 and you\u2019re set up to give and pass it on.'; link='canopy.html'; }
+    else if(score>=56){ tag='Comfortable & Secure'; title='Comfortable and secure.'; desc='You made mostly strong choices and built a solid foundation. A few tweaks \u2014 investing a bit more, watching lifestyle creep \u2014 and you\u2019re on the path to freedom.'; link='taking-investing.html'; }
+    else if(score>=42){ tag='Getting By'; title='Getting by \u2014 with room to grow.'; desc='You\u2019re managing, but surprises hit hard and savings are thin. The good news: small changes, like an emergency fund and automatic saving, change everything.'; link='taking-emergency.html'; }
+    else { tag='Paycheck to Paycheck'; title='Living paycheck to paycheck.'; desc='Money felt tight the whole way \u2014 but it\u2019s never too late to turn it around. Start with a simple budget and a small emergency fund, and the rest follows.'; link='taking-budget.html'; }
+    document.getElementById('scene').innerHTML =
+      '<div class="end"><span class="tag">'+tag+'</span><h2>'+title+'</h2><p class="q">'+desc+'</p>'+
+      '<div class="links">Keep learning: <a href="'+link+'">a lesson that helps here</a> \u00B7 <a href="tracks.html">explore all money skills</a>'+
+      '<p style="margin-top:14px;"><button class="btn" id="replay">Play again</button> <button class="btn-ghost" id="share2">Share result</button></p></div></div>';
+    document.getElementById('replay').addEventListener('click', function(){ S={sav:15,sec:45,hap:55}; i=0; paint(); render(); });
+    document.getElementById('share2').addEventListener('click', function(){
+      var txt='I got \u201C'+tag+'\u201D on my Money Journey! Play yours:';
+      var url=location.href.replace(/adventure\.html.*$/,'adventure.html');
+      if(navigator.share){ navigator.share({title:'Your Money Journey',text:txt,url:url}).catch(function(){}); }
+      else if(navigator.clipboard){ navigator.clipboard.writeText(txt+' '+url).then(function(){ var b=document.getElementById('share2'); b.textContent='Copied!'; }).catch(function(){}); }
+    });
+  }
+  paint(); render();
+})();
+</script>
+</body>
+</html>
