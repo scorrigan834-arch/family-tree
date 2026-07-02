@@ -3,76 +3,101 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Spend, Save, Give — Family Tree</title>
+<title>Spend, Save, Give &mdash; Family Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <script src="site.js" defer></script>
 <style>
-  .game{max-width:520px;margin:0 auto;}
-  .coins{text-align:center;font-weight:600;color:var(--forest);font-size:16px;margin-bottom:16px;}
-  .jars{display:flex;gap:14px;justify-content:center;}
-  .jar{flex:1;max-width:150px;text-align:center;}
-  .jarbox{height:150px;border:2px solid var(--line);border-radius:0 0 14px 14px;border-top:none;position:relative;overflow:hidden;background:#fff;}
-  .fill{position:absolute;left:0;right:0;bottom:0;transition:height .25s;}
-  .jar.spend .fill{background:var(--clay);}
-  .jar.save .fill{background:var(--sprout);}
-  .jar.give .fill{background:var(--moss);}
-  .jarlbl{font-family:var(--serif);font-size:18px;color:var(--forest);margin-top:8px;}
-  .jaramt{color:var(--stone);font-size:14px;}
-  .jar button{margin-top:8px;width:100%;padding:10px;border-radius:10px;border:1px solid var(--moss);background:var(--paper);color:var(--forest);font-family:var(--sans);font-weight:600;cursor:pointer;}
-  .jar button:hover{background:var(--sand);}
-  .msg{text-align:center;margin-top:18px;font-weight:600;color:var(--moss);min-height:24px;}
+  .stage{max-width:520px;margin:0 auto;text-align:center;}
+  .pile{font-family:var(--sans);font-weight:600;color:var(--forest);font-size:17px;margin-bottom:4px;}
+  .pile .n{font-family:var(--serif);font-size:22px;color:var(--clay);}
+  .hint{color:var(--stone);font-size:14px;margin-bottom:18px;}
+  .jars{display:flex;gap:12px;justify-content:center;align-items:flex-end;}
+  .jar{flex:1;max-width:150px;cursor:pointer;user-select:none;}
+  .rim{height:12px;border-radius:8px 8px 0 0;margin:0 8px;}
+  .glass{position:relative;height:190px;border:3px solid;border-top:none;border-radius:6px 6px 24px 24px;display:flex;flex-direction:column-reverse;align-items:center;padding:8px 6px;overflow:hidden;transition:transform .12s ease,box-shadow .2s ease;}
+  .jar:hover .glass{transform:translateY(-3px);box-shadow:0 12px 26px rgba(15,42,34,.14);}
+  .jar:active .glass{transform:translateY(0);}
+  .jar.spend .glass,.jar.spend .rim{border-color:var(--clay);} .jar.spend .rim{background:var(--clay);}
+  .jar.save .glass,.jar.save .rim{border-color:var(--moss);} .jar.save .rim{background:var(--moss);}
+  .jar.give .glass,.jar.give .rim{border-color:var(--sprout);} .jar.give .rim{background:var(--sprout);}
+  .jar.spend .glass{background:rgba(201,111,63,.06);}
+  .jar.save .glass{background:rgba(47,93,70,.06);}
+  .jar.give .glass{background:rgba(143,183,91,.08);}
+  .coin{width:27px;height:27px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#FFE79A,#E8A24A);border:1px solid #cf8b33;margin:1.5px 0;box-shadow:0 1px 2px rgba(0,0,0,.22);flex:0 0 auto;}
+  .coin.drop{animation:drop .38s cubic-bezier(.3,1.3,.5,1);}
+  @keyframes drop{0%{transform:translateY(-90px) scale(.8);opacity:0;}70%{opacity:1;}100%{transform:translateY(0) scale(1);opacity:1;}}
+  .jicon{font-size:26px;margin-top:10px;}
+  .jlbl{font-family:var(--serif);font-size:17px;color:var(--forest);margin-top:2px;}
+  .jsub{font-size:12px;color:var(--stone);}
+  .jcnt{font-weight:700;color:var(--forest);font-size:15px;margin-top:2px;}
+  .controls{margin-top:22px;}
+  .result{background:#fff;border:2px solid var(--line);border-radius:22px;padding:26px 22px;margin-top:22px;box-shadow:0 16px 38px rgba(15,42,34,.10);display:none;}
+  .result.show{display:block;animation:pop .4s cubic-bezier(.34,1.5,.5,1);}
+  @keyframes pop{0%{transform:scale(.8);opacity:0;}100%{transform:scale(1);opacity:1;}}
+  .result .stars{font-size:40px;letter-spacing:5px;}
+  .result h2{font-family:var(--serif);color:var(--forest);font-size:26px;margin:8px 0 6px;}
+  .result p{color:var(--stone);margin:0 0 6px;}
 </style>
 </head>
 <body>
 <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
 <section class="section band-forest">
   <div class="inner">
-    <span class="eyebrow" style="color:var(--sprout);">Play &middot; First Roots &amp; Growing</span>
-    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Spend, Save, Give</h1>
-    <p class="subhead">You have 12 coins. Put each one in a jar. Try to save some for later and give a little too!</p>
+    <span class="eyebrow" style="color:var(--sprout);">Play &middot; First Roots</span>
+    <h1 class="display" style="font-size:clamp(30px,6vw,46px);">Spend, Save, Give</h1>
+    <p class="subhead">You have 10 coins to share. Tap a jar to drop a coin in. A little in each jar is a great plan!</p>
   </div>
 </section>
 <section class="section band-paper">
   <div class="inner">
-    <div class="game">
-      <div class="coins">Coins left: <span id="left">12</span></div>
+    <div class="stage">
+      <div class="pile">Coins to share: <span class="n" id="left">10</span></div>
+      <div class="hint">Tip: try to save at least 4 for a goal, and give a little to help others.</div>
       <div class="jars">
-        <div class="jar spend"><div class="jarbox"><div class="fill" id="f-spend" style="height:0"></div></div><div class="jarlbl">Spend</div><div class="jaramt"><span id="a-spend">0</span> coins</div><button data-j="spend">+ coin</button></div>
-        <div class="jar save"><div class="jarbox"><div class="fill" id="f-save" style="height:0"></div></div><div class="jarlbl">Save</div><div class="jaramt"><span id="a-save">0</span> coins</div><button data-j="save">+ coin</button></div>
-        <div class="jar give"><div class="jarbox"><div class="fill" id="f-give" style="height:0"></div></div><div class="jarlbl">Give</div><div class="jaramt"><span id="a-give">0</span> coins</div><button data-j="give">+ coin</button></div>
+        <div class="jar spend" id="jar-spend"><div class="rim"></div><div class="glass"><div id="stack-spend" style="display:contents"></div></div><div class="jicon">&#128722;</div><div class="jlbl">Spend</div><div class="jsub">fun now</div><div class="jcnt"><span id="c-spend">0</span></div></div>
+        <div class="jar save" id="jar-save"><div class="rim"></div><div class="glass"><div id="stack-save" style="display:contents"></div></div><div class="jicon">&#128176;</div><div class="jlbl">Save</div><div class="jsub">for goals</div><div class="jcnt"><span id="c-save">0</span></div></div>
+        <div class="jar give" id="jar-give"><div class="rim"></div><div class="glass"><div id="stack-give" style="display:contents"></div></div><div class="jicon">&#128157;</div><div class="jlbl">Give</div><div class="jsub">help others</div><div class="jcnt"><span id="c-give">0</span></div></div>
       </div>
-      <div class="msg" id="msg"></div>
-      <div style="text-align:center;margin-top:10px;"><button class="btn-ghost" id="reset">Start over</button></div>
+      <div class="controls"><button class="btn-ghost" id="reset" style="color:var(--moss) !important;border-color:var(--moss);">Start over</button></div>
+      <div class="result" id="result"></div>
     </div>
-    <p style="text-align:center;margin-top:26px;"><a href="growing-budget.html">Read the lesson</a> &middot; <a href="growing.html">Back to Growing</a></p>
+    <p style="text-align:center;margin-top:28px;"><a href="first-roots-giving.html">Read the lesson</a> &middot; <a href="games.html">All games</a></p>
   </div>
 </section>
 <script>
 (function(){
-  var TOTAL=12, j={spend:0,save:0,give:0};
-  function used(){ return j.spend+j.save+j.give; }
-  function render(){
-    ["spend","save","give"].forEach(function(k){
-      document.getElementById("a-"+k).textContent=j[k];
-      document.getElementById("f-"+k).style.height=(j[k]/TOTAL*100)+"%";
-    });
-    var left=TOTAL-used();
-    document.getElementById("left").textContent=left;
-    var msg=document.getElementById("msg");
-    if(left===0){
-      if(j.save>0 && j.give>0) msg.textContent="Wonderful! You saved some and gave some \u2014 that is a great plan.";
-      else if(j.save>0) msg.textContent="Nice \u2014 you saved some for later! Could you also give a little?";
-      else msg.textContent="All spent! Next time, try saving a few coins for something bigger.";
-    } else { msg.textContent=""; }
+  var TOTAL=10, left=TOTAL, c={spend:0,save:0,give:0}, done=false;
+  var leftEl=document.getElementById('left'), resultEl=document.getElementById('result');
+  function add(jar){
+    if(done||left<=0) return;
+    left--; c[jar]++;
+    document.getElementById('c-'+jar).textContent=c[jar];
+    leftEl.textContent=left;
+    var coin=document.createElement('div'); coin.className='coin drop';
+    document.getElementById('stack-'+jar).appendChild(coin);
+    if(left===0){ done=true; setTimeout(evaluate,480); }
   }
-  document.querySelectorAll(".jar button").forEach(function(b){
-    b.onclick=function(){ if(used()<TOTAL){ j[b.getAttribute("data-j")]++; render(); } };
-  });
-  document.getElementById("reset").onclick=function(){ j={spend:0,save:0,give:0}; render(); };
-  render();
+  ['spend','save','give'].forEach(function(j){ document.getElementById('jar-'+j).onclick=function(){ add(j); }; });
+  function evaluate(){
+    var stars,title,msg;
+    var balanced = c.save>=1 && c.give>=1 && c.spend>=1;
+    if(c.save>=4 && c.give>=1 && c.spend>=1){ stars=3; title='Wonderful balance!'; msg='You saved for a goal, gave to help others, and kept some to enjoy. That is exactly how smart money works.'; }
+    else if(balanced){ stars=2; title='Nice sharing!'; msg='You put something in every jar. Try saving a little more next time to reach a bigger goal.'; }
+    else { stars=1; title='Good start!'; msg='It is smart to put a little in each jar &mdash; some to spend, some to save, and some to give.'; }
+    var s=''; for(var i=0;i<3;i++){ s+= i<stars?'\u2b50':'\u2606'; }
+    resultEl.innerHTML='<div class="stars">'+s+'</div><h2>'+title+'</h2><p>'+msg+'</p>'+
+      '<p style="font-weight:600;color:var(--forest);margin-top:10px;">Spend '+c.spend+' &middot; Save '+c.save+' &middot; Give '+c.give+'</p>';
+    resultEl.classList.add('show');
+    if(window.ftCelebrate) window.ftCelebrate(stars===3?'Perfect plan!':'Great sharing!');
+  }
+  document.getElementById('reset').onclick=function(){
+    left=TOTAL; c={spend:0,save:0,give:0}; done=false; leftEl.textContent=TOTAL;
+    ['spend','save','give'].forEach(function(j){ document.getElementById('c-'+j).textContent='0'; document.getElementById('stack-'+j).innerHTML=''; });
+    resultEl.classList.remove('show'); resultEl.innerHTML='';
+  };
 })();
 </script>
 </body>
