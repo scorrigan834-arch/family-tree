@@ -8,10 +8,10 @@
       nav.className = 'nav';
       nav.innerHTML = '<div class="row">' +
         '<a href="index.html">Home</a>' +
-        '<a href="start-here.html">Start here</a>' +
+        '<a href="profile.html">Build your profile</a>' +
         '<a href="tools.html">Tools</a>' +
+        '<a href="start-here.html">Start here</a>' +
         '<a href="about.html">About</a>' +
-        '<a href="glossary.html">Glossary</a>' +
         '</div>';
       var hdr = document.querySelector('header.topbar');
       hdr ? hdr.insertAdjacentElement('afterend', nav) : document.body.insertAdjacentElement('afterbegin', nav);

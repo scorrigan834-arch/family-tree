@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Build your profile — Family Tree</title>
+  <meta name="description" content="Answer a few questions and Family Tree personalizes lessons and tools to your age, stage, and goals." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+
+  <section class="section band-forest">
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">Start here</span>
+      <h1 class="display" style="font-size:clamp(30px,6vw,48px);">Build your profile.</h1>
+      <p class="subhead">Answer a few quick questions — for yourself, or for your child — and we'll point you to the right lessons and tools for your age, stage, and goals.</p>
+    </div>
+  </section>
+
+  <section class="section band-paper">
+    <div class="inner" style="max-width:640px;">
+      <div id="pf-welcome" class="muted" style="display:none; margin-bottom:14px;"></div>
+
+      <div class="qcard">
+        <h3>Who is this profile for?</h3>
+        <div class="choices" id="pf-who">
+          <span class="choice"><input type="radio" name="who" id="who-me" value="me" checked /><label for="who-me">Myself</label></span>
+          <span class="choice"><input type="radio" name="who" id="who-child" value="child" /><label for="who-child">My child</label></span>
+        </div>
+      </div>
+
+      <div class="qcard">
+        <h3>Age</h3>
+        <p class="help" id="pf-age-help">Your age. (For a child, enter their age — you'll manage this profile for them.)</p>
+        <input type="number" id="pf-age" min="1" max="120" placeholder="e.g. 24" />
+      </div>
+
+      <div class="qcard">
+        <h3>Life stage</h3>
+        <p class="help">Roughly where things are right now.</p>
+        <select id="pf-life">
+          <option value="">Choose one…</option>
+          <option value="school">In school (K–12)</option>
+          <option value="college">College or training</option>
+          <option value="early">Early career</option>
+          <option value="established">Established adult</option>
+          <option value="parent">Parent / raising a family</option>
+          <option value="retire">Near or in retirement</option>
+        </select>
+      </div>
+
+      <div class="qcard">
+        <h3>What do you want help with?</h3>
+        <p class="help">Pick any that apply.</p>
+        <div class="choices" id="pf-interests">
+          <span class="choice"><input type="checkbox" id="i-saving" value="saving" /><label for="i-saving">Saving</label></span>
+          <span class="choice"><input type="checkbox" id="i-budgeting" value="budgeting" /><label for="i-budgeting">Budgeting</label></span>
+          <span class="choice"><input type="checkbox" id="i-debt" value="debt" /><label for="i-debt">Credit &amp; debt</label></span>
+          <span class="choice"><input type="checkbox" id="i-investing" value="investing" /><label for="i-investing">Investing</label></span>
+          <span class="choice"><input type="checkbox" id="i-home" value="home" /><label for="i-home">Buying a home</label></span>
+          <span class="choice"><input type="checkbox" id="i-retirement" value="retirement" /><label for="i-retirement">Retirement</label></span>
+          <span class="choice"><input type="checkbox" id="i-college" value="college" /><label for="i-college">College savings</label></span>
+          <span class="choice"><input type="checkbox" id="i-emergency" value="emergency" /><label for="i-emergency">Emergency fund</label></span>
+          <span class="choice"><input type="checkbox" id="i-kids" value="kids" /><label for="i-kids">Teaching my kids</label></span>
+          <span class="choice"><input type="checkbox" id="i-estate" value="estate" /><label for="i-estate">Estate &amp; legacy</label></span>
+        </div>
+      </div>
+
+      <div class="qcard">
+        <h3>Where are you on your money journey?</h3>
+        <div class="choices" id="pf-journey">
+          <span class="choice"><input type="radio" name="journey" id="j-start" value="starting" checked /><label for="j-start">Just starting</label></span>
+          <span class="choice"><input type="radio" name="journey" id="j-build" value="building" /><label for="j-build">Building</label></span>
+          <span class="choice"><input type="radio" name="journey" id="j-grow" value="growing" /><label for="j-grow">Growing &amp; protecting</label></span>
+        </div>
+      </div>
+
+      <p style="margin-top:18px;"><button class="btn btn-lg" id="pf-go" type="button">See my plan →</button></p>
+      <p id="pf-error" class="muted" style="color:var(--clay); display:none;">Please enter an age to continue.</p>
+    </div>
+  </section>
+
+  <section class="section band-sand" id="pf-results">
+    <div class="inner" style="max-width:720px;">
+      <span class="eyebrow">Your Family Tree plan</span>
+      <h2 class="sec-title" id="pf-title" style="margin-top:6px;">Here's where to begin.</h2>
+      <div id="pf-plan"></div>
+      <p class="muted" style="margin-top:22px; font-size:13px;">Want to save this and track progress across visits? Accounts are coming soon.</p>
+      <p style="margin-top:6px;"><a href="index.html">← Home</a></p>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      var KEY = 'familyTreeProfile';
+
+      function stageFromAge(a){
+        if(a<=10) return {slug:'first-roots.html', name:'First Roots', ages:'5–10', lessons:[['first-roots-earning.html','Earning your first dollar'],['first-roots-saving.html','Saving for something you want'],['first-roots-needs.html','Needs versus wants']]};
+        if(a<=15) return {slug:'growing.html', name:'Growing', ages:'10–15', lessons:[['growing-budget.html','Making a simple budget'],['growing-goal.html','Setting a savings goal'],['growing-banks.html','How banks and interest work']]};
+        if(a<=22) return {slug:'branching-out.html', name:'Branching Out', ages:'15–22', lessons:[['branching-paycheck.html','Your first paycheck and taxes'],['branching-credit.html','Student loans and credit'],['branching-accounts.html','Opening real accounts']]};
+        if(a<=30) return {slug:'taking-root.html', name:'Taking Root', ages:'22–30', lessons:[['taking-budget.html','Budgeting a real salary'],['taking-debt.html','Paying down debt'],['taking-investing.html','Investing for the first time']]};
+        return {slug:'canopy.html', name:'The Canopy', ages:'30+', lessons:[['canopy-investing.html','Investing for the long run'],['canopy-insurance.html','Family and insurance'],['canopy-estate.html','Estate planning and what to pass on']]};
+      }
+      var TOOLS = {
+        saving:[['savings-goal.html','Savings goal'],['compound-interest.html','Compound interest']],
+        budgeting:[['budget.html','Budget builder']],
+        debt:[['debt-payoff.html','Debt payoff']],
+        investing:[['compound-interest.html','Compound interest'],['retirement.html','Retirement']],
+        home:[['mortgage.html','Mortgage payment'],['rent-vs-buy.html','Rent vs. buy']],
+        retirement:[['retirement.html','Retirement']],
+        college:[['college-savings.html','College savings']],
+        emergency:[['emergency-fund.html','Emergency fund']],
+        kids:[['first-roots.html','Kids: First Roots'],['growing.html','Kids: Growing']],
+        estate:[['canopy-estate.html','Estate planning']]
+      };
+      var DEFAULTS = {
+        'first-roots.html':[['savings-goal.html','Savings goal'],['compound-interest.html','Compound interest']],
+        'growing.html':[['savings-goal.html','Savings goal'],['budget.html','Budget builder'],['compound-interest.html','Compound interest']],
+        'branching-out.html':[['budget.html','Budget builder'],['debt-payoff.html','Debt payoff'],['savings-goal.html','Savings goal']],
+        'taking-root.html':[['budget.html','Budget builder'],['debt-payoff.html','Debt payoff'],['retirement.html','Retirement']],
+        'canopy.html':[['retirement.html','Retirement'],['net-worth.html','Net worth'],['mortgage.html','Mortgage payment']]
+      };
+
+      function getChecked(containerId){
+        var out=[]; document.querySelectorAll('#'+containerId+' input:checked').forEach(function(i){ out.push(i.value); }); return out;
+      }
+      function radio(name){ var el=document.querySelector('input[name="'+name+'"]:checked'); return el?el.value:''; }
+
+      function recommendTools(interests, stageSlug){
+        var out=[], seen={};
+        function add(list){ (list||[]).forEach(function(t){ if(!seen[t[0]]){ seen[t[0]]=1; out.push(t); } }); }
+        interests.forEach(function(k){ add(TOOLS[k]); });
+        if(out.length<2){ add(DEFAULTS[stageSlug]); }
+        return out.slice(0,5);
+      }
+
+      function cardsHtml(list){
+        return '<div class="reco">' + list.map(function(item){
+          return '<a class="card" href="'+item[0]+'"><strong style="font-family:var(--serif);color:var(--forest);">'+item[1]+'</strong></a>';
+        }).join('') + '</div>';
+      }
+
+      function buildPlan(p){
+        var st = stageFromAge(p.age);
+        var tools = recommendTools(p.interests, st.slug);
+        var who = p.who === 'child' ? 'For your child (age '+p.age+')' : 'For you (age '+p.age+')';
+        var html = '';
+        html += '<p class="muted" style="margin:0 0 14px;">'+who+'</p>';
+        html += '<div class="card" style="border-left:3px solid var(--sprout);"><div class="eyebrow">Recommended stage</div>'
+             +  '<div class="stagename" style="font-size:22px;margin-top:4px;">'+st.name+'</div>'
+             +  '<div class="ages">AGES '+st.ages+'</div>'
+             +  '<p style="margin:10px 0 0;"><a class="btn" href="'+st.slug+'">Open '+st.name+' →</a></p></div>';
+        html += '<h3 style="margin-top:24px;">Start with these lessons</h3>' + cardsHtml(st.lessons);
+        html += '<h3 style="margin-top:24px;">Tools for your goals</h3>' + cardsHtml(tools);
+        return html;
+      }
+
+      function save(p){ try{ localStorage.setItem(KEY, JSON.stringify(p)); }catch(e){} }
+      function load(){ try{ var v=localStorage.getItem(KEY); return v?JSON.parse(v):null; }catch(e){ return null; } }
+
+      function run(){
+        var age = parseInt(document.getElementById('pf-age').value, 10);
+        var err = document.getElementById('pf-error');
+        if(!age || age < 1){ err.style.display='block'; document.getElementById('pf-age').focus(); return; }
+        err.style.display='none';
+        var p = { who: radio('who'), age: age, life: document.getElementById('pf-life').value, interests: getChecked('pf-interests'), journey: radio('journey') };
+        save(p);
+        document.getElementById('pf-plan').innerHTML = buildPlan(p);
+        document.getElementById('pf-title').textContent = p.who==='child' ? "Your child's starting point" : "Here's where to begin";
+        var res = document.getElementById('pf-results');
+        res.style.display='block';
+        res.scrollIntoView({ behavior:'smooth' });
+      }
+
+      function prefill(){
+        var p = load(); if(!p) return;
+        try{
+          if(p.who){ var w=document.querySelector('input[name="who"][value="'+p.who+'"]'); if(w) w.checked=true; }
+          if(p.age){ document.getElementById('pf-age').value = p.age; }
+          if(p.life){ document.getElementById('pf-life').value = p.life; }
+          if(p.journey){ var j=document.querySelector('input[name="journey"][value="'+p.journey+'"]'); if(j) j.checked=true; }
+          (p.interests||[]).forEach(function(k){ var c=document.querySelector('#pf-interests input[value="'+k+'"]'); if(c) c.checked=true; });
+          var wc=document.getElementById('pf-welcome'); wc.style.display='block'; wc.textContent='Welcome back — we filled in your last answers. Update anything and see your plan again.';
+        }catch(e){}
+      }
+
+      document.getElementById('pf-go').addEventListener('click', run);
+      prefill();
+    })();
+  </script>
+</body>
+</html>
