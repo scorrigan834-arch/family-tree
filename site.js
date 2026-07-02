@@ -57,7 +57,14 @@
     {u:'about.html', t:'About', c:'Page', k:'about mission'},
     {u:'glossary.html', t:'Glossary', c:'Page', k:'glossary terms definitions'},
     {u:'faq.html', t:'FAQ', c:'Page', k:'faq questions'},
-    {u:'resources.html', t:'Resources', c:'Page', k:'resources links'}
+    {u:'resources.html', t:'Resources', c:'Page', k:'resources links'},
+    {u:'guides.html', t:'All guides', c:'Guides', k:'guides library topics reference'},
+    {u:'guide-estate.html', t:'Estate planning and protecting your family', c:'Guide', k:'estate will trust beneficiary power of attorney legacy heirs'},
+    {u:'guide-behavioral.html', t:'Why smart people make bad money decisions', c:'Guide', k:'behavioral psychology bias loss aversion lifestyle creep'},
+    {u:'guide-kids.html', t:'What changes when children arrive', c:'Guide', k:'kids children baby 529 guardianship life insurance'},
+    {u:'guide-couples.html', t:'How couples can manage money', c:'Guide', k:'couples marriage joint separate prenup money'},
+    {u:'guide-retirement-accounts.html', t:'Roth vs Traditional vs HSA', c:'Guide', k:'roth traditional hsa 401k retirement account tax'},
+    {u:'guide-index-vs-stocks.html', t:'Index funds vs individual stocks', c:'Guide', k:'index funds stocks investing diversification fees'}
   ];
 
   function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
@@ -125,6 +132,7 @@
       '<div class="ft-menu-label">Explore</div>' +
       '<a href="profile.html">Build your profile</a>' +
       '<a href="tools.html">Tools</a>' +
+      '<a href="guides.html">Guides</a>' +
       '<a href="start-here.html">Start here</a>' +
       '<a href="about.html">About</a>' +
       '<a href="glossary.html">Glossary</a>' +
