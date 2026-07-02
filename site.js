@@ -835,3 +835,84 @@
     }
   });
 })();
+
+/* ---- Per-stage age-appropriate visual themes ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+
+  var THEME = {
+    'ft-kids': ['first-roots.html','first-roots-earning.html','first-roots-saving.html','first-roots-needs.html','first-roots-giving.html','activity-needs-wants.html','activity-jars.html'],
+    'ft-tween': ['growing.html','growing-budget.html','growing-goal.html','growing-banks.html','growing-spending.html','growing-safety.html','growing-earning.html','activity-grow.html'],
+    'ft-young': ['branching-out.html','branching-paycheck.html','branching-credit.html','branching-accounts.html','branching-aid.html','branching-apartment.html','branching-invest.html','branching-car.html','activity-credit.html','activity-invest-early.html'],
+    'ft-adult': ['taking-root.html','taking-budget.html','taking-debt.html','taking-investing.html','taking-housing.html','taking-emergency.html','taking-taxes.html','taking-family.html','activity-first-month.html'],
+    'ft-pro': ['canopy.html','canopy-investing.html','canopy-insurance.html','canopy-estate.html','canopy-teaching.html','canopy-heirs.html','canopy-giving.html','canopy-healthcare.html']
+  };
+  function themeFor(f){
+    for (var cls in THEME){ if (THEME[cls].indexOf(f) >= 0) return cls; }
+    return null;
+  }
+
+  function injectCSS(){
+    if (document.getElementById('ft-theme-css')) return;
+    var s = document.createElement('style'); s.id = 'ft-theme-css';
+    s.textContent = [
+      /* ===== KIDS (First Roots) — super stimulating ===== */
+      'body.ft-kids{background:#FFFDF5;}',
+      'body.ft-kids .band-forest{background:linear-gradient(135deg,#12603f 0%,#2E8B57 50%,#7FB86A 100%);}',
+      'body.ft-kids .display{font-size:clamp(34px,7vw,56px)!important;letter-spacing:-.01em;}',
+      'body.ft-kids .subhead{font-size:19px;}',
+      'body.ft-kids .eyebrow{color:#E8912F!important;font-size:14px;letter-spacing:.06em;font-weight:600;}',
+      'body.ft-kids .sec-title{font-size:clamp(24px,4.6vw,36px);}',
+      'body.ft-kids .btn,body.ft-kids .btn-lg{border-radius:999px!important;background:#F0873E!important;color:#fff!important;font-weight:700!important;box-shadow:0 6px 0 #cf6a26;transition:transform .1s,box-shadow .1s;}',
+      'body.ft-kids .btn:hover,body.ft-kids .btn-lg:hover{transform:translateY(-2px);}',
+      'body.ft-kids .btn:active,body.ft-kids .btn-lg:active{transform:translateY(3px);box-shadow:0 2px 0 #cf6a26;}',
+      'body.ft-kids .btn-ghost{border-radius:999px!important;border-width:2px;}',
+      'body.ft-kids .card,body.ft-kids .stage-card{border-radius:22px!important;border-width:2px;}',
+      'body.ft-kids .card:hover,body.ft-kids .stage-card:hover{transform:translateY(-4px) rotate(-.5deg);}',
+      'body.ft-kids .chip{border-radius:999px;font-weight:600;}',
+      'body.ft-kids .ft-quiz{border-radius:22px;border-width:2px;}',
+      'body.ft-kids .ftq-opt{border-radius:14px!important;font-size:16px;padding:14px!important;}',
+      /* ===== TWEEN (Growing) — fun, energetic ===== */
+      'body.ft-tween .band-forest{background:linear-gradient(135deg,#123529 0%,#2F5D46 55%,#3E8E7E 100%);}',
+      'body.ft-tween .display{font-size:clamp(30px,6vw,48px);}',
+      'body.ft-tween .eyebrow{color:#3E9E86!important;font-weight:600;letter-spacing:.06em;}',
+      'body.ft-tween .btn,body.ft-tween .btn-lg{border-radius:14px!important;font-weight:600!important;}',
+      'body.ft-tween .btn:hover,body.ft-tween .btn-lg:hover{transform:translateY(-2px);}',
+      'body.ft-tween .card,body.ft-tween .stage-card{border-radius:16px!important;}',
+      'body.ft-tween .card:hover,body.ft-tween .stage-card:hover{transform:translateY(-3px);}',
+      /* ===== YOUNG (Branching Out) — bold, modern ===== */
+      'body.ft-young .band-forest{background:linear-gradient(120deg,#0F2A22 0%,#123529 55%,#1f4d3a 100%);}',
+      'body.ft-young .eyebrow{color:var(--sprout)!important;letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:600;}',
+      'body.ft-young .display{font-weight:600;letter-spacing:-.015em;}',
+      'body.ft-young .btn,body.ft-young .btn-lg{border-radius:10px!important;background:var(--sprout)!important;color:#12352b!important;font-weight:700!important;}',
+      'body.ft-young .btn-ghost{border-radius:10px!important;}',
+      'body.ft-young .card,body.ft-young .stage-card{border-radius:12px!important;}',
+      'body.ft-young .card:hover,body.ft-young .stage-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(15,42,34,.15);}',
+      /* ===== ADULT (Taking Root) — clean, contemporary ===== */
+      'body.ft-adult .band-forest{background:linear-gradient(120deg,#0F2A22 0%,#123529 100%);}',
+      'body.ft-adult .eyebrow{color:var(--moss)!important;letter-spacing:.1em;}',
+      'body.ft-adult .btn,body.ft-adult .btn-lg{border-radius:10px!important;background:var(--moss)!important;}',
+      'body.ft-adult .btn-ghost{border-radius:10px!important;}',
+      'body.ft-adult .card,body.ft-adult .stage-card{border-radius:12px!important;}',
+      /* ===== PRO (The Canopy) — refined, professional ===== */
+      'body.ft-pro .band-forest{background:#0F2A22;}',
+      'body.ft-pro .eyebrow{color:var(--stone)!important;letter-spacing:.2em;text-transform:uppercase;font-size:11px;font-weight:600;}',
+      'body.ft-pro .display{font-weight:500;letter-spacing:-.015em;}',
+      'body.ft-pro .subhead{color:#3a463c;}',
+      'body.ft-pro .sec-title{font-weight:500;}',
+      'body.ft-pro .btn,body.ft-pro .btn-lg{border-radius:6px!important;background:var(--forest)!important;color:#fff!important;font-weight:600!important;}',
+      'body.ft-pro .btn-ghost{border-radius:6px!important;}',
+      'body.ft-pro .card,body.ft-pro .stage-card{border-radius:8px!important;}',
+      'body.ft-pro .section{padding-top:80px;padding-bottom:80px;}'
+    ].join('\n');
+    document.head.appendChild(s);
+  }
+
+  ready(function () {
+    var cls = themeFor(fname());
+    if (!cls) return;
+    injectCSS();
+    document.body.classList.add(cls);
+  });
+})();
