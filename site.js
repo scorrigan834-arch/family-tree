@@ -367,3 +367,153 @@
     }
   });
 })();
+
+/* ---- Lesson knowledge-check quizzes ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+
+  var QUIZZES = {
+    "first-roots-earning.html": [
+      {q:"How do most people get money?", a:["It grows on trees","They earn it by doing work","They find it on the ground"], c:1, e:"Money comes from effort — doing something useful and being paid for it."},
+      {q:"You did your chores and earned two dollars. What is a good first thing to do?", a:["Spend it all right away without thinking","Stop and think about whether to save or spend it","Throw it away"], c:1, e:"Even little kids can pause and choose. Choosing on purpose is the whole lesson."},
+      {q:"Earning money teaches us that money comes from...", a:["luck","effort and work","nowhere"], c:1, e:"When money is tied to effort, it never feels like it just appears."}
+    ],
+    "first-roots-saving.html": [
+      {q:"Saving means...", a:["spending money right away","setting money aside for later","giving all your money away"], c:1, e:"Saving is patience made visible — money kept for something bigger, later."},
+      {q:"Why is a clear jar helpful for saving?", a:["So you can watch your money grow toward the goal","To hide the money","Because jars look pretty"], c:0, e:"Seeing the pile grow keeps a young saver motivated."},
+      {q:"You want a ten-dollar toy and you have six dollars. What helps you get it?", a:["Give up","Keep saving a little more","Nothing can help"], c:1, e:"A little more saving, and a little patience, gets you there."}
+    ],
+    "first-roots-needs.html": [
+      {q:"Which of these is a NEED?", a:["Candy","A warm coat in winter","A new toy"], c:1, e:"Needs are things we must have to live and stay safe, like food, shelter, and warm clothes."},
+      {q:"Which of these is a WANT?", a:["Water","Food","A video game"], c:2, e:"Wants are nice to have, but we can live without them."},
+      {q:"Knowing needs from wants helps you...", a:["spend on purpose instead of by accident","never buy anything fun","spend all your money"], c:0, e:"It turns spending into a choice rather than a reflex."}
+    ],
+    "growing-budget.html": [
+      {q:"A budget is...", a:["a plan for your money before you spend it","a type of bank","a kind of loan"], c:0, e:"A plan made before the money arrives keeps you in control of it."},
+      {q:"A common way to split money is spend, save, and...", a:["give","hide","lose"], c:0, e:"Spend, save, and give — the give jar builds generosity early."},
+      {q:"Why decide your split before the money arrives?", a:["So you never wonder where it all went","To make spending harder","There is no reason"], c:0, e:"Plan first, and there is no puzzled feeling later about where it went."}
+    ],
+    "growing-goal.html": [
+      {q:"A good savings goal is...", a:["vague and far away","specific, with an amount and a timeline","impossible"], c:1, e:"Specific goals with a number and a deadline are the ones you actually reach."},
+      {q:"If you save ten dollars a week toward a sixty-dollar goal, it takes about...", a:["6 weeks","60 weeks","1 week"], c:0, e:"Sixty divided by ten is six weeks — the price divided by your weekly amount."},
+      {q:"Breaking a goal into weekly amounts makes it feel...", a:["impossible","like a countdown you control","more confusing"], c:1, e:"A distant wish becomes a countdown you can see yourself finishing."}
+    ],
+    "growing-banks.html": [
+      {q:"Interest is...", a:["money the bank pays you for keeping savings there","a fee for using a jar","a type of coin"], c:0, e:"The bank pays you a small amount for holding your savings."},
+      {q:"What makes savings grow faster over time?", a:["Earning interest on your interest too","Spending it","Hiding it"], c:0, e:"Earning interest on past interest is the snowball that builds real wealth."},
+      {q:"Compared with cash in a drawer, a bank is...", a:["less safe","safer","exactly the same"], c:1, e:"A bank keeps your money far safer than a drawer at home."}
+    ],
+    "branching-paycheck.html": [
+      {q:"Gross pay is...", a:["what you take home","what you earned before anything is taken out","your yearly bonus"], c:1, e:"Gross is the full amount earned, before taxes and deductions."},
+      {q:"Net pay, or take-home pay, is...", a:["the amount before taxes","what actually reaches your account after deductions","the same as gross pay"], c:1, e:"Net pay is what lands in your account once taxes and deductions come out."},
+      {q:"The form that tells your employer how much tax to withhold is the...", a:["W-4","1099","receipt"], c:0, e:"You fill out a W-4 when you start a job to set your withholding."}
+    ],
+    "branching-credit.html": [
+      {q:"APR tells you...", a:["how much borrowing costs per year","your bank balance","your shoe size"], c:0, e:"APR is the yearly cost of borrowing — higher APR means costlier debt."},
+      {q:"On your first credit card, the safest habit is to...", a:["pay the full balance every month","pay only the minimum","skip payments"], c:0, e:"Paying in full builds credit history for free and avoids interest."},
+      {q:"A good credit score can help you...", a:["rent an apartment and get better loan rates","avoid all taxes","earn a paycheck"], c:0, e:"Reliable repayment history makes borrowing and renting easier and cheaper."}
+    ],
+    "branching-accounts.html": [
+      {q:"A debit card spends...", a:["borrowed money","money you already have","the bank's money"], c:1, e:"Debit spends your own money; credit borrows it."},
+      {q:"A high-yield savings account is good because it...", a:["pays more interest for the same safety","is riskier","charges more fees"], c:0, e:"Same safety, more interest — a simple upgrade over a standard account."},
+      {q:"When choosing a bank account, look for...", a:["high monthly fees","no monthly fee and no minimum balance","hidden charges"], c:1, e:"Avoiding fees keeps more of your money working for you."}
+    ],
+    "taking-budget.html": [
+      {q:"In the 50/30/20 rule, the 50% goes to...", a:["wants","needs","savings"], c:1, e:"Half to needs, 30% to wants, 20% to saving and extra debt payoff."},
+      {q:"The single most effective budgeting move is to...", a:["automate saving on payday","check your balance daily","spend first, save what's left"], c:0, e:"Automating transfers before you can spend the money is what actually works."},
+      {q:"Lifestyle creep means...", a:["spending quietly rises to match every raise","your rent shrinks over time","you save more automatically"], c:0, e:"When spending grows with income, higher pay never becomes higher wealth."}
+    ],
+    "taking-debt.html": [
+      {q:"The debt to attack first is usually...", a:["the highest-interest debt","your mortgage","the newest debt"], c:0, e:"High-interest debt compounds against you fastest, so it goes first."},
+      {q:"The avalanche method targets the...", a:["smallest balance first","highest interest rate first","debts in alphabetical order"], c:1, e:"Avalanche pays the highest rate first, which costs you the least overall."},
+      {q:"Paying only the minimum on a credit card...", a:["clears it quickly","keeps you in debt for years","is always the best move"], c:1, e:"Minimums are designed to keep you paying interest for a long time."}
+    ],
+    "taking-investing.html": [
+      {q:"Your biggest advantage when investing young is...", a:["time for compounding","picking perfect stocks","pure luck"], c:0, e:"Decades of compounding do the heavy lifting — time beats timing."},
+      {q:"If your employer offers a 401(k) match, you should...", a:["contribute enough to get the full match","ignore it","opt out"], c:0, e:"A match is an immediate, guaranteed return you shouldn't leave behind."},
+      {q:"A low-cost index fund...", a:["bets everything on one company","spreads money across the whole market","guarantees a profit"], c:1, e:"Index funds own a broad slice of the market, so no single failure sinks you."}
+    ],
+    "taking-housing.html": [
+      {q:"Buying a home usually pays off if you'll stay for about...", a:["a few months","five or more years","one year"], c:1, e:"Staying long enough lets you outrun the big upfront costs of buying."},
+      {q:"Besides the mortgage, owning a home also costs...", a:["nothing extra","property taxes, insurance, and maintenance","only utilities"], c:1, e:"The payment is just part of the picture — plan for the rest."},
+      {q:"Renting is...", a:["always throwing money away","a reasonable choice that offers flexibility","never allowed"], c:1, e:"Renting buys flexibility and freedom from repairs — not wasted money."}
+    ],
+    "canopy-investing.html": [
+      {q:"Diversifying means...", a:["putting everything in one stock","spreading across many investments","avoiding investing entirely"], c:1, e:"Spreading out means no single investment can sink you."},
+      {q:"The biggest permanent losses often come from...", a:["panic-selling during downturns","staying invested","rebalancing occasionally"], c:0, e:"Selling in a panic locks in losses at the worst possible time."},
+      {q:"Over decades, investment fees...", a:["don't really matter","compound and can cost a great deal","help your returns"], c:1, e:"Small percentages compound into large sums over long periods."}
+    ],
+    "canopy-insurance.html": [
+      {q:"An emergency fund should hold roughly...", a:["one day of expenses","several months of essential expenses","nothing at all"], c:1, e:"A few months of essentials keeps a surprise from becoming a crisis."},
+      {q:"Life insurance becomes essential when...", a:["no one depends on you","other people depend on your income","you retire"], c:1, e:"Once others rely on your earnings, life insurance protects them."},
+      {q:"Umbrella liability insurance is...", a:["expensive and useless","inexpensive extra protection as assets grow","only for cars"], c:1, e:"It's low-cost coverage that shields your net worth from a big lawsuit."}
+    ],
+    "canopy-estate.html": [
+      {q:"Beneficiary designations on your accounts...", a:["override what your will says","don't matter","are illegal"], c:0, e:"Beneficiaries take priority over a will, so keep them current."},
+      {q:"A will lets you name...", a:["your favorite color","who raises your children and who receives what","your salary"], c:1, e:"A will directs your belongings and names guardians for children."},
+      {q:"Family wealth is most often lost because...", a:["heirs weren't prepared","the planning was wrong","of taxes alone"], c:0, e:"Preparing the people matters even more than preparing the documents."}
+    ]
+  };
+
+  function injectCSS(){
+    if(document.getElementById('ft-quiz-css')) return;
+    var s=document.createElement('style'); s.id='ft-quiz-css';
+    s.textContent =
+      '.ft-quiz{margin-top:24px;padding:20px 22px;border:1px solid var(--line);border-radius:14px;background:#fff;}' +
+      '.ftq{margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--sand);}' +
+      '.ftq:last-of-type{border-bottom:0;margin-bottom:8px;}' +
+      '.ftq-opt{display:block;width:100%;text-align:left;padding:10px 14px;margin:6px 0;border:1px solid var(--line);border-radius:10px;background:var(--paper);font-family:var(--sans);font-size:14px;color:var(--ink);cursor:pointer;}' +
+      '.ftq-opt:hover:not(:disabled){border-color:var(--moss);}' +
+      '.ftq-opt.correct{background:#EAF1E3;border-color:var(--sprout);color:var(--forest);font-weight:600;}' +
+      '.ftq-opt.wrong{background:#F7E7DF;border-color:var(--clay);color:#9a4a24;}' +
+      '.ftq-exp{margin-top:8px;font-size:13px;color:var(--stone);background:var(--sand);border-radius:8px;padding:9px 12px;}' +
+      '.ft-quiz-score{margin-top:8px;font-weight:600;color:var(--forest);font-size:14px;}';
+    document.head.appendChild(s);
+  }
+
+  ready(function () {
+    var quiz = QUIZZES[fname()];
+    if(!quiz) return;
+    var prose = document.querySelector('.prose');
+    if(!prose || !prose.parentNode) return;
+    injectCSS();
+
+    var wrap = document.createElement('div');
+    wrap.className = 'ft-quiz';
+    var html = '<div class="eyebrow" style="margin-bottom:6px;">Quick check</div>' +
+      '<h3 style="font-family:var(--serif);color:var(--forest);margin:0 0 14px;font-size:20px;">Test what you learned</h3>';
+    quiz.forEach(function(item, qi){
+      html += '<div class="ftq" data-c="' + item.c + '"><p style="font-weight:600;margin:0 0 8px;">' + (qi+1) + '. ' + item.q + '</p><div class="ftq-opts">';
+      item.a.forEach(function(opt, oi){ html += '<button class="ftq-opt" data-i="' + oi + '">' + opt + '</button>'; });
+      html += '</div><div class="ftq-exp" style="display:none;">' + item.e + '</div></div>';
+    });
+    html += '<div class="ft-quiz-score"></div>';
+    wrap.innerHTML = html;
+    prose.parentNode.insertBefore(wrap, prose.nextSibling);
+
+    var total = quiz.length, answered = 0, correct = 0;
+    var scoreEl = wrap.querySelector('.ft-quiz-score');
+    wrap.querySelectorAll('.ftq').forEach(function(q){
+      var c = parseInt(q.getAttribute('data-c'), 10);
+      var opts = q.querySelectorAll('.ftq-opt');
+      var exp = q.querySelector('.ftq-exp');
+      opts.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          if(q.getAttribute('data-done')) return;
+          q.setAttribute('data-done','1');
+          var i = parseInt(btn.getAttribute('data-i'), 10);
+          answered++;
+          if(i === c){ btn.classList.add('correct'); correct++; }
+          else { btn.classList.add('wrong'); opts[c].classList.add('correct'); }
+          opts.forEach(function(b){ b.disabled = true; });
+          if(exp) exp.style.display = 'block';
+          if(answered < total){ scoreEl.textContent = answered + ' of ' + total + ' answered · ' + correct + ' correct'; }
+          else if(correct === total){ scoreEl.textContent = 'Perfect — ' + correct + ' of ' + total + ' correct!'; }
+          else if(correct >= Math.ceil(total/2)){ scoreEl.textContent = 'Nice work — ' + correct + ' of ' + total + ' correct.'; }
+          else { scoreEl.textContent = 'Good try — ' + correct + ' of ' + total + '. Give the lesson another read!'; }
+        });
+      });
+    });
+  });
+})();
