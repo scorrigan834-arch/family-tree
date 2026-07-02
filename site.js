@@ -81,6 +81,7 @@
     {u:'faq.html', t:'FAQ', c:'Page', k:'faq questions'},
     {u:'resources.html', t:'Resources', c:'Page', k:'resources links'},
     {u:'guides.html', t:'All guides', c:'Guides', k:'guides library topics reference'},
+    {u:'games.html', t:'Games — learn money by playing', c:'Activity', k:'games play interactive activities fun kids'},
     {u:'tracks.html', t:'Tracks — follow a skill across stages', c:'Page', k:'tracks skills earn save spend invest grow protect give path'},
     {u:'adventure.html', t:'Your Money Journey (game)', c:'Activity', k:'game adventure money journey life choices simulator interactive'},
     {u:'guide-estate.html', t:'Estate planning and protecting your family', c:'Guide', k:'estate will trust beneficiary power of attorney legacy heirs'},
@@ -186,6 +187,7 @@
       '<a href="advisors.html" style="color:var(--clay);font-weight:600;">For advisors &amp; families</a>' +
       '<a href="profile.html">Build your profile</a>' +
       '<a href="tools.html">Tools</a>' +
+      '<a href="games.html">Games</a>' +
       '<a href="guides.html">Guides</a>' +
       '<a href="tracks.html">Tracks</a>' +
       '<a href="adventure.html">Money Journey</a>' +
@@ -1327,7 +1329,7 @@
       '<span class="eyebrow" style="color:var(--sprout);">Try the interactive</span>' +
       '<h2 class="display" style="font-size:clamp(26px,5vw,42px);color:#fff;">Play Your Money Journey</h2>' +
       '<p class="subhead" style="color:#EAF1E3;max-width:600px;margin:8px auto 0;">Make life\u2019s big money choices from age 16 to 40 and see where you land. Three minutes, surprisingly revealing \u2014 and fun.</p>' +
-      '<div class="cta-row" style="justify-content:center;margin-top:18px;"><a class="btn btn-lg" href="adventure.html">Start the journey \u2192</a></div>' +
+      '<div class="cta-row" style="justify-content:center;margin-top:18px;"><a class="btn btn-lg" href="adventure.html">Start the journey \u2192</a><a class="btn-ghost btn-lg" href="games.html">All games</a></div>' +
       '</div>';
     var first = document.querySelector('section.section');
     if (first) first.insertAdjacentElement('afterend', sec);

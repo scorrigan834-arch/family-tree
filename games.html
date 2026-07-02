@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Games — Family Tree</title>
+<meta name="description" content="Learn money by playing — interactive games for every age, from sorting needs and wants to a full life money adventure." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script src="site.js" defer></script>
+<style>
+  .gm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px;}
+  .gm{display:block;text-decoration:none;border-radius:18px;padding:22px;color:#fff;position:relative;overflow:hidden;min-height:150px;transition:transform .15s ease,box-shadow .2s ease;box-shadow:0 10px 26px rgba(15,42,34,.12);}
+  .gm:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(15,42,34,.2);}
+  .gm .age{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;opacity:.9;}
+  .gm .nm{font-family:var(--serif);font-size:22px;margin:8px 0 6px;line-height:1.15;}
+  .gm .ds{font-size:14px;opacity:.95;line-height:1.4;}
+  .gm .play{margin-top:14px;font-weight:600;font-size:14px;}
+  .gm.g1{background:linear-gradient(135deg,#2E8B57,#7FB86A);}
+  .gm.g2{background:linear-gradient(135deg,#C96F3F,#E8912F);}
+  .gm.g3{background:linear-gradient(135deg,#2F5D46,#3E9E86);}
+  .gm.g4{background:linear-gradient(135deg,#123529,#2F5D46);}
+  .gm.g5{background:linear-gradient(135deg,#4A6FA5,#6E9BD1);}
+  .gm.g6{background:linear-gradient(135deg,#8FB75B,#5f8f3e);}
+  .gm.g7{background:linear-gradient(135deg,#123529,#2F5D46 55%,#C96F3F 130%);}
+  .gm.big{grid-column:1 / -1;min-height:120px;}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+<section class="section band-forest">
+  <div class="inner">
+    <span class="eyebrow" style="color:var(--sprout);">Games</span>
+    <h1 class="display" style="font-size:clamp(32px,6vw,52px);">Learn money by playing.</h1>
+    <p class="subhead">Interactive games for every age \u2014 tap, slide, choose, and see what happens. The most fun way to build money smarts.</p>
+  </div>
+</section>
+<section class="section band-paper">
+  <div class="inner">
+    <a class="gm g7 big" href="adventure.html">
+      <div class="age">Featured \u00B7 Teens &amp; adults</div>
+      <div class="nm">Your Money Journey</div>
+      <div class="ds">Make life\u2019s big money choices from age 16 to 40 and see where you land. Three minutes, surprisingly revealing.</div>
+      <div class="play">Start the journey \u2192</div>
+    </a>
+    <div class="gm-grid">
+      <a class="gm g1" href="activity-needs-wants.html">
+        <div class="age">Ages 5\u201310</div><div class="nm">Needs &amp; Wants</div>
+        <div class="ds">Tap to sort each thing into a need or a want.</div><div class="play">Play \u2192</div>
+      </a>
+      <a class="gm g2" href="activity-jars.html">
+        <div class="age">Ages 5\u201315</div><div class="nm">Spend, Save, Give</div>
+        <div class="ds">Split 12 coins into three jars and plan your money.</div><div class="play">Play \u2192</div>
+      </a>
+      <a class="gm g3" href="activity-grow.html">
+        <div class="age">Ages 10\u201315</div><div class="nm">Watch your money grow</div>
+        <div class="ds">Slide to see how saving adds up over the years.</div><div class="play">Play \u2192</div>
+      </a>
+      <a class="gm g5" href="activity-credit.html">
+        <div class="age">Ages 15\u201322</div><div class="nm">Build your credit</div>
+        <div class="ds">Make choices and watch your credit score move.</div><div class="play">Play \u2192</div>
+      </a>
+      <a class="gm g6" href="activity-invest-early.html">
+        <div class="age">Ages 15\u201330</div><div class="nm">Start early vs start late</div>
+        <div class="ds">See what a ten-year head start really does.</div><div class="play">Play \u2192</div>
+      </a>
+      <a class="gm g4" href="activity-first-month.html">
+        <div class="age">Ages 22\u201330</div><div class="nm">Your first month on your own</div>
+        <div class="ds">Budget a real paycheck and see if it balances.</div><div class="play">Play \u2192</div>
+      </a>
+    </div>
+    <p style="margin-top:28px;"><a href="index.html">\u2190 Home</a> &middot; <a href="tracks.html">Explore by skill</a></p>
+  </div>
+</section>
+</body>
+</html>
