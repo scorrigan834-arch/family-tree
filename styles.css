@@ -124,3 +124,10 @@ select{ display:block; width:100%; margin-top:5px; font-family:var(--sans); font
 .choice input:focus-visible + label{ outline:2px solid var(--sprout); outline-offset:2px; }
 #pf-results{ display:none; }
 .reco{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:14px; }
+
+/* tool result bars */
+.bar{ display:flex; height:22px; border-radius:6px; overflow:hidden; background:var(--sand); margin-top:16px; }
+.bar span{ display:block; height:100%; width:0; transition:width .25s ease; }
+.seg1{ background:var(--moss); } .seg2{ background:var(--sprout); } .seg3{ background:var(--clay); }
+.legend{ font-size:13px; color:var(--stone); margin-top:9px; } .legend b{ color:var(--forest); }
+.calcbig{ font-family:var(--serif); font-size:15px; }

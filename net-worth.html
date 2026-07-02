@@ -9,28 +9,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
-  </head>
+</head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
-  <main class="container">
-    <p class="eyebrow">Tool</p>
-    <h1>Net worth</h1>
-    <p class="muted" style="max-width:52ch;">Everything you own minus everything you owe.</p>
-    <div class="card" style="max-width:440px; margin-top:16px;">
-      <label>Cash &amp; savings ($)<input id="nw-cash" type="number" value="2000" /></label>
-      <label>Investments ($)<input id="nw-inv" type="number" value="5000" /></label>
-      <label>Home / property ($)<input id="nw-home" type="number" value="0" /></label>
-      <label>Other assets ($)<input id="nw-other" type="number" value="0" /></label>
-      <label>Total debts owed ($)<input id="nw-debt" type="number" value="3000" /></label>
-      <p class="out">Your net worth: <strong id="nw-out">—</strong></p>
+  <section class="section band-forest">
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">Tool</span>
+      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Net worth</h1>
+      <p class="subhead">Everything you own minus everything you owe.</p>
+      <div class="cta-row">
+        <a class="btn-ghost btn-lg" href="tools.html">← All tools</a>
+        <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
+      </div>
     </div>
-    <p style="margin-top:24px;"><a href="tools.html">← All tools</a> · <a href="index.html">Home</a></p>
-  </main>
+  </section>
+  <section class="section band-paper">
+    <div class="inner" style="max-width:520px;">
+      <div class="card">
+        <label>Cash &amp; savings ($)<input id="nw-cash" type="number" value="2000" /></label>
+        <label>Investments ($)<input id="nw-inv" type="number" value="5000" /></label>
+        <label>Home / property ($)<input id="nw-home" type="number" value="0" /></label>
+        <label>Other assets ($)<input id="nw-other" type="number" value="0" /></label>
+        <label>Total debts owed ($)<input id="nw-debt" type="number" value="3000" /></label>
+        <p class="out">Your net worth: <strong id="nw-out">—</strong></p>
+      </div>
+    </div>
+  </section>
   <script>
     function money(x){return x.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});}
     function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
     function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
-    function calc(){var a=num('nw-cash')+num('nw-inv')+num('nw-home')+num('nw-other');set('nw-out',money(a-num('nw-debt')));}
+    function setW(id,p){var e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,p))+'%';}
+    function calc(){ var a=num('nw-cash')+num('nw-inv')+num('nw-home')+num('nw-other');set('nw-out',money(a-num('nw-debt'))); }
     document.querySelectorAll('.card input').forEach(function(i){i.addEventListener('input',calc);});
     calc();
   </script>

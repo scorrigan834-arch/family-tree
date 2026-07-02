@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Take-home pay — Family Tree</title>
+  <title>Debt payoff — Family Tree</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -15,8 +15,8 @@
   <section class="section band-forest">
     <div class="inner">
       <span class="eyebrow" style="color:var(--sprout);">Tool</span>
-      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Take-home pay</h1>
-      <p class="subhead">A rough estimate of what lands in your account. Real withholding varies by state and situation.</p>
+      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Debt payoff</h1>
+      <p class="subhead">See how long it takes to clear a balance — and how much of what you pay is interest.</p>
       <div class="cta-row">
         <a class="btn-ghost btn-lg" href="tools.html">← All tools</a>
         <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
@@ -26,10 +26,12 @@
   <section class="section band-paper">
     <div class="inner" style="max-width:520px;">
       <div class="card">
-        <label>Gross annual salary ($)<input id="th-gross" type="number" value="60000" /></label>
-        <label>Estimated total tax rate (%)<input id="th-rate" type="number" value="25" /></label>
-        <p class="out">Per year: <strong id="th-year">—</strong></p>
-        <p class="out">Per month: <strong id="th-month">—</strong></p>
+        <label>Balance ($)<input id="dp-bal" type="number" value="5000" /></label>
+        <label>Interest rate (APR %)<input id="dp-apr" type="number" value="19" /></label>
+        <label>Monthly payment ($)<input id="dp-pay" type="number" value="200" /></label>
+        <p class="out"><strong id="dp-out">—</strong></p>
+        <div class="bar"><span class="seg1" id="bar1"></span><span class="seg2" id="bar2"></span><span class="seg3" id="bar3"></span></div>
+        <div class="legend" id="legend"></div>
       </div>
     </div>
   </section>
@@ -38,7 +40,7 @@
     function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
     function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
     function setW(id,p){var e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,p))+'%';}
-    function calc(){ var net=num('th-gross')*(1-num('th-rate')/100);set('th-year',money(net));set('th-month',money(net/12)); }
+    function calc(){ var b=num('dp-bal'),apr=num('dp-apr')/100/12,pay=num('dp-pay');if(b<=0){set('dp-out','Enter a balance to begin.');setW('bar1',0);setW('bar2',0);set('legend','');return;}if(pay<=b*apr){set('dp-out','That payment is too low to ever pay it off — try a higher amount.');setW('bar1',0);setW('bar2',0);set('legend','');return;}var m=0,tot=0,bb=b;while(bb>0&&m<1200){var i=bb*apr;bb=bb+i-pay;tot+=i;m++;}var total=b+tot;set('dp-out','Paid off in '+m+' months ('+Math.floor(m/12)+' yr '+(m%12)+' mo)');var pp=total>0?b/total*100:0;setW('bar1',pp);setW('bar2',100-pp);setW('bar3',0);set('legend','Principal '+money(b)+' · Interest '+money(tot)); }
     document.querySelectorAll('.card input').forEach(function(i){i.addEventListener('input',calc);});
     calc();
   </script>

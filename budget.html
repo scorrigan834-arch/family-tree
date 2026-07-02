@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Take-home pay — Family Tree</title>
+  <title>Budget builder — Family Tree</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -15,8 +15,8 @@
   <section class="section band-forest">
     <div class="inner">
       <span class="eyebrow" style="color:var(--sprout);">Tool</span>
-      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Take-home pay</h1>
-      <p class="subhead">A rough estimate of what lands in your account. Real withholding varies by state and situation.</p>
+      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Budget builder</h1>
+      <p class="subhead">The 50/30/20 rule: half to needs, a third to wants, a fifth to savings. Enter your monthly take-home pay.</p>
       <div class="cta-row">
         <a class="btn-ghost btn-lg" href="tools.html">← All tools</a>
         <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
@@ -26,10 +26,14 @@
   <section class="section band-paper">
     <div class="inner" style="max-width:520px;">
       <div class="card">
-        <label>Gross annual salary ($)<input id="th-gross" type="number" value="60000" /></label>
-        <label>Estimated total tax rate (%)<input id="th-rate" type="number" value="25" /></label>
-        <p class="out">Per year: <strong id="th-year">—</strong></p>
-        <p class="out">Per month: <strong id="th-month">—</strong></p>
+        <label>Monthly take-home pay ($)<input id="bd-income" type="number" value="3000" /></label>
+        <div style="display:grid; gap:8px; font-size:16px; margin-top:4px;">
+          <div>Needs (50%): <strong id="bd-needs" style="color:var(--moss);">—</strong></div>
+          <div>Wants (30%): <strong id="bd-wants" style="color:var(--moss);">—</strong></div>
+          <div>Savings (20%): <strong id="bd-save" style="color:var(--moss);">—</strong></div>
+        </div>
+        <div class="bar"><span class="seg1" id="bar1"></span><span class="seg2" id="bar2"></span><span class="seg3" id="bar3"></span></div>
+        <div class="legend" id="legend"></div>
       </div>
     </div>
   </section>
@@ -38,7 +42,7 @@
     function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
     function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
     function setW(id,p){var e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,p))+'%';}
-    function calc(){ var net=num('th-gross')*(1-num('th-rate')/100);set('th-year',money(net));set('th-month',money(net/12)); }
+    function calc(){ var inc=num('bd-income');set('bd-needs',money(inc*0.5));set('bd-wants',money(inc*0.3));set('bd-save',money(inc*0.2));setW('bar1',50);setW('bar2',30);setW('bar3',20);set('legend','Needs '+money(inc*0.5)+' · Wants '+money(inc*0.3)+' · Savings '+money(inc*0.2)); }
     document.querySelectorAll('.card input').forEach(function(i){i.addEventListener('input',calc);});
     calc();
   </script>

@@ -9,26 +9,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
-  </head>
+</head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
-  <main class="container">
-    <p class="eyebrow">Tool</p>
-    <h1>Mortgage payment</h1>
-    <p class="muted" style="max-width:52ch;">Estimated monthly principal and interest. Taxes and insurance are extra.</p>
-    <div class="card" style="max-width:440px; margin-top:16px;">
-      <label>Loan amount ($)<input id="mo-amt" type="number" value="300000" /></label>
-      <label>Interest rate (APR %)<input id="mo-apr" type="number" value="6.5" /></label>
-      <label>Term (years)<input id="mo-years" type="number" value="30" /></label>
-      <p class="out">Estimated payment: <strong id="mo-out">—</strong></p>
+  <section class="section band-forest">
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">Tool</span>
+      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Mortgage payment</h1>
+      <p class="subhead">Estimate a monthly principal-and-interest payment, and see the lifetime interest. Taxes and insurance are extra.</p>
+      <div class="cta-row">
+        <a class="btn-ghost btn-lg" href="tools.html">← All tools</a>
+        <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
+      </div>
     </div>
-    <p style="margin-top:24px;"><a href="tools.html">← All tools</a> · <a href="index.html">Home</a></p>
-  </main>
+  </section>
+  <section class="section band-paper">
+    <div class="inner" style="max-width:520px;">
+      <div class="card">
+        <label>Loan amount ($)<input id="mo-amt" type="number" value="300000" /></label>
+        <label>Interest rate (APR %)<input id="mo-apr" type="number" value="6.5" /></label>
+        <label>Term (years)<input id="mo-years" type="number" value="30" /></label>
+        <p class="out">Estimated payment: <strong id="mo-out">—</strong></p>
+        <div class="bar"><span class="seg1" id="bar1"></span><span class="seg2" id="bar2"></span><span class="seg3" id="bar3"></span></div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+  </section>
   <script>
     function money(x){return x.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});}
     function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
     function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
-    function calc(){var P=num('mo-amt'),r=num('mo-apr')/100/12,n=num('mo-years')*12;if(P<=0||n<=0){set('mo-out','Enter loan details.');return;}var pay=r?P*r/(1-Math.pow(1+r,-n)):P/n;set('mo-out',money(pay)+' / month');}
+    function setW(id,p){var e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,p))+'%';}
+    function calc(){ var P=num('mo-amt'),r=num('mo-apr')/100/12,n=num('mo-years')*12;if(P<=0||n<=0){set('mo-out','Enter loan details.');setW('bar1',0);setW('bar2',0);set('legend','');return;}var pay=r?P*r/(1-Math.pow(1+r,-n)):P/n;var total=pay*n,interest=Math.max(0,total-P);set('mo-out',money(pay)+' / month');var pp=total>0?P/total*100:0;setW('bar1',pp);setW('bar2',100-pp);setW('bar3',0);set('legend','Over '+num('mo-years')+' years — principal '+money(P)+' · interest '+money(interest)); }
     document.querySelectorAll('.card input').forEach(function(i){i.addEventListener('input',calc);});
     calc();
   </script>

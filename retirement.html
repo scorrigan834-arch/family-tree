@@ -9,28 +9,40 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
-  </head>
+</head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
-  <main class="container">
-    <p class="eyebrow">Tool</p>
-    <h1>Retirement projection</h1>
-    <p class="muted" style="max-width:52ch;">A rough projection of savings growth to your retirement age.</p>
-    <div class="card" style="max-width:440px; margin-top:16px;">
-      <label>Current age<input id="re-age" type="number" value="30" /></label>
-      <label>Retirement age<input id="re-ret" type="number" value="65" /></label>
-      <label>Saved so far ($)<input id="re-now" type="number" value="10000" /></label>
-      <label>Monthly contribution ($)<input id="re-month" type="number" value="400" /></label>
-      <label>Annual return (%)<input id="re-rate" type="number" value="6" /></label>
-      <p class="out">Projected at retirement: <strong id="re-out">—</strong></p>
+  <section class="section band-forest">
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">Tool</span>
+      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Retirement projection</h1>
+      <p class="subhead">A rough projection of how your savings could grow by the time you retire.</p>
+      <div class="cta-row">
+        <a class="btn-ghost btn-lg" href="tools.html">← All tools</a>
+        <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
+      </div>
     </div>
-    <p style="margin-top:24px;"><a href="tools.html">← All tools</a> · <a href="index.html">Home</a></p>
-  </main>
+  </section>
+  <section class="section band-paper">
+    <div class="inner" style="max-width:520px;">
+      <div class="card">
+        <label>Current age<input id="re-age" type="number" value="30" /></label>
+        <label>Retirement age<input id="re-ret" type="number" value="65" /></label>
+        <label>Saved so far ($)<input id="re-now" type="number" value="10000" /></label>
+        <label>Monthly contribution ($)<input id="re-month" type="number" value="400" /></label>
+        <label>Annual return (%)<input id="re-rate" type="number" value="6" /></label>
+        <p class="out">Projected at retirement: <strong id="re-out">—</strong></p>
+        <div class="bar"><span class="seg1" id="bar1"></span><span class="seg2" id="bar2"></span><span class="seg3" id="bar3"></span></div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+  </section>
   <script>
     function money(x){return x.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});}
     function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
     function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
-    function calc(){var yrs=num('re-ret')-num('re-age');if(yrs<=0){set('re-out','Retirement age must be later.');return;}var n=yrs*12,r=num('re-rate')/100/12,now=num('re-now'),m=num('re-month');var fv=r?now*Math.pow(1+r,n)+m*((Math.pow(1+r,n)-1)/r):now+m*n;set('re-out',money(fv));}
+    function setW(id,p){var e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,p))+'%';}
+    function calc(){ var yrs=num('re-ret')-num('re-age');if(yrs<=0){set('re-out','Retirement age must be later.');setW('bar1',0);setW('bar2',0);set('legend','');return;}var n=yrs*12,r=num('re-rate')/100/12,now=num('re-now'),m=num('re-month');var fv=r?now*Math.pow(1+r,n)+m*((Math.pow(1+r,n)-1)/r):now+m*n;var c=now+m*n,g=Math.max(0,fv-c);set('re-out',money(fv));var cp=fv>0?c/fv*100:0;setW('bar1',cp);setW('bar2',100-cp);setW('bar3',0);set('legend','Contributed '+money(c)+' · Growth '+money(g)); }
     document.querySelectorAll('.card input').forEach(function(i){i.addEventListener('input',calc);});
     calc();
   </script>

@@ -3,32 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inflation & buying power — Family Tree</title>
+  <title>Inflation &amp; buying power — Family Tree</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
-  </head>
+</head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
-  <main class="container">
-    <p class="eyebrow">Tool</p>
-    <h1>Inflation & buying power</h1>
-    <p class="muted" style="max-width:52ch;">What something costs you today will likely cost in the future.</p>
-    <div class="card" style="max-width:440px; margin-top:16px;">
-      <label>Amount today ($)<input id="in-amt" type="number" value="1000" /></label>
-      <label>Yearly inflation (%)<input id="in-rate" type="number" value="3" /></label>
-      <label>Years from now<input id="in-years" type="number" value="20" /></label>
-      <p class="out">Likely future cost: <strong id="in-out">—</strong></p>
+  <section class="section band-forest">
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">Tool</span>
+      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Inflation &amp; buying power</h1>
+      <p class="subhead">What something costs you today will likely cost in the future.</p>
+      <div class="cta-row">
+        <a class="btn-ghost btn-lg" href="tools.html">← All tools</a>
+        <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
+      </div>
     </div>
-    <p style="margin-top:24px;"><a href="tools.html">← All tools</a> · <a href="index.html">Home</a></p>
-  </main>
+  </section>
+  <section class="section band-paper">
+    <div class="inner" style="max-width:520px;">
+      <div class="card">
+        <label>Amount today ($)<input id="in-amt" type="number" value="1000" /></label>
+        <label>Yearly inflation (%)<input id="in-rate" type="number" value="3" /></label>
+        <label>Years from now<input id="in-years" type="number" value="20" /></label>
+        <p class="out">Likely future cost: <strong id="in-out">—</strong></p>
+      </div>
+    </div>
+  </section>
   <script>
     function money(x){return x.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});}
     function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
     function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
-    function calc(){set('in-out',money(num('in-amt')*Math.pow(1+num('in-rate')/100,num('in-years'))));}
+    function setW(id,p){var e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,p))+'%';}
+    function calc(){ set('in-out',money(num('in-amt')*Math.pow(1+num('in-rate')/100,num('in-years')))); }
     document.querySelectorAll('.card input').forEach(function(i){i.addEventListener('input',calc);});
     calc();
   </script>

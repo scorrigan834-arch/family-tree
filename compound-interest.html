@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Take-home pay — Family Tree</title>
+  <title>Compound interest — Family Tree</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -15,8 +15,8 @@
   <section class="section band-forest">
     <div class="inner">
       <span class="eyebrow" style="color:var(--sprout);">Tool</span>
-      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Take-home pay</h1>
-      <p class="subhead">A rough estimate of what lands in your account. Real withholding varies by state and situation.</p>
+      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Compound interest</h1>
+      <p class="subhead">See how steady saving grows over time — and how much of the total is growth, not what you put in.</p>
       <div class="cta-row">
         <a class="btn-ghost btn-lg" href="tools.html">← All tools</a>
         <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
@@ -26,10 +26,13 @@
   <section class="section band-paper">
     <div class="inner" style="max-width:520px;">
       <div class="card">
-        <label>Gross annual salary ($)<input id="th-gross" type="number" value="60000" /></label>
-        <label>Estimated total tax rate (%)<input id="th-rate" type="number" value="25" /></label>
-        <p class="out">Per year: <strong id="th-year">—</strong></p>
-        <p class="out">Per month: <strong id="th-month">—</strong></p>
+        <label>Starting amount ($)<input id="ci-p" type="number" value="1000" /></label>
+        <label>Monthly contribution ($)<input id="ci-m" type="number" value="100" /></label>
+        <label>Annual return (%)<input id="ci-r" type="number" value="7" /></label>
+        <label>Years<input id="ci-y" type="number" value="10" /></label>
+        <p class="out">Future value: <strong id="ci-out">—</strong></p>
+        <div class="bar"><span class="seg1" id="bar1"></span><span class="seg2" id="bar2"></span><span class="seg3" id="bar3"></span></div>
+        <div class="legend" id="legend"></div>
       </div>
     </div>
   </section>
@@ -38,7 +41,7 @@
     function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
     function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
     function setW(id,p){var e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,p))+'%';}
-    function calc(){ var net=num('th-gross')*(1-num('th-rate')/100);set('th-year',money(net));set('th-month',money(net/12)); }
+    function calc(){ var P=num('ci-p'),M=num('ci-m'),r=num('ci-r')/100/12,n=num('ci-y')*12;var fv=r?P*Math.pow(1+r,n)+M*((Math.pow(1+r,n)-1)/r):P+M*n;var c=P+M*n,g=Math.max(0,fv-c);set('ci-out',money(fv));var cp=fv>0?c/fv*100:0;setW('bar1',cp);setW('bar2',100-cp);setW('bar3',0);set('legend','Contributed '+money(c)+' · Growth '+money(g)); }
     document.querySelectorAll('.card input').forEach(function(i){i.addEventListener('input',calc);});
     calc();
   </script>

@@ -9,30 +9,40 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
-  </head>
+</head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
-  <main class="container">
-    <p class="eyebrow">Tool</p>
-    <h1>Rent vs. buy</h1>
-    <p class="muted" style="max-width:52ch;">A rough monthly comparison. It does not count equity you build or a home changing in value.</p>
-    <div class="card" style="max-width:440px; margin-top:16px;">
-      <label>Monthly rent ($)<input id="rb-rent" type="number" value="1800" /></label>
-      <label>Home price ($)<input id="rb-price" type="number" value="300000" /></label>
-      <label>Down payment ($)<input id="rb-down" type="number" value="60000" /></label>
-      <label>Mortgage rate (APR %)<input id="rb-apr" type="number" value="6.5" /></label>
-      <label>Term (years)<input id="rb-years" type="number" value="30" /></label>
-      <label>Monthly taxes, insurance, upkeep ($)<input id="rb-extra" type="number" value="600" /></label>
-      <p class="out">Owning, per month: <strong id="rb-buy">—</strong></p>
-      <p class="out"><strong id="rb-note">—</strong></p>
+  <section class="section band-forest">
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">Tool</span>
+      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Rent vs. buy</h1>
+      <p class="subhead">A rough monthly comparison. It does not count equity you build or a home changing in value.</p>
+      <div class="cta-row">
+        <a class="btn-ghost btn-lg" href="tools.html">← All tools</a>
+        <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
+      </div>
     </div>
-    <p style="margin-top:24px;"><a href="tools.html">← All tools</a> · <a href="index.html">Home</a></p>
-  </main>
+  </section>
+  <section class="section band-paper">
+    <div class="inner" style="max-width:520px;">
+      <div class="card">
+        <label>Monthly rent ($)<input id="rb-rent" type="number" value="1800" /></label>
+        <label>Home price ($)<input id="rb-price" type="number" value="300000" /></label>
+        <label>Down payment ($)<input id="rb-down" type="number" value="60000" /></label>
+        <label>Mortgage rate (APR %)<input id="rb-apr" type="number" value="6.5" /></label>
+        <label>Term (years)<input id="rb-years" type="number" value="30" /></label>
+        <label>Monthly taxes, insurance, upkeep ($)<input id="rb-extra" type="number" value="600" /></label>
+        <p class="out">Owning, per month: <strong id="rb-buy">—</strong></p>
+        <p class="out"><strong id="rb-note">—</strong></p>
+      </div>
+    </div>
+  </section>
   <script>
     function money(x){return x.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});}
     function num(id){var e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
     function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
-    function calc(){var P=num('rb-price')-num('rb-down'),r=num('rb-apr')/100/12,n=num('rb-years')*12;var pay=r?P*r/(1-Math.pow(1+r,-n)):(n?P/n:0);var buy=pay+num('rb-extra');set('rb-buy',money(buy)+' / month');var d=buy-num('rb-rent');set('rb-note',d>0?'Buying costs '+money(d)+' more per month than renting.':'Buying costs '+money(-d)+' less per month than renting.');}
+    function setW(id,p){var e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,p))+'%';}
+    function calc(){ var P=num('rb-price')-num('rb-down'),r=num('rb-apr')/100/12,n=num('rb-years')*12;var pay=r?P*r/(1-Math.pow(1+r,-n)):(n?P/n:0);var buy=pay+num('rb-extra');set('rb-buy',money(buy)+' / month');var d=buy-num('rb-rent');set('rb-note',d>0?'Buying costs '+money(d)+' more per month than renting.':'Buying costs '+money(-d)+' less per month than renting.'); }
     document.querySelectorAll('.card input').forEach(function(i){i.addEventListener('input',calc);});
     calc();
   </script>
