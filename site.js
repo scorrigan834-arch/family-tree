@@ -92,7 +92,8 @@
     {u:'guide-lease.html', t:'Lease or buy a car?', c:'Guide', k:'car lease buy vehicle payment'},
     {u:'guide-emergency.html', t:'How to build an emergency fund', c:'Guide', k:'emergency fund savings cushion 3 6 months'},
     {u:'guide-checkup.html', t:'Am I on track for my age?', c:'Guide', k:'on track benchmark net worth savings age retirement'},
-    {u:'guide-mental-health.html', t:'Money and mental health', c:'Guide', k:'mental health money stress anxiety wellbeing'}
+    {u:'guide-mental-health.html', t:'Money and mental health', c:'Guide', k:'mental health money stress anxiety wellbeing'},
+    {u:'advisors.html', t:'For advisors & families', c:'Page', k:'advisors wealth management firms families clients heirs next generation offering'}
   ];
 
   function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
@@ -158,6 +159,7 @@
       '<a href="taking-root.html">Taking Root</a>' +
       '<a href="canopy.html">The Canopy</a>' +
       '<div class="ft-menu-label">Explore</div>' +
+      '<a href="advisors.html" style="color:var(--clay);font-weight:600;">For advisors &amp; families</a>' +
       '<a href="profile.html">Build your profile</a>' +
       '<a href="tools.html">Tools</a>' +
       '<a href="guides.html">Guides</a>' +

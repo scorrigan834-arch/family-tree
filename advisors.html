@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For advisors &amp; families — Family Tree</title>
+  <meta name="description" content="Family Tree is the financial education a family grows with — built to the standard a wealth-management firm can give its best clients, and clear enough for any parent to give their child." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="site.js" defer></script>
+  <style>
+    .aud-card{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px 24px; }
+    .aud-card h3{ font-family:var(--serif); color:var(--forest); font-size:19px; margin:0 0 12px; }
+    .aud-card ul{ margin:0; padding-left:0; list-style:none; }
+    .aud-card li{ position:relative; padding-left:24px; margin-bottom:12px; font-size:15px; line-height:1.5; color:var(--ink); }
+    .aud-card li::before{ content:""; position:absolute; left:0; top:8px; width:9px; height:9px; border-radius:50%; background:var(--sprout); }
+    .aud-card li strong{ color:var(--forest); }
+    .two{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:24px; }
+    @media (max-width:720px){ .two{ grid-template-columns:1fr; } }
+    .statgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:26px; }
+    @media (max-width:720px){ .statgrid{ grid-template-columns:1fr 1fr; } }
+    .stat{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:18px 20px; }
+    .stat .n{ font-family:var(--serif); font-size:30px; color:var(--sprout); line-height:1; }
+    .stat .l{ color:#DCE6D8; font-size:14px; margin-top:8px; line-height:1.4; }
+    .pull{ border-left:3px solid var(--clay); padding:6px 0 6px 20px; margin:22px 0; font-family:var(--serif); font-style:italic; font-size:20px; color:var(--forest); line-height:1.4; }
+    .refs{ font-size:12px; color:var(--stone); margin-top:18px; }
+    .refs a{ color:var(--stone); }
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+
+  <!-- HERO -->
+  <section class="section band-forest">
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">For advisors &amp; families</span>
+      <h1 class="display" style="font-size:clamp(32px,6vw,54px);">Prepare the heir, not just the estate.</h1>
+      <p class="subhead">Family Tree is the financial education a family grows with — from a five-year-old's first saved dollar to a thirty-year-old's first estate plan. Built to the standard a wealth-management firm can put in front of its best clients, and clear enough for any parent to give their child.</p>
+      <div class="cta-row">
+        <a class="btn btn-lg" href="profile.html">Build your profile</a>
+        <a class="btn-ghost btn-lg" href="guides.html">Explore the guides</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section class="section band-paper">
+    <div class="inner" style="max-width:760px;">
+      <span class="eyebrow">The gap</span>
+      <h2 class="sec-title">The most expensive gap in wealth planning.</h2>
+      <div class="prose">
+        <p>We are living through the largest transfer of wealth in history. An estimated <strong>$124 trillion</strong> will change hands through 2048, with more than <strong>$100 trillion</strong> flowing to heirs. Yet the financial industry has spent decades perfecting how to prepare <em>estates</em> — and almost no time preparing the <em>people</em> who inherit them.</p>
+        <p>The results are stark. Most heirs leave their family's advisor after inheriting: research finds only about <strong>one in four</strong> plan to keep that advisor, and just <strong>one in five</strong> among those who already have. And the wealth itself often doesn't survive — commonly cited estimates put the loss at roughly <strong>70% by the second generation</strong> and <strong>90% by the third</strong>.</p>
+        <p>The cause usually isn't bad investing. It's that heirs were never prepared — never brought into the conversation, never taught to steward what they would receive, and often without any relationship to the advisor at all.</p>
+      </div>
+      <p class="pull">The industry learned to prepare assets for heirs. It never learned to prepare heirs for assets.</p>
+      <div class="prose"><p>That is the gap Family Tree is built to close: the education layer that prepares people, not just portfolios — decades before the transfer, not after.</p></div>
+      <p class="refs">Figures: Cerulli Associates (2024–2025) and BlackRock advisor insights. Wealth-erosion estimates reflect widely cited multigenerational studies. Sources: <a href="https://www.blackrock.com/us/financial-professionals/insights/high-net-worth-family-meetings-with-financial-advisors" target="_blank" rel="noopener">BlackRock</a>, <a href="https://www.cnbc.com/2025/10/16/heirs-parents-wealth-advisor-cerulli-study.html" target="_blank" rel="noopener">CNBC / Cerulli</a>.</p>
+    </div>
+  </section>
+
+  <!-- FOR ADVISORS -->
+  <section class="section band-sand">
+    <div class="inner">
+      <span class="eyebrow">For advisors &amp; wealth-management firms</span>
+      <h2 class="sec-title">Engage the next generation before you inherit the problem.</h2>
+      <p class="subhead" style="max-width:720px;">The strongest predictor of keeping assets through a wealth transfer is a genuine relationship with the whole family, built early. Family Tree gives you a credible, white-glove way to build that relationship — and to be seen doing the thing most firms only talk about: preparing the heirs.</p>
+      <div class="two">
+        <div class="aud-card">
+          <h3>What it does for your practice</h3>
+          <ul>
+            <li><strong>Next-generation retention.</strong> Give client families a resource their children actually use, so your relationship with the heirs begins years before the transfer — not in the estate-settlement meeting.</li>
+            <li><strong>A differentiator beyond performance.</strong> Financial education for a client's children is a tangible, memorable demonstration that you care for the whole family, not just the portfolio.</li>
+            <li><strong>An on-ramp to the hard conversations.</strong> Legacy and values discussions are emotional and tough to start. A shared, neutral resource gives families a natural way in.</li>
+            <li><strong>The complement to your estate work.</strong> You prepare the estate and the plan; Family Tree helps prepare the people who will live with it — the missing half of a complete plan.</li>
+            <li><strong>It scales across every client.</strong> One resource that meets a five-year-old and a fifty-year-old exactly where they are, personalized to each.</li>
+          </ul>
+        </div>
+        <div class="aud-card">
+          <h3>What it does for their heirs</h3>
+          <ul>
+            <li><strong>They inherit judgment, not just assets.</strong> Age-appropriate financial capability so the next generation can hold what it receives.</li>
+            <li><strong>They arrive fluent.</strong> Heirs who already understand accounts, investing, and estate basics come to the table as partners in the relationship, not strangers to it.</li>
+            <li><strong>They learn the "why."</strong> The values and purpose behind the wealth — which research shows are what actually preserve it across generations.</li>
+            <li><strong>You become the family's advisor.</strong> Across generations, not just the current client's lifetime.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prose" style="margin-top:22px;"><p>Firms interested in offering Family Tree to their client families — including future co-branded and partnership options — can reach out through our <a href="about.html">About page</a>.</p></div>
+    </div>
+  </section>
+
+  <!-- FOR CLIENTS / WEALTH FAMILIES -->
+  <section class="section band-paper">
+    <div class="inner">
+      <span class="eyebrow">For your clients — families building or passing on wealth</span>
+      <h2 class="sec-title">Raise a capable steward, not an entitled inheritor.</h2>
+      <p class="subhead" style="max-width:720px;">The old proverb — shirtsleeves to shirtsleeves in three generations — isn't about bad luck. It's about heirs handed wealth without the preparation to hold it. Family Tree is designed to close that gap inside your own family, one age-appropriate step at a time.</p>
+      <div class="two">
+        <div class="aud-card">
+          <h3>What's in it for you</h3>
+          <ul>
+            <li><strong>A path from age 5 to 50.</strong> The money conversation becomes a decade-by-decade upbringing — not one overwhelming talk at twenty-five.</li>
+            <li><strong>The wealth-specific threads, woven in.</strong> Stewardship over entitlement, generosity and philanthropy, the basics of trusts and estates, and learning to work with advisors as a partner.</li>
+            <li><strong>A neutral place for hard conversations.</strong> A trusted, shared starting point for talking about money, values, and what you hope to pass on — beyond the balance sheet.</li>
+            <li><strong>A complement to your advisor and attorney.</strong> The education layer beneath the plan they build — never a replacement for it.</li>
+          </ul>
+        </div>
+        <div class="aud-card">
+          <h3>What's in it for your children</h3>
+          <ul>
+            <li><strong>They grow up financially fluent</strong> — able to understand, question, and steward what they'll one day be responsible for.</li>
+            <li><strong>They learn the purpose behind the wealth</strong> — the values that research shows are what actually preserve it across generations.</li>
+            <li><strong>They reach adulthood ready to participate</strong> in the family's financial life as partners, not passengers.</li>
+            <li><strong>They avoid the entitlement trap</strong> — because they learned early that money is earned, stewarded, and used with intention.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR EVERY PARENT -->
+  <section class="section band-sand">
+    <div class="inner">
+      <span class="eyebrow">For every parent</span>
+      <h2 class="sec-title">Give your child the financial upbringing, not just an allowance.</h2>
+      <p class="subhead" style="max-width:720px;">You don't need wealth to want your child prepared for money. The financial upbringing that families of means work hard to give their heirs is exactly what every child benefits from — and Family Tree makes it available to any parent, free to start.</p>
+      <div class="two">
+        <div class="aud-card">
+          <h3>What's in it for you</h3>
+          <ul>
+            <li><strong>Know what to teach, and when.</strong> A clear, age-by-age path so you're never guessing what your child is ready for.</li>
+            <li><strong>Practical and parent-friendly.</strong> Conversation starters, simple activities, and tools you can use tonight — no finance background required.</li>
+            <li><strong>Content that grows with your child</strong> — from their first saved dollar to their first paycheck, budget, and beyond.</li>
+          </ul>
+        </div>
+        <div class="aud-card">
+          <h3>What's in it for your child</h3>
+          <ul>
+            <li><strong>Lifelong financial confidence</strong> — habits and understanding that compound for decades.</li>
+            <li><strong>The same foundations the most prepared families give their kids</strong>, in plain language.</li>
+            <li><strong>A head start on every money decision</strong> they'll face — because you gave them the upbringing, not just the answer.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INSIDE -->
+  <section class="section band-forest">
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">What's inside</span>
+      <h2 class="display" style="font-size:clamp(26px,4.5vw,40px); color:#fff;">A complete financial education — not a pamphlet.</h2>
+      <div class="statgrid">
+        <div class="stat"><div class="n">5</div><div class="l">Life stages, ages 5–50: First Roots, Growing, Branching Out, Taking Root, The Canopy.</div></div>
+        <div class="stat"><div class="n">16</div><div class="l">Lessons, each deepened and written for families and advisors alike.</div></div>
+        <div class="stat"><div class="n">13</div><div class="l">Interactive calculators — compound interest, retirement, mortgage, debt, and more.</div></div>
+        <div class="stat"><div class="n">33</div><div class="l">In-depth guides across banking, credit, taxes, investing, insurance, career, housing, estate &amp; family.</div></div>
+        <div class="stat"><div class="n">1</div><div class="l">Personalized path — build a profile and your recommendations and progress follow you.</div></div>
+        <div class="stat"><div class="n">✓</div><div class="l">Search everything from any page, and pick up where you left off.</div></div>
+      </div>
+      <div class="cta-row" style="margin-top:28px;">
+        <a class="btn btn-lg" href="guides.html">Explore the guides</a>
+        <a class="btn-ghost btn-lg" href="start-here.html">See the stages</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="section band-paper">
+    <div class="inner" style="max-width:760px;">
+      <span class="eyebrow">Built to be trusted</span>
+      <h2 class="sec-title">Principles that make it safe to share.</h2>
+      <div class="two">
+        <div class="aud-card">
+          <h3>Education, not advice</h3>
+          <ul>
+            <li>Clear, accurate financial education — not personalized advice, and not product sales.</li>
+            <li>Every guide is reviewed and grounded in guidance from the <strong>CFPB, IRS, and SEC</strong>.</li>
+          </ul>
+        </div>
+        <div class="aud-card">
+          <h3>Independent &amp; private</h3>
+          <ul>
+            <li><strong>No products to push, no commissions</strong> — just the education itself.</li>
+            <li>Your family's information stays yours. <strong>No ads, ever.</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section band-sprout">
+    <div class="inner" style="text-align:center;">
+      <h2 class="display" style="font-size:clamp(28px,5vw,44px); color:var(--forest);">Start your family's tree.</h2>
+      <p class="subhead" style="color:var(--forest); max-width:640px; margin-left:auto; margin-right:auto;">Whether you're an advisor preparing a client's family, a parent of means preparing an heir, or a parent preparing a kid — the first step is the same.</p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="btn btn-lg" href="profile.html">Build your profile</a>
+        <a class="btn-ghost btn-lg" href="guides.html">Browse the guides</a>
+        <a class="btn-ghost btn-lg" href="about.html">About</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
