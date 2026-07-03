@@ -167,3 +167,14 @@ select{ display:block; width:100%; margin-top:5px; font-family:var(--sans); font
 .nav a::after{
   content:none !important;
 }
+/* ---- Header bar: undo progress-bar .bar bleed ---- */
+.topbar .bar{
+  background:transparent !important;
+  border-radius:0 !important;
+  height:auto !important;
+  overflow:visible !important;
+  margin-top:0 !important;
+  box-shadow:none !important;
+  padding:15px 24px !important;
+  justify-content:flex-start !important;
+}
