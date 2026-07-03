@@ -1405,3 +1405,34 @@
   var s = document.createElement('style'); s.id = 'ft-premium-css'; s.textContent = css;
   (document.head || document.documentElement).appendChild(s);
 })();
+/* ---- Slick UI: pill buttons + persistent header CTA (goodshire-inspired) ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  if (!document.getElementById('ft-slick-css')) {
+    var css = [
+      '.btn,.btn-lg,.btn-ghost{border-radius:999px!important;font-weight:600;letter-spacing:.01em;}',
+      '.btn,.btn-lg{box-shadow:0 6px 18px rgba(15,42,34,.18);transition:transform .16s cubic-bezier(.34,1.4,.5,1),box-shadow .2s ease,filter .2s ease;}',
+      '.btn:hover,.btn-lg:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 28px rgba(15,42,34,.26);filter:brightness(1.05);}',
+      '.btn:active,.btn-lg:active{transform:translateY(0) scale(.99);}',
+      '.btn-lg{padding:16px 32px!important;font-size:16px;}',
+      '.btn-ghost{border-width:1.5px;transition:transform .16s ease,background .2s ease,border-color .2s ease;}',
+      '.btn-ghost:hover{transform:translateY(-2px);background:rgba(255,255,255,.12);}',
+      '.ft-hcta{margin-left:auto;display:inline-flex;align-items:center;gap:6px;background:var(--sprout);color:#12352b!important;font-family:var(--sans);font-weight:700;font-size:14px;padding:9px 18px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(143,183,91,.4);transition:transform .15s ease,box-shadow .2s ease,filter .2s ease;white-space:nowrap;}',
+      '.ft-hcta:hover{transform:translateY(-1px) scale(1.03);box-shadow:0 8px 20px rgba(143,183,91,.55);filter:brightness(1.04);color:#12352b!important;}',
+      '@media(max-width:520px){.ft-hcta{font-size:13px;padding:8px 14px;}}'
+    ].join('\n');
+    var s = document.createElement('style'); s.id = 'ft-slick-css'; s.textContent = css;
+    (document.head || document.documentElement).appendChild(s);
+  }
+  ready(function () {
+    var f = fname();
+    if (f === 'profile.html') return;
+    if (document.querySelector('.ft-hcta')) return;
+    var bar = document.querySelector('.topbar .bar') || document.querySelector('.topbar');
+    if (!bar) return;
+    var a = document.createElement('a');
+    a.className = 'ft-hcta'; a.href = 'profile.html'; a.textContent = 'Build your profile';
+    bar.appendChild(a);
+  });
+})();
