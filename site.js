@@ -65,3 +65,17 @@ EOF
   var s = document.createElement('style'); s.id = 'ft-prose-css'; s.textContent = css;
   (document.head || document.documentElement).appendChild(s);
 })();
+
+/* ---- Paint stabilizer + smooth scroll ---- */
+(function () {
+  if (document.getElementById('ft-perf-css')) return;
+  var css = [
+    'html{scroll-behavior:smooth;}',
+    '@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}',
+    'img{max-width:100%;height:auto;}',
+    'body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}',
+    '.section{scroll-margin-top:70px;}'
+  ].join('\n');
+  var s = document.createElement('style'); s.id = 'ft-perf-css'; s.textContent = css;
+  (document.head || document.documentElement).appendChild(s);
+})();
