@@ -131,3 +131,20 @@ select{ display:block; width:100%; margin-top:5px; font-family:var(--sans); font
 .seg1{ background:var(--moss); } .seg2{ background:var(--sprout); } .seg3{ background:var(--clay); }
 .legend{ font-size:13px; color:var(--stone); margin-top:9px; } .legend b{ color:var(--forest); }
 .calcbig{ font-family:var(--serif); font-size:15px; }
+
+/* ---- Header logo/title spacing fix ---- */
+.topbar .brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.topbar .brand svg{
+  flex:0 0 auto;
+}
+.topbar .wm{
+  display:inline-block;
+  line-height:1;
+  white-space:nowrap;
+}
