@@ -1436,3 +1436,42 @@
     bar.appendChild(a);
   });
 })();
+/* ---- Brand A (Heritage Oak): forest + brass gold + ivory; and mobile bottom CTA ---- */
+(function () {
+  function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
+  function fname(){ return (location.pathname.split('/').pop() || 'index.html'); }
+  if (!document.getElementById('ft-brandA-css')) {
+    var css = [
+      'body{background:#F6F1E6!important;}',
+      '.band-paper{background:linear-gradient(180deg,#FBF7EC,#F3ECDB)!important;}',
+      '.band-sand{background:linear-gradient(180deg,#F0E8D5,#E6DDC4)!important;}',
+      '.eyebrow{color:#B8923F!important;}',
+      '.band-forest .eyebrow{color:#C6A15B!important;}',
+      '.ages{color:#B8923F!important;}',
+      '.sec-title::after{background:linear-gradient(90deg,#C6A15B,#8A4B32)!important;}',
+      '.statnum,.step .num{color:#C6A15B!important;}',
+      '.stage-card .arrow{color:#C6A15B!important;}',
+      '.chip{border-color:rgba(198,161,91,.5)!important;color:#E8E1D0!important;}',
+      '.ft-hcta{background:#C6A15B!important;color:#17281f!important;box-shadow:0 4px 14px rgba(198,161,91,.45)!important;}',
+      '.hero-bg .g2{background:radial-gradient(circle,rgba(198,161,91,.42),transparent 70%)!important;}',
+      '#ft-bottombar{display:none;}',
+      '@media(max-width:640px){',
+      '.ft-hcta{display:none!important;}',
+      'body{padding-bottom:76px;}',
+      '#ft-sprout{bottom:82px!important;}',
+      '#ft-bottombar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:9997;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(15,42,34,.96);box-shadow:0 -4px 20px rgba(0,0,0,.22);}',
+      '#ft-bottombar a{display:block;text-align:center;background:#C6A15B;color:#17281f;font-family:var(--sans);font-weight:700;padding:14px;border-radius:999px;text-decoration:none;font-size:16px;}',
+      '}'
+    ].join('\n');
+    var s = document.createElement('style'); s.id = 'ft-brandA-css'; s.textContent = css;
+    (document.head || document.documentElement).appendChild(s);
+  }
+  ready(function () {
+    var f = fname();
+    if (f === 'profile.html') return;
+    if (document.getElementById('ft-bottombar')) return;
+    var b = document.createElement('div'); b.id = 'ft-bottombar';
+    b.innerHTML = '<a href="profile.html">Build your profile \u2192</a>';
+    document.body.appendChild(b);
+  });
+})();
