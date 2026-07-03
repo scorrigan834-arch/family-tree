@@ -3,24 +3,31 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Watch your money grow — Family Tree</title>
+<title>Watch Your Money Grow &mdash; Family Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <script src="site.js" defer></script>
 <style>
-  .game{max-width:520px;margin:0 auto;}
-  .ctrl{margin-bottom:18px;}
-  .ctrl label{display:flex;justify-content:space-between;font-weight:600;color:var(--forest);margin-bottom:6px;}
-  .ctrl input[type=range]{width:100%;accent-color:var(--moss);}
-  .result{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center;box-shadow:0 10px 30px rgba(15,42,34,.08);}
-  .big{font-family:var(--serif);font-size:44px;color:var(--moss);line-height:1;}
-  .bar{height:26px;border-radius:99px;overflow:hidden;display:flex;margin-top:16px;background:var(--sand);}
-  .bar .in{background:var(--dim);}
-  .bar .gain{background:var(--sprout);}
-  .key{display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:13px;color:var(--stone);}
-  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:5px;}
+  .stage{max-width:540px;margin:0 auto;}
+  .bignum{text-align:center;font-family:var(--serif);font-size:clamp(40px,10vw,60px);color:var(--forest);line-height:1;}
+  .subnum{text-align:center;color:var(--stone);font-size:15px;margin-top:6px;}
+  .subnum b{color:#c98a2e;}
+  .chart{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 16px 14px;margin-top:22px;box-shadow:0 14px 34px rgba(15,42,34,.08);}
+  .bars{display:flex;align-items:flex-end;gap:5px;height:200px;}
+  .barcol{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;}
+  .bar{width:100%;max-width:30px;border-radius:6px 6px 0 0;overflow:hidden;display:flex;flex-direction:column;transition:height .8s cubic-bezier(.2,.8,.2,1);box-shadow:0 2px 5px rgba(15,42,34,.12);}
+  .seg-int{background:linear-gradient(180deg,#F2B75A,#E8A24A);}
+  .seg-con{background:linear-gradient(180deg,#3B7358,var(--moss));}
+  .yr{font-size:10px;color:var(--stone);margin-top:6px;}
+  .legend{display:flex;gap:18px;justify-content:center;margin-top:14px;font-size:13px;color:var(--stone);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:12px;height:12px;border-radius:3px;}
+  .ctrl{margin-top:24px;text-align:center;}
+  .ctrl .val{font-family:var(--serif);font-size:24px;color:var(--moss);}
+  input[type=range]{width:100%;max-width:360px;margin-top:10px;accent-color:var(--moss);height:28px;}
+  .note{background:var(--sand);border-radius:14px;padding:16px 18px;margin-top:22px;font-size:14.5px;color:var(--ink);line-height:1.5;}
 </style>
 </head>
 <body>
@@ -28,48 +35,60 @@
 <section class="section band-forest">
   <div class="inner">
     <span class="eyebrow" style="color:var(--sprout);">Play &middot; Growing</span>
-    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Watch your money grow</h1>
-    <p class="subhead">When you save money and leave it alone, it earns a little extra called interest \u2014 and then that extra earns more. Move the sliders and see!</p>
+    <h1 class="display" style="font-size:clamp(30px,6vw,46px);">Watch your money grow</h1>
+    <p class="subhead">When you save money, it earns a little extra called <b>interest</b> &mdash; and then that extra earns more. Slide to see 10 years add up!</p>
   </div>
 </section>
 <section class="section band-paper">
   <div class="inner">
-    <div class="game">
-      <div class="ctrl">
-        <label>Save each week <span id="w-lbl">$5</span></label>
-        <input type="range" id="w" min="1" max="20" value="5" />
+    <div class="stage">
+      <div class="bignum" id="total">$0</div>
+      <div class="subnum">In 10 years &mdash; and <b id="interest">$0</b> of that is free interest!</div>
+      <div class="chart">
+        <div class="bars" id="bars"></div>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--moss)"></span> Money you saved</span>
+          <span><span class="dot" style="background:#E8A24A"></span> Interest earned</span>
+        </div>
       </div>
       <div class="ctrl">
-        <label>For this many years <span id="y-lbl">5</span></label>
-        <input type="range" id="y" min="1" max="10" value="5" />
+        <div>You save <span class="val" id="permo">$10</span> each month</div>
+        <input type="range" id="slider" min="5" max="50" step="5" value="10" />
       </div>
-      <div class="result">
-        <div class="muted" style="font-size:14px;">After that time you could have</div>
-        <div class="big" id="total">$0</div>
-        <div class="bar"><div class="in" id="bar-in"></div><div class="gain" id="bar-gain"></div></div>
-        <div class="key"><span><span class="dot" style="background:var(--dim)"></span><span id="k-in">money you saved</span></span><span><span class="dot" style="background:var(--sprout)"></span><span id="k-gain">extra it earned</span></span></div>
-      </div>
+      <div class="note" id="note"></div>
     </div>
-    <p style="text-align:center;margin-top:26px;"><a href="growing-banks.html">Read the lesson</a> &middot; <a href="compound-interest.html">Try the full calculator</a></p>
+    <p style="text-align:center;margin-top:28px;"><a href="growing-goal.html">Read the lesson</a> &middot; <a href="games.html">All games</a></p>
   </div>
 </section>
 <script>
 (function(){
-  var W=document.getElementById("w"), Y=document.getElementById("y");
-  function money(n){ return "$"+Math.round(n).toLocaleString(); }
-  function calc(){
-    var w=+W.value, years=+Y.value, rate=0.05/52, weeks=years*52, bal=0;
-    for(var i=0;i<weeks;i++){ bal=bal*(1+rate)+w; }
-    var put=w*weeks, gain=Math.max(0,bal-put);
-    document.getElementById("w-lbl").textContent="$"+w;
-    document.getElementById("y-lbl").textContent=years;
-    document.getElementById("total").textContent=money(bal);
-    document.getElementById("bar-in").style.width=(put/bal*100)+"%";
-    document.getElementById("bar-gain").style.width=(gain/bal*100)+"%";
-    document.getElementById("k-in").textContent="you saved "+money(put);
-    document.getElementById("k-gain").textContent="it earned "+money(gain);
+  var YEARS=10, RATE=0.06;
+  var barsEl=document.getElementById('bars'), totalEl=document.getElementById('total'),
+      intEl=document.getElementById('interest'), permoEl=document.getElementById('permo'),
+      slider=document.getElementById('slider'), noteEl=document.getElementById('note');
+  function money(n){ return '$'+Math.round(n).toLocaleString(); }
+  function compute(pmt){
+    var r=RATE/12, bal=0, byYear=[], conByYear=[];
+    for(var m=1;m<=YEARS*12;m++){ bal=(bal+pmt)*(1+r); if(m%12===0){ byYear.push(bal); conByYear.push(pmt*m); } }
+    return {byYear:byYear, conByYear:conByYear, total:bal, contrib:pmt*YEARS*12, interest:bal-pmt*YEARS*12};
   }
-  W.addEventListener("input",calc); Y.addEventListener("input",calc); calc();
+  function render(pmt, animateNums){
+    var d=compute(pmt), max=d.byYear[d.byYear.length-1];
+    barsEl.innerHTML=d.byYear.map(function(bal,idx){
+      var h=bal/max*100, conPct=d.conByYear[idx]/bal*100, intPct=100-conPct;
+      return '<div class="barcol"><div class="bar" data-h="'+h.toFixed(1)+'" style="height:0">'+
+        '<div class="seg-int" style="height:'+intPct.toFixed(1)+'%"></div>'+
+        '<div class="seg-con" style="height:'+conPct.toFixed(1)+'%"></div>'+
+        '</div><div class="yr">'+(idx+1)+'</div></div>';
+    }).join('');
+    requestAnimationFrame(function(){ Array.prototype.forEach.call(barsEl.querySelectorAll('.bar'),function(b){ b.style.height=b.getAttribute('data-h')+'%'; }); });
+    totalEl.textContent=money(d.total);
+    intEl.textContent=money(d.interest);
+    var times=(d.interest/d.contrib);
+    noteEl.innerHTML='You put in <b>'+money(d.contrib)+'</b>, and it grew to <b>'+money(d.total)+'</b>. The longer you leave it, the more the interest snowballs &mdash; that\u2019s the magic of starting early.';
+  }
+  slider.addEventListener('input', function(){ permoEl.textContent='$'+slider.value; render(+slider.value, false); });
+  render(10, true);
 })();
 </script>
 </body>
