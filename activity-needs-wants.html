@@ -52,7 +52,7 @@
   <div class="inner">
     <div class="stage">
       <div class="hud">
-        <div class="score">⭐ <span id="score">0</span></div>
+        <div class="score">&#11088; <span id="score">0</span></div>
         <div class="streak" id="streak"></div>
       </div>
       <div class="pbar"><div id="pbar" style="width:0"></div></div>
@@ -64,10 +64,10 @@
 <script>
 (function(){
   var ITEMS=[
-    {e:"🍎",n:"Food",need:true},{e:"💧",n:"Clean water",need:true},{e:"🧥",n:"A warm coat",need:true},
-    {e:"🏠",n:"A home",need:true},{e:"💊",n:"Medicine",need:true},{e:"🛏️",n:"A bed to sleep in",need:true},
-    {e:"🍬",n:"Candy",need:false},{e:"🎮",n:"A video game",need:false},{e:"🚲",n:"A shiny new bike",need:false},
-    {e:"🧸",n:"Another toy",need:false},{e:"🍦",n:"Ice cream",need:false},{e:"📺",n:"A bigger TV",need:false}
+    {e:"\uD83C\uDF4E",n:"Food",need:true},{e:"\uD83D\uDCA7",n:"Clean water",need:true},{e:"\uD83E\uDDE5",n:"A warm coat",need:true},
+    {e:"\uD83C\uDFE0",n:"A home",need:true},{e:"\uD83D\uDC8A",n:"Medicine",need:true},{e:"\uD83D\uDECF\uFE0F",n:"A bed to sleep in",need:true},
+    {e:"\uD83C\uDF6C",n:"Candy",need:false},{e:"\uD83C\uDFAE",n:"A video game",need:false},{e:"\uD83D\uDEB2",n:"A shiny new bike",need:false},
+    {e:"\uD83E\uDDF8",n:"Another toy",need:false},{e:"\uD83C\uDF66",n:"Ice cream",need:false},{e:"\uD83D\uDCFA",n:"A bigger TV",need:false}
   ];
   var order=ITEMS.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;}).slice(0,10);
   var i=0, score=0, streak=0, correct=0, lock=false;
@@ -90,22 +90,22 @@
     document.getElementById("bNeed").disabled=true; document.getElementById("bWant").disabled=true;
     if(saidNeed===it.need){
       correct++; streak++; var pts=10+(streak>=3?5:0); score+=pts; scoreEl.textContent=score;
-      fb.textContent="✓ Yes! +"+pts; fb.className="fb ok";
-      streakEl.textContent = streak>=2 ? "🔥 "+streak+" in a row!" : "";
+      fb.textContent="\u2713 Yes! +"+pts; fb.className="fb ok";
+      streakEl.textContent = streak>=2 ? "\uD83D\uDD25 "+streak+" in a row!" : "";
       streakEl.classList.add("pop"); setTimeout(function(){streakEl.classList.remove("pop");},200);
       card.classList.add(saidNeed?"left":"right");
       if(streak===4 && window.ftCelebrate) window.ftCelebrate("On fire! 4 in a row!");
       i++; setTimeout(render,420);
     } else {
       streak=0; streakEl.textContent="";
-      fb.textContent = it.need ? "That one is a need — we need it to live." : "That one is a want — fun, but not needed.";
+      fb.textContent = it.need ? "That one is a need \u2014 we need it to live." : "That one is a want \u2014 fun, but not needed.";
       fb.className="fb no"; card.classList.add("buzz");
       i++; setTimeout(render,1500);
     }
   }
   function end(){
     var pct=correct/order.length, fullStars=Math.round(pct*3);
-    var stars=""; for(var k=0;k<3;k++){ stars+= k<fullStars?"⭐":"☆"; }
+    var stars=""; for(var k=0;k<3;k++){ stars+= k<fullStars?"\u2b50":"\u2606"; }
     var msg = pct>=0.9?"Amazing! You really know your needs from your wants." : pct>=0.6?"Great job! You're getting the hang of it." : "Good try! Play again to beat your score.";
     board.innerHTML='<div class="card in end"><div class="stars">'+stars+'</div><h2>'+correct+' of '+order.length+' right</h2><p>'+msg+'</p>'+
       '<div class="btns" style="margin-top:20px;"><button id="bNeed" onclick="location.reload()">Play again</button></div></div>';
