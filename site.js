@@ -43,3 +43,25 @@ EOF
   var s = document.createElement('style'); s.id = 'ft-a11y-css'; s.textContent = css;
   (document.head || document.documentElement).appendChild(s);
 })();
+
+/* ---- Lesson & guide reading polish ---- */
+(function () {
+  if (document.getElementById('ft-prose-css')) return;
+  var css = [
+    '.prose{font-size:17.5px;line-height:1.75;color:#2A322B;max-width:70ch;}',
+    '.prose p{margin:0 0 18px;}',
+    '.prose h2{font-family:var(--serif);font-weight:600;color:var(--forest);font-size:26px;margin:34px 0 12px;letter-spacing:-.01em;}',
+    '.prose h3{font-family:var(--serif);font-weight:600;color:var(--forest);font-size:21px;margin:28px 0 10px;}',
+    '.prose h2::after{content:"";display:block;width:44px;height:3px;border-radius:2px;margin-top:10px;background:linear-gradient(90deg,#C6A15B,#8A4B32);}',
+    '.prose ul,.prose ol{margin:0 0 18px;padding-left:22px;}',
+    '.prose li{margin-bottom:9px;line-height:1.65;}',
+    '.prose li::marker{color:#B8923F;}',
+    '.prose strong{color:var(--forest);}',
+    '.prose a{color:var(--moss);text-underline-offset:2px;}',
+    '.prose blockquote{border-left:3px solid #C6A15B;margin:22px 0;padding:4px 0 4px 20px;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--forest);}',
+    '.callout,.prose .callout{background:#FBF4E3;border:1px solid #E8D9B4;border-left:4px solid #C6A15B;border-radius:10px;padding:16px 20px;margin:22px 0;font-size:15.5px;line-height:1.6;}',
+    '.callout strong{color:var(--forest);}'
+  ].join('\n');
+  var s = document.createElement('style'); s.id = 'ft-prose-css'; s.textContent = css;
+  (document.head || document.documentElement).appendChild(s);
+})();
