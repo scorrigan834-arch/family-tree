@@ -77,3 +77,24 @@
   var s = document.createElement('style'); s.id = 'ft-perf-css'; s.textContent = css;
   (document.head || document.documentElement).appendChild(s);
 })();
+
+/* ---- Favicon injection ---- */
+(function () {
+  if (document.querySelector('link[rel="icon"][data-ft]')) return;
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="%230F2A22"/><path d="M24 40C24 33 24 29 24 18" stroke="%238FB75B" stroke-width="3" stroke-linecap="round"/><path d="M24 30C16 31 11 25 12 18C19 19 23 24 24 30Z" fill="%238FB75B"/><path d="M24 24C32 25 37 19 36 12C29 13 24.5 18 24 24Z" fill="%238FB75B"/><circle cx="24" cy="15" r="3" fill="%23C6A15B"/></svg>';
+  var link = document.createElement('link');
+  link.rel = 'icon';
+  link.type = 'image/svg+xml';
+  link.setAttribute('data-ft', '1');
+  link.href = 'data:image/svg+xml,' + svg;
+  document.head.appendChild(link);
+})();
+
+/* ---- Anchor scroll offset ---- */
+(function () {
+  if (document.getElementById('ft-anchor-css')) return;
+  var s = document.createElement('style');
+  s.id = 'ft-anchor-css';
+  s.textContent = '[id]{scroll-margin-top:78px;}';
+  document.head.appendChild(s);
+})();
