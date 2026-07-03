@@ -3,23 +3,29 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Your first month on your own — Family Tree</title>
+<title>Your First Month On Your Own &mdash; Family Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <script src="site.js" defer></script>
 <style>
-  .game{max-width:560px;margin:0 auto;}
-  .inc{text-align:center;font-family:var(--serif);font-size:22px;color:var(--forest);margin-bottom:6px;}
-  .left{text-align:center;font-weight:600;font-size:18px;margin-bottom:20px;}
-  .left.ok{color:var(--moss);} .left.over{color:var(--clay);}
-  .row{margin-bottom:14px;}
-  .row label{display:flex;justify-content:space-between;font-weight:600;color:var(--forest);margin-bottom:4px;}
-  .row input[type=range]{width:100%;accent-color:var(--moss);}
-  .hint{font-size:12px;color:var(--stone);}
-  .msg{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:10px;font-size:15px;color:var(--ink);min-height:20px;}
-  .msg b{color:var(--forest);}
+  .stage{max-width:540px;margin:0 auto;}
+  .money-left{text-align:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:18px;box-shadow:0 10px 28px rgba(15,42,34,.07);position:sticky;top:8px;z-index:5;}
+  .money-left .lab{font-size:13px;color:var(--stone);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+  .money-left .amt{font-family:var(--serif);font-size:38px;line-height:1;margin-top:4px;transition:color .3s;}
+  .cat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px;}
+  .cat .top{display:flex;justify-content:space-between;align-items:baseline;}
+  .cat .name{font-weight:600;color:var(--forest);font-size:15px;}
+  .cat .v{font-family:var(--serif);font-size:20px;color:var(--moss);}
+  .cat input[type=range]{width:100%;margin-top:8px;accent-color:var(--moss);height:26px;}
+  .go-row{text-align:center;margin-top:8px;}
+  .result{background:#fff;border:2px solid var(--line);border-radius:20px;padding:24px;margin-top:18px;text-align:center;box-shadow:0 16px 38px rgba(15,42,34,.10);display:none;}
+  .result.show{display:block;animation:pop .4s cubic-bezier(.34,1.5,.5,1);}
+  @keyframes pop{0%{transform:scale(.85);opacity:0;}100%{transform:scale(1);opacity:1;}}
+  .result .stars{font-size:38px;letter-spacing:5px;}
+  .result h2{font-family:var(--serif);color:var(--forest);font-size:24px;margin:8px 0 6px;}
+  .result p{color:var(--stone);margin:0;font-size:14.5px;line-height:1.5;}
 </style>
 </head>
 <body>
@@ -27,49 +33,60 @@
 <section class="section band-forest">
   <div class="inner">
     <span class="eyebrow" style="color:var(--sprout);">Play &middot; Taking Root</span>
-    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Your first month on your own</h1>
-    <p class="subhead">You take home $2,400 this month. Slide to give every dollar a job — cover your needs, keep rent reasonable, and try to save something.</p>
+    <h1 class="display" style="font-size:clamp(30px,6vw,46px);">Your first month on your own</h1>
+    <p class="subhead">Your take-home pay is <b>$2,800</b>. Slide to build a real monthly budget &mdash; cover the essentials, and try to save. Can you make it balance?</p>
   </div>
 </section>
 <section class="section band-paper">
   <div class="inner">
-    <div class="game">
-      <div class="inc">Take-home this month: $2,400</div>
-      <div class="left ok" id="left">$2,400 left to assign</div>
-      <div class="row"><label>Rent &amp; utilities <span id="v-rent">$0</span></label><input type="range" id="rent" min="0" max="2400" step="50" value="0"><div class="hint">Tip: try to keep this under about 30% ($720).</div></div>
-      <div class="row"><label>Food &amp; groceries <span id="v-food">$0</span></label><input type="range" id="food" min="0" max="2400" step="50" value="0"></div>
-      <div class="row"><label>Transport <span id="v-transport">$0</span></label><input type="range" id="transport" min="0" max="2400" step="50" value="0"></div>
-      <div class="row"><label>Savings <span id="v-savings">$0</span></label><input type="range" id="savings" min="0" max="2400" step="50" value="0"></div>
-      <div class="row"><label>Fun &amp; extras <span id="v-fun">$0</span></label><input type="range" id="fun" min="0" max="2400" step="50" value="0"></div>
-      <div class="msg" id="msg">Start sliding to build your plan.</div>
+    <div class="stage">
+      <div class="money-left"><div class="lab">Left to budget</div><div class="amt" id="left">$2,800</div></div>
+      <div id="cats"></div>
+      <div class="go-row"><button class="btn btn-lg" id="check">Check my budget</button></div>
+      <div class="result" id="result"></div>
     </div>
-    <p style="text-align:center;margin-top:26px;"><a href="taking-budget.html">Read the lesson</a> &middot; <a href="budget.html">Try the full budget tool</a></p>
+    <p style="text-align:center;margin-top:28px;"><a href="taking-budget.html">Read the lesson</a> &middot; <a href="games.html">All games</a></p>
   </div>
 </section>
 <script>
 (function(){
-  var INCOME=2400, cats=["rent","food","transport","savings","fun"];
-  function money(n){ return "$"+Math.round(n).toLocaleString(); }
-  function calc(){
-    var vals={}, total=0;
-    cats.forEach(function(c){ var v=+document.getElementById(c).value; vals[c]=v; total+=v; document.getElementById("v-"+c).textContent=money(v); });
-    var left=INCOME-total, leftEl=document.getElementById("left"), msg=document.getElementById("msg");
-    if(left>=0){ leftEl.textContent=money(left)+" left to assign"; leftEl.className="left ok"; }
-    else { leftEl.textContent=money(-left)+" over budget"; leftEl.className="left over"; }
-    var notes=[];
-    if(total>INCOME){ notes.push("You've spent more than you earn \u2014 pull something back until you're at or under $2,400."); }
-    else {
-      if(vals.rent>720){ notes.push("Your rent is above ~30% of your pay, which squeezes everything else."); }
-      if(vals.food===0){ notes.push("Don't forget food \u2014 everyone needs to eat!"); }
-      if(vals.savings===0){ notes.push("Try to save something, even a little \u2014 pay yourself first."); }
-      else if(vals.savings>=240){ notes.push("Nice \u2014 you're saving 10% or more. That habit builds real wealth."); }
-      if(left>0 && total>0){ notes.push("You have "+money(left)+" unassigned \u2014 give every dollar a job (more savings counts!)."); }
-      if(notes.length===0 && total>0){ notes.push("<b>Balanced plan!</b> Needs covered, rent reasonable, and money saved. That's exactly how it's done."); }
-    }
-    msg.innerHTML = total===0 ? "Start sliding to build your plan." : notes.join(" ");
+  var INCOME=2800;
+  var CATS=[
+    {k:'rent', name:'Rent', min:600, max:1500, step:50, val:1000},
+    {k:'food', name:'Groceries', min:100, max:600, step:25, val:300},
+    {k:'trans', name:'Transport', min:0, max:400, step:25, val:150},
+    {k:'phone', name:'Phone & internet', min:40, max:160, step:10, val:90},
+    {k:'fun', name:'Fun & extras', min:0, max:700, step:25, val:250},
+    {k:'save', name:'Savings', min:0, max:900, step:25, val:200}
+  ];
+  var catsEl=document.getElementById('cats'), leftEl=document.getElementById('left'), resultEl=document.getElementById('result');
+  function money(n){ return '$'+Math.round(n).toLocaleString(); }
+  catsEl.innerHTML=CATS.map(function(c){
+    return '<div class="cat"><div class="top"><span class="name">'+c.name+'</span><span class="v" id="v-'+c.k+'">'+money(c.val)+'</span></div>'+
+      '<input type="range" id="s-'+c.k+'" min="'+c.min+'" max="'+c.max+'" step="'+c.step+'" value="'+c.val+'"></div>';
+  }).join('');
+  function total(){ var t=0; CATS.forEach(function(c){ t+=+document.getElementById('s-'+c.k).value; }); return t; }
+  function update(){
+    var left=INCOME-total();
+    leftEl.textContent=money(left);
+    leftEl.style.color = left<0 ? '#C0553B' : (left===0 ? '#2F7D53' : 'var(--forest)');
+    CATS.forEach(function(c){ document.getElementById('v-'+c.k).textContent=money(+document.getElementById('s-'+c.k).value); });
   }
-  cats.forEach(function(c){ document.getElementById(c).addEventListener("input",calc); });
-  calc();
+  CATS.forEach(function(c){ document.getElementById('s-'+c.k).addEventListener('input', function(){ update(); resultEl.classList.remove('show'); }); });
+  document.getElementById('check').onclick=function(){
+    var vals={}; CATS.forEach(function(c){ vals[c.k]=+document.getElementById('s-'+c.k).value; });
+    var left=INCOME-total(), save=vals.save, stars, title, msg;
+    if(left<0){ stars=0; title='Over budget by '+money(-left); msg='You&rsquo;re spending more than you earn. Trim something &mdash; usually rent or fun &mdash; until you&rsquo;re back to $0 or above.'; }
+    else if(vals.rent<600 || vals.food<150){ stars=1; title='Essentials look thin'; msg='Make sure rent and groceries are realistic first &mdash; those come before fun.'; }
+    else if(save>=INCOME*0.15 && left>=0){ stars=3; title='Nailed it!'; msg='Essentials covered, and you saved '+money(save)+' &mdash; over 15% of your pay. That&rsquo;s a pro-level first month.'; }
+    else if(save>=INCOME*0.10){ stars=2; title='Solid budget'; msg='You covered your needs and saved '+money(save)+'. Nudge savings a little higher and you&rsquo;re golden.'; }
+    else { stars=1; title='It balances &mdash; but save more'; msg='Your budget works, but savings are low. Even $280 (10%) builds a real safety net over time.'; }
+    var s=''; for(var i=0;i<3;i++){ s+= i<stars?'\u2b50':'\u2606'; }
+    resultEl.innerHTML='<div class="stars">'+s+'</div><h2>'+title+'</h2><p>'+msg+'</p>';
+    resultEl.classList.add('show');
+    if(stars>=2 && window.ftCelebrate) window.ftCelebrate(stars===3?'Budget master!':'Nice budgeting!');
+  };
+  update();
 })();
 </script>
 </body>
