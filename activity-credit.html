@@ -3,24 +3,33 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Build your credit — Family Tree</title>
+<title>Build Your Credit &mdash; Family Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <script src="site.js" defer></script>
 <style>
-  .game{max-width:520px;margin:0 auto;}
-  .score{text-align:center;margin-bottom:18px;}
-  .score .n{font-family:var(--serif);font-size:52px;color:var(--forest);line-height:1;transition:color .3s;}
-  .score .l{color:var(--stone);font-size:14px;}
-  .card2{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(15,42,34,.06);}
-  .q{font-family:var(--serif);font-size:19px;color:var(--forest);margin-bottom:14px;}
-  .opt{display:block;width:100%;text-align:left;padding:12px 15px;margin:8px 0;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-family:var(--sans);font-size:15px;color:var(--ink);cursor:pointer;}
-  .opt:hover:not(:disabled){border-color:var(--moss);}
-  .fb{margin-top:10px;font-size:14px;min-height:20px;}
-  .delta{font-weight:600;}
-  .up{color:var(--moss);} .down{color:var(--clay);}
+  .stage{max-width:520px;margin:0 auto;}
+  .gauge{text-align:center;}
+  .score{font-family:var(--serif);font-size:clamp(48px,12vw,72px);line-height:1;transition:color .4s;}
+  .rating{font-weight:700;font-size:16px;letter-spacing:.02em;margin-top:2px;transition:color .4s;}
+  .track{position:relative;height:14px;border-radius:99px;margin:20px 6px 4px;background:linear-gradient(90deg,#C0553B,#E8A24A 38%,#8FB75B 66%,#2F7D53);}
+  .marker{position:absolute;top:-6px;width:6px;height:26px;border-radius:3px;background:#12332A;box-shadow:0 1px 5px rgba(0,0,0,.35);transform:translateX(-50%);transition:left .7s cubic-bezier(.2,.8,.2,1);}
+  .ends{display:flex;justify-content:space-between;font-size:11px;color:var(--stone);margin:0 6px;}
+  .prog{text-align:center;font-size:13px;color:var(--stone);font-weight:600;margin:22px 0 8px;}
+  .scene{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 12px 32px rgba(15,42,34,.08);}
+  .scene h2{font-family:var(--serif);color:var(--forest);font-size:20px;margin:0 0 6px;}
+  .scene p.q{font-size:15px;color:var(--ink);line-height:1.5;margin:0 0 14px;}
+  .choice{display:block;width:100%;text-align:left;padding:14px 16px;margin:9px 0;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-family:var(--sans);font-size:15px;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s;}
+  .choice:hover:not(:disabled){border-color:var(--moss);transform:translateY(-2px);}
+  .choice:disabled{cursor:default;}
+  .choice.pick-good{border-color:var(--moss);background:#EAF1E3;font-weight:600;}
+  .choice.pick-bad{border-color:var(--clay);background:#F8ECE4;font-weight:600;}
+  .fb{margin-top:12px;font-size:14px;border-radius:10px;padding:11px 14px;display:none;}
+  .fb.show{display:block;}
+  .fb .delta{font-weight:700;}
+  .nextwrap{margin-top:14px;text-align:right;}
 </style>
 </head>
 <body>
@@ -28,83 +37,119 @@
 <section class="section band-forest">
   <div class="inner">
     <span class="eyebrow" style="color:var(--sprout);">Play &middot; Branching Out</span>
-    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Build your credit</h1>
-    <p class="subhead">You're starting out with a credit score of 650. Make a few choices and watch how each one moves it — the same way real habits do.</p>
+    <h1 class="display" style="font-size:clamp(30px,6vw,46px);">Build your credit</h1>
+    <p class="subhead">Your credit score follows you into apartments, car loans, even job offers. Make the calls and watch your score move.</p>
   </div>
 </section>
 <section class="section band-paper">
   <div class="inner">
-    <div class="game">
-      <div class="score"><div class="n" id="score">650</div><div class="l" id="rating">Fair</div></div>
-      <div class="card2">
-        <div class="q" id="q"></div>
-        <div id="opts"></div>
-        <div class="fb" id="fb"></div>
-        <div id="next" style="margin-top:12px;"></div>
+    <div class="stage">
+      <div class="gauge">
+        <div class="score" id="score">650</div>
+        <div class="rating" id="rating">Fair</div>
+        <div class="track"><div class="marker" id="marker"></div></div>
+        <div class="ends"><span>300</span><span>850</span></div>
       </div>
+      <div class="prog" id="prog"></div>
+      <div class="scene" id="scene"></div>
     </div>
-    <p style="text-align:center;margin-top:26px;"><a href="branching-credit.html">Read the lesson</a> &middot; <a href="guide-credit.html">Read the credit guide</a></p>
+    <p style="text-align:center;margin-top:28px;"><a href="branching-credit.html">Read the lesson</a> &middot; <a href="games.html">All games</a></p>
   </div>
 </section>
 <script>
 (function(){
+  var score=650, i=0, lock=false;
+  var scoreEl=document.getElementById('score'), ratingEl=document.getElementById('rating'),
+      marker=document.getElementById('marker'), sceneEl=document.getElementById('scene'), progEl=document.getElementById('prog');
   var STEPS=[
-    {q:"Your first credit card bill arrives. What do you do?", o:[
-      {t:"Pay the full balance",d:35,e:"On-time, in-full payments are the biggest driver of a good score."},
-      {t:"Pay only the minimum",d:-10,e:"You avoid a late mark, but interest piles up and progress stalls."},
-      {t:"Skip it this month",d:-70,e:"A missed payment is the single most damaging thing for your score."}
+    {t:'Your first credit card bill', q:'Your first bill is $120 and it&rsquo;s due Friday.', c:[
+      {t:'Pay it in full, on time', d:25, good:true, n:'On-time, full payments are the single biggest driver of a good score.'},
+      {t:'Pay just the minimum', d:-5, good:false, n:'It keeps you current, but interest piles up. Not the habit you want.'},
+      {t:'Skip it this month', d:-65, good:false, n:'A missed payment can haunt your score for years. Never skip.'}
     ]},
-    {q:"Your card limit is $1,000. How much of it do you use each month?", o:[
-      {t:"Under $300 (low usage)",d:30,e:"Keeping usage low \u2014 under about 30% \u2014 helps your score."},
-      {t:"About $700",d:-15,e:"High usage signals risk and pulls your score down."},
-      {t:"Max it out at $1,000",d:-40,e:"Maxing out a card hurts; keep balances well below the limit."}
+    {t:'Holiday shopping', q:'Your card limit is $1,000. How much do you put on it?', c:[
+      {t:'Keep it under $300', d:22, good:true, n:'Using less than about 30% of your limit shows lenders you&rsquo;re in control.'},
+      {t:'Spend around $900', d:-20, good:false, n:'Using almost your whole limit makes lenders nervous.'},
+      {t:'Max it out', d:-35, good:false, n:'A maxed-out card is a big red flag to lenders.'}
     ]},
-    {q:"A store offers a discount if you open several new cards today.", o:[
-      {t:"Open none",d:15,e:"Avoiding a burst of new accounts keeps your score steady."},
-      {t:"Open one useful card",d:-5,e:"One new account dips your score briefly, then can help."},
-      {t:"Open all five",d:-35,e:"Many applications at once looks risky to lenders."}
+    {t:'A tempting offer', q:'A store offers 15% off today if you open their credit card.', c:[
+      {t:'Politely decline', d:6, good:true, n:'Skipping impulse credit keeps your history clean and steady.'},
+      {t:'Open it for the discount', d:-15, good:false, n:'A new account plus a hard credit check ding your score a bit.'}
     ]},
-    {q:"You've had your very first card for several years now.", o:[
-      {t:"Keep it open and active",d:20,e:"A long credit history helps \u2014 keep old accounts open."},
-      {t:"Close it for no reason",d:-25,e:"Closing your oldest card shortens your history and can hurt."}
+    {t:'Monthly bills', q:'You&rsquo;ve got phone and streaming bills every month.', c:[
+      {t:'Set up autopay', d:20, good:true, n:'Never missing a due date is the easiest win in all of credit.'},
+      {t:'Pay them when you remember', d:-15, good:false, n:'One forgotten bill can cost you a surprising number of points.'}
     ]},
-    {q:"An unexpected bill hits during a tight month.", o:[
-      {t:"Pay on time, even if it's tight",d:30,e:"Protecting your payment history is always worth it."},
-      {t:"Pay it two weeks late",d:-60,e:"Late payments are reported and sting for a long time."}
+    {t:'An old card', q:'You have a card from two years ago you rarely use.', c:[
+      {t:'Keep it open', d:15, good:true, n:'A longer history and that unused limit both help your score.'},
+      {t:'Close it', d:-15, good:false, n:'Closing it shortens your history and raises your usage ratio.'}
+    ]},
+    {t:'Shopping for a car loan', q:'You want to finance a used car.', c:[
+      {t:'Check your score, then compare lenders within a week', d:15, good:true, n:'Rate-shopping in a short window usually counts as just one inquiry.'},
+      {t:'Apply at six places over two months', d:-22, good:false, n:'Lots of separate hard inquiries pull your score down.'}
+    ]},
+    {t:'Oops', q:'You realize a payment slipped through the cracks last week.', c:[
+      {t:'Pay it now and set reminders', d:10, good:true, n:'Catching it fast and rebuilding your streak helps you bounce back.'},
+      {t:'Deal with it some other time', d:-45, good:false, n:'The longer a payment stays late, the more it hurts.'}
     ]}
   ];
-  var score=650, i=0;
-  var scEl=document.getElementById("score"), rtEl=document.getElementById("rating"),
-      qEl=document.getElementById("q"), optsEl=document.getElementById("opts"),
-      fbEl=document.getElementById("fb"), nextEl=document.getElementById("next");
-  function clamp(n){ return Math.max(300,Math.min(850,n)); }
-  function rating(s){ return s>=800?"Excellent":s>=740?"Very good":s>=670?"Good":s>=580?"Fair":"Poor"; }
-  function paint(){ scEl.textContent=score; rtEl.textContent=rating(score); scEl.style.color = score>=670?"var(--moss)":score>=580?"var(--forest)":"var(--clay)"; }
-  function show(){
-    var st=STEPS[i]; qEl.textContent=(i+1)+". "+st.q; optsEl.innerHTML=""; fbEl.textContent=""; nextEl.innerHTML="";
-    st.o.forEach(function(opt){
-      var b=document.createElement("button"); b.className="opt"; b.textContent=opt.t;
-      b.onclick=function(){ choose(opt,st); };
-      optsEl.appendChild(b);
-    });
+  function band(s){
+    if(s<580) return {label:'Poor', color:'#C0553B'};
+    if(s<670) return {label:'Fair', color:'#C96F3F'};
+    if(s<740) return {label:'Good', color:'#6E9E3E'};
+    if(s<800) return {label:'Very Good', color:'#3B8B63'};
+    return {label:'Excellent', color:'#2F7D53'};
   }
-  function choose(opt,st){
-    score=clamp(score+opt.d); paint();
-    Array.prototype.forEach.call(optsEl.querySelectorAll("button"),function(b){ b.disabled=true; });
-    var sign=opt.d>=0?"+":"";
-    fbEl.innerHTML='<span class="delta '+(opt.d>=0?"up":"down")+'">'+sign+opt.d+' points</span> \u00B7 '+opt.e;
-    i++;
-    var btn=document.createElement("button"); btn.className="btn";
-    btn.textContent = i<STEPS.length ? "Next" : "See your result";
-    btn.onclick = i<STEPS.length ? show : finish;
-    nextEl.appendChild(btn);
+  function paint(){
+    var b=band(score);
+    scoreEl.textContent=Math.round(score); scoreEl.style.color=b.color;
+    ratingEl.textContent=b.label; ratingEl.style.color=b.color;
+    marker.style.left=Math.max(0,Math.min(100,(score-300)/550*100))+'%';
   }
-  function finish(){
-    qEl.textContent="Your credit score: "+score+" ("+rating(score)+")";
-    optsEl.innerHTML=""; nextEl.innerHTML='<button class="btn" onclick="location.reload()">Play again</button>';
-    fbEl.innerHTML = score>=740 ? "Excellent habits \u2014 this score unlocks the best rates on loans and cards." : score>=670 ? "Solid work. Keep paying on time and using little of your limit to climb higher." : "Every score can recover. On-time payments and low balances rebuild it over time.";
+  function animateScore(from,to){
+    var start=null, dur=650;
+    function tick(t){ if(!start)start=t; var p=Math.min(1,(t-start)/dur); score=from+(to-from)*p; paint(); if(p<1)requestAnimationFrame(tick); }
+    requestAnimationFrame(tick);
   }
-  paint(); show();
+  function render(){
+    if(i>=STEPS.length) return end();
+    lock=false;
+    var st=STEPS[i];
+    progEl.textContent='Decision '+(i+1)+' of '+STEPS.length;
+    var h='<h2>'+st.t+'</h2><p class="q">'+st.q+'</p>';
+    st.c.forEach(function(ch,ci){ h+='<button class="choice" data-i="'+ci+'">'+ch.t+'</button>'; });
+    h+='<div class="fb" id="fb"></div><div class="nextwrap" id="nw"></div>';
+    sceneEl.innerHTML=h;
+    Array.prototype.forEach.call(sceneEl.querySelectorAll('.choice'),function(b){ b.onclick=function(){ pick(st,+b.getAttribute('data-i'),b); }; });
+  }
+  function pick(st,ci,btn){
+    if(lock) return; lock=true;
+    var ch=st.c[ci], from=score, to=Math.max(300,Math.min(850,score+ch.d));
+    animateScore(from,to);
+    Array.prototype.forEach.call(sceneEl.querySelectorAll('.choice'),function(b){ b.disabled=true; });
+    btn.classList.add(ch.good?'pick-good':'pick-bad');
+    var fb=document.getElementById('fb');
+    fb.innerHTML='<span class="delta" style="color:'+(ch.d>=0?'#3B8B63':'#C0553B')+'">'+(ch.d>=0?'+':'')+ch.d+' points</span> &mdash; '+ch.n;
+    fb.style.background=ch.d>=0?'#EAF1E3':'#F8ECE4'; fb.classList.add('show');
+    var nb=document.createElement('button'); nb.className='btn';
+    nb.textContent=(i<STEPS.length-1)?'Next \u2192':'See your score \u2192';
+    nb.onclick=function(){ i++; render(); };
+    document.getElementById('nw').appendChild(nb);
+    if(ch.good && ch.d>=20 && window.ftCelebrate) window.ftCelebrate('Smart move!');
+  }
+  function end(){
+    progEl.textContent='Your credit journey';
+    var b=band(score);
+    var msg = score>=740 ? 'Excellent work &mdash; this score unlocks the best rates on cars, homes, and more.' :
+              score>=670 ? 'Solid! A good score like this saves you real money on every loan.' :
+              score>=580 ? 'You&rsquo;re on your way. A few more on-time habits and this climbs fast.' :
+              'Credit takes time to rebuild &mdash; on-time payments and low balances turn it around.';
+    sceneEl.innerHTML='<h2 style="text-align:center;">Final score: <span style="color:'+b.color+'">'+Math.round(score)+'</span></h2>'+
+      '<p class="q" style="text-align:center;">'+msg+'</p>'+
+      '<div class="nextwrap" style="text-align:center;"><button class="btn" onclick="location.reload()">Play again</button></div>';
+    if(window.ftCelebrate) window.ftCelebrate('Score: '+Math.round(score)+' ('+b.label+')');
+  }
+  paint(); render();
 })();
 </script>
 </body>
