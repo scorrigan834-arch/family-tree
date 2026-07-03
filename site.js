@@ -1475,3 +1475,23 @@
     document.body.appendChild(b);
   });
 })();
+
+/* ---- Lesson blocks for stage pages (Heritage) ---- */
+(function () {
+  if (document.getElementById('ft-lessonblocks-css')) return;
+  var css = [
+    '.lblocks{border-top:1px solid var(--line);margin-top:6px;}',
+    '.lblock{display:flex;align-items:center;gap:20px;text-decoration:none;color:inherit;border-bottom:1px solid var(--line);padding:22px 4px;position:relative;transition:background .2s ease;}',
+    '.lblock::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(180deg,#C6A15B,#8A4B32);transition:width .2s ease;}',
+    '.lblock:hover{background:rgba(198,161,91,.06);}',
+    '.lblock:hover::before{width:4px;}',
+    '.lblock .n{font-family:var(--serif);font-size:26px;color:#D9CBA6;font-weight:600;width:46px;flex:0 0 auto;text-align:center;}',
+    '.lblock .nm{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--forest);margin:0;}',
+    '.lblock .ds{color:var(--stone);font-size:14px;margin:2px 0 0;}',
+    '.lblock .go{margin-left:auto;color:#B8923F;font-weight:700;font-size:14px;flex:0 0 auto;transition:transform .2s ease;}',
+    '.lblock:hover .go{transform:translateX(4px);}',
+    '@media(max-width:600px){.lblock .go{display:none;}.lblock{gap:14px;}.lblock .n{width:34px;font-size:22px;}}'
+  ].join('\n');
+  var s = document.createElement('style'); s.id = 'ft-lessonblocks-css'; s.textContent = css;
+  (document.head || document.documentElement).appendChild(s);
+})();
