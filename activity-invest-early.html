@@ -3,84 +3,76 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Start early vs start late — Family Tree</title>
+<title>Start Early vs Start Late &mdash; Family Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <script src="site.js" defer></script>
 <style>
-  .game{max-width:560px;margin:0 auto;}
-  .ctrl label{display:flex;justify-content:space-between;font-weight:600;color:var(--forest);margin-bottom:6px;}
-  .ctrl input[type=range]{width:100%;accent-color:var(--moss);}
-  .people{margin-top:22px;}
-  .person{margin-bottom:16px;}
-  .ptop{display:flex;justify-content:space-between;align-items:baseline;}
-  .pname{font-family:var(--serif);font-size:18px;color:var(--forest);}
-  .pval{font-family:var(--serif);font-size:22px;color:var(--moss);}
-  .track{height:26px;background:var(--sand);border-radius:99px;overflow:hidden;margin-top:6px;}
-  .bar{height:100%;border-radius:99px;transition:width .3s;}
-  .b-early{background:var(--sprout);}
-  .b-late{background:var(--dim);}
-  .psub{font-size:13px;color:var(--stone);margin-top:4px;}
-  .punch{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:14px;font-size:15px;color:var(--ink);}
-  .punch b{color:var(--forest);}
+  .stage{max-width:540px;margin:0 auto;}
+  .bignum{text-align:center;font-family:var(--serif);font-size:clamp(38px,9vw,58px);color:var(--forest);line-height:1;}
+  .subnum{text-align:center;color:var(--stone);font-size:15px;margin-top:6px;}
+  .chart{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 18px 14px;margin-top:22px;box-shadow:0 14px 34px rgba(15,42,34,.08);}
+  .row{display:flex;align-items:center;gap:12px;margin:12px 0;}
+  .row .lab{width:74px;font-size:13px;color:var(--stone);font-weight:600;flex:0 0 auto;}
+  .track{flex:1;height:26px;background:var(--sand);border-radius:8px;overflow:hidden;}
+  .fill{height:100%;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-size:12px;font-weight:700;width:0;transition:width .8s cubic-bezier(.2,.8,.2,1);white-space:nowrap;}
+  .ctrl{margin-top:24px;text-align:center;}
+  .ctrl .val{font-family:var(--serif);font-size:24px;color:var(--moss);}
+  input[type=range]{width:100%;max-width:360px;margin-top:10px;accent-color:var(--moss);height:28px;}
+  .note{background:var(--sand);border-radius:14px;padding:16px 18px;margin-top:22px;font-size:14.5px;color:var(--ink);line-height:1.5;}
+  .note b{color:var(--forest);}
 </style>
 </head>
 <body>
 <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
 <section class="section band-forest">
   <div class="inner">
-    <span class="eyebrow" style="color:var(--sprout);">Play &middot; Branching Out &amp; Taking Root</span>
-    <h1 class="display" style="font-size:clamp(28px,5vw,42px);">Start early vs start late</h1>
-    <p class="subhead">Ava starts investing at 25. Ben waits until 35. Both invest the same amount every month until 65. Move the slider and see what a ten-year head start does.</p>
+    <span class="eyebrow" style="color:var(--sprout);">Play &middot; Branching Out</span>
+    <h1 class="display" style="font-size:clamp(30px,6vw,46px);">Start early vs start late</h1>
+    <p class="subhead">Investing $200 a month until age 65. The only thing that changes is <b>when you start</b>. Slide to see how much a head start is worth.</p>
   </div>
 </section>
 <section class="section band-paper">
   <div class="inner">
-    <div class="game">
+    <div class="stage">
+      <div class="bignum" id="total">$0</div>
+      <div class="subnum">by age 65 if you start at <b id="startlab">25</b></div>
+      <div class="chart" id="chart"></div>
       <div class="ctrl">
-        <label>Invest each month <span id="m-lbl">$200</span></label>
-        <input type="range" id="m" min="50" max="500" step="25" value="200" />
+        <div>I start investing at age <span class="val" id="ageval">25</span></div>
+        <input type="range" id="slider" min="18" max="45" step="1" value="25" />
       </div>
-      <div class="people">
-        <div class="person">
-          <div class="ptop"><span class="pname">Ava — starts at 25</span><span class="pval" id="a-val">$0</span></div>
-          <div class="track"><div class="bar b-early" id="a-bar"></div></div>
-          <div class="psub" id="a-sub"></div>
-        </div>
-        <div class="person">
-          <div class="ptop"><span class="pname">Ben — starts at 35</span><span class="pval" id="b-val">$0</span></div>
-          <div class="track"><div class="bar b-late" id="b-bar"></div></div>
-          <div class="psub" id="b-sub"></div>
-        </div>
-      </div>
-      <div class="punch" id="punch"></div>
+      <div class="note" id="note"></div>
     </div>
-    <p style="text-align:center;margin-top:26px;"><a href="taking-investing.html">Read the lesson</a> &middot; <a href="compound-interest.html">Try the full calculator</a></p>
+    <p style="text-align:center;margin-top:28px;"><a href="branching-invest.html">Read the lesson</a> &middot; <a href="games.html">All games</a></p>
   </div>
 </section>
 <script>
 (function(){
-  var M=document.getElementById("m"), rate=0.07/12;
-  function money(n){ return "$"+Math.round(n).toLocaleString(); }
-  function fv(pmt,n){ return pmt*((Math.pow(1+rate,n)-1)/rate); }
-  function calc(){
-    var pmt=+M.value;
-    var na=(65-25)*12, nb=(65-35)*12;
-    var a=fv(pmt,na), b=fv(pmt,nb);
-    var ca=pmt*na, cb=pmt*nb;
-    document.getElementById("m-lbl").textContent="$"+pmt;
-    document.getElementById("a-val").textContent=money(a);
-    document.getElementById("b-val").textContent=money(b);
-    document.getElementById("a-bar").style.width="100%";
-    document.getElementById("b-bar").style.width=(b/a*100)+"%";
-    document.getElementById("a-sub").textContent="Put in "+money(ca)+" over 40 years";
-    document.getElementById("b-sub").textContent="Put in "+money(cb)+" over 30 years";
-    var extra=ca-cb, gap=a-b;
-    document.getElementById("punch").innerHTML="Ava invested only <b>"+money(extra)+"</b> more than Ben \u2014 but she ends up with <b>"+money(gap)+"</b> more. That is the power of starting early: time, not the amount, does the heavy lifting.";
+  var PMT=200, RATE=0.07, END=65;
+  var chart=document.getElementById('chart'), totalEl=document.getElementById('total'),
+      slider=document.getElementById('slider'), ageval=document.getElementById('ageval'),
+      startlab=document.getElementById('startlab'), noteEl=document.getElementById('note');
+  function money(n){ return '$'+Math.round(n).toLocaleString(); }
+  function fv(startAge){ var n=(END-startAge)*12, r=RATE/12; return n<=0?0:PMT*((Math.pow(1+r,n)-1)/r); }
+  var COLORS=['#2F7D53','#6E9E3E','#C96F3F'];
+  function render(startAge){
+    var ages=[Math.max(15,startAge-10), Math.max(15,startAge-5), startAge];
+    ages=ages.filter(function(a,idx){ return ages.indexOf(a)===idx; });
+    var vals=ages.map(fv), max=Math.max.apply(null,vals);
+    chart.innerHTML=ages.map(function(a,idx){
+      return '<div class="row"><div class="lab">Age '+a+'</div><div class="track"><div class="fill" data-w="'+(vals[idx]/max*100).toFixed(1)+'" style="background:'+COLORS[idx%COLORS.length]+'">'+money(vals[idx])+'</div></div></div>';
+    }).join('');
+    requestAnimationFrame(function(){ Array.prototype.forEach.call(chart.querySelectorAll('.fill'),function(f){ f.style.width=f.getAttribute('data-w')+'%'; }); });
+    totalEl.textContent=money(fv(startAge));
+    startlab.textContent=startAge;
+    var earlier=Math.max(15,startAge-10), diff=fv(earlier)-fv(startAge);
+    noteEl.innerHTML='Starting at <b>'+startAge+'</b> gives you <b>'+money(fv(startAge))+'</b>. Start just 10 years earlier at <b>'+earlier+'</b> and you&rsquo;d have <b>'+money(fv(earlier))+'</b> &mdash; about <b>'+money(diff)+'</b> more, for the same $200 a month. Time does the heavy lifting.';
   }
-  M.addEventListener("input",calc); calc();
+  slider.addEventListener('input', function(){ ageval.textContent=slider.value; render(+slider.value); });
+  render(25);
 })();
 </script>
 </body>
