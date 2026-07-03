@@ -3,34 +3,203 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Start here — Family Tree</title>
+  <title>Family Tree &mdash; Ready for every money decision</title>
+  <meta name="description" content="Financial confidence that grows with you, ages 5 to 50. For parents raising money-smart kids, and for advisors preparing families to inherit well." />
+  <meta name="theme-color" content="#0F2A22" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    @media(max-width:720px){.two-col{grid-template-columns:1fr;}}
+    .pathcard{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px;transition:transform .16s ease,box-shadow .22s ease,border-color .16s ease;box-shadow:0 10px 28px rgba(15,42,34,.07);}
+    .pathcard:hover{transform:translateY(-4px);border-color:var(--sprout);box-shadow:0 20px 46px rgba(15,42,34,.14);}
+    .pathcard .pc-ico{width:54px;height:54px;border-radius:15px;display:flex;align-items:center;justify-content:center;background:var(--sand);color:var(--moss);margin-bottom:16px;}
+    .pathcard h3{font-family:var(--serif);font-weight:600;font-size:23px;color:var(--forest);margin:0 0 8px;}
+    .pathcard p{color:var(--stone);font-size:15px;margin:0 0 14px;line-height:1.55;}
+    .pathcard .go{color:var(--moss);font-weight:600;font-size:14px;}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+    @media(max-width:720px){.steps{grid-template-columns:1fr;}}
+    .step .num{font-family:var(--serif);font-weight:600;font-size:44px;color:var(--sprout);line-height:1;}
+    .step h3{font-family:var(--serif);font-weight:600;color:var(--paper);font-size:20px;margin:10px 0 6px;}
+    .step p{color:var(--dim);font-size:14.5px;margin:0;line-height:1.55;}
+    .statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;}
+    @media(max-width:640px){.statgrid{grid-template-columns:1fr;}}
+    .statnum{font-family:var(--serif);font-weight:600;font-size:clamp(36px,5vw,50px);color:var(--sprout);line-height:1;}
+    .statlbl{color:var(--dim);font-size:14px;margin-top:8px;line-height:1.45;}
+  </style>
   <script src="site.js" defer></script>
 </head>
 <body>
-  <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+  <header class="topbar"><div class="bar inner" style="justify-content:space-between;">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg>
+      <span class="wm">Family <i>Tree</i></span>
+    </a>
+  </div></header>
+  <nav class="nav"><div class="row"><a href="index.html">Home</a><a href="profile.html">Build your profile</a><a href="tools.html">Tools</a><a href="games.html">Games</a><a href="advisors.html">For advisors</a><a href="about.html">About</a></div></nav>
+
+  <section class="section band-forest">
+    <div class="inner hero2">
+      <div class="hero2-copy">
+        <span class="eyebrow" style="color:var(--sprout);">Financial confidence &middot; ages 5 to 50</span>
+        <h1 class="display">Ready for every<br/>money decision.</h1>
+        <p class="subhead">One place that grows with you &mdash; from a child&rsquo;s first dollar to a family&rsquo;s legacy. Built for parents raising money-smart kids, and for advisors preparing families to inherit well.</p>
+        <div class="cta-row">
+          <a class="btn btn-lg" href="profile.html">Build your profile</a>
+          <a class="btn-ghost btn-lg" href="#stages">Explore the stages</a>
+        </div>
+        <div class="chips">
+          <span class="chip">Free to start</span><span class="chip">Ages 5&ndash;50</span><span class="chip">Personalized</span><span class="chip">For families &amp; advisors</span>
+        </div>
+      </div>
+      <div class="hero2-art">
+        <svg viewBox="0 0 300 340" fill="none" aria-hidden="true" style="color:var(--sprout)">
+          <path d="M150 340 C150 300 150 250 150 120" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          <path d="M150 250 C95 255 55 205 62 140 C118 148 143 195 150 250 Z" fill="currentColor" opacity=".92"/>
+          <path d="M150 205 C205 210 248 160 240 96 C185 104 158 150 150 205 Z" fill="currentColor" opacity=".92"/>
+          <path d="M150 150 C112 154 84 118 90 76 C128 82 145 116 150 150 Z" fill="currentColor" opacity=".8"/>
+          <path d="M150 120 C188 124 214 90 208 50 C172 56 156 88 150 120 Z" fill="currentColor" opacity=".8"/>
+          <circle cx="150" cy="70" r="9" fill="currentColor"/>
+          <circle cx="86" cy="188" r="7" fill="#C96F3F"/>
+          <circle cx="220" cy="150" r="7" fill="#C96F3F"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-paper">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow">Where you fit</span><h2 class="sec-title">Two ways in, one journey.</h2><p class="muted" style="margin-top:8px;">Whether you&rsquo;re raising a child or guiding a family&rsquo;s wealth, start where it matters to you.</p></div>
+      <div class="two-col">
+        <a class="pathcard" href="profile.html">
+          <div class="pc-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6 8 6M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg></div>
+          <h3>For your family</h3>
+          <p>Raise a money-smart kid &mdash; or grow your own confidence. Personalized lessons, games, and calculators for every age from 5 to 50.</p>
+          <span class="go">Build your profile &rarr;</span>
+        </a>
+        <a class="pathcard" href="advisors.html">
+          <div class="pc-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>For advisors &amp; wealth families</h3>
+          <p>Wealth passes down; wisdom shouldn&rsquo;t be left to chance. Prepare heirs &mdash; not just assets &mdash; to receive, steward, and grow what they inherit.</p>
+          <span class="go">See the approach &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-sand" id="stages">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow">The journey</span><h2 class="sec-title">Find your stage</h2><p class="muted" style="margin-top:8px;">Five stages, each meeting you exactly where you are.</p></div>
+      <div class="feature-grid">
+        <a class="card stage-card" href="first-roots.html">
+          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 33 20 31 20 26" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 29 C24.5 29.5 27 26 26.5 22 C22.5 22.5 20.5 25.5 20 29 Z" fill="currentColor"/><circle cx="20" cy="24" r="2.2" fill="currentColor"/></svg></span>
+          <div class="stagename">First Roots</div><div class="ages">AGES 5&ndash;10</div>
+          <p class="stage-desc">Earning, saving, and needs versus wants.</p><span class="arrow">&rarr;</span>
+        </a>
+        <a class="card stage-card" href="growing.html">
+          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 32 20 28 20 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 28 C15.5 28.5 13 25 13.5 21 C17.5 21.5 19.5 24.5 20 28 Z" fill="currentColor"/><path d="M20 24 C24.5 24.5 27 21 26.5 17 C22.5 17.5 20.5 20.5 20 24 Z" fill="currentColor"/><circle cx="20" cy="19" r="2.4" fill="currentColor"/></svg></span>
+          <div class="stagename">Growing</div><div class="ages">AGES 10&ndash;15</div>
+          <p class="stage-desc">Budgeting, goals, and how banks work.</p><span class="arrow">&rarr;</span>
+        </a>
+        <a class="card stage-card" href="branching-out.html">
+          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 31 20 26 20 16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 29 C15 29.5 12 25.5 12.5 21 C17 21.5 19.5 25 20 29 Z" fill="currentColor"/><path d="M20 24 C25 24.5 28 20.5 27.5 16 C23 16.5 20.5 20 20 24 Z" fill="currentColor"/><circle cx="20" cy="14" r="2.6" fill="currentColor"/></svg></span>
+          <div class="stagename">Branching Out</div><div class="ages">AGES 15&ndash;22</div>
+          <p class="stage-desc">First jobs, credit, accounts, and college.</p><span class="arrow">&rarr;</span>
+        </a>
+        <a class="card stage-card" href="taking-root.html">
+          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 30 20 24 20 13" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 30 C14.5 30.5 11 26 11.5 21 C17 21.5 19.5 25.5 20 30 Z" fill="currentColor"/><path d="M20 25 C25.5 25.5 29 21 28.5 16 C23 16.5 20.5 20.5 20 25 Z" fill="currentColor"/><circle cx="20" cy="11" r="2.6" fill="currentColor"/><circle cx="13.5" cy="23" r="2" fill="#C96F3F"/></svg></span>
+          <div class="stagename">Taking Root</div><div class="ages">AGES 22&ndash;30</div>
+          <p class="stage-desc">Real budgets, debt, and investing early.</p><span class="arrow">&rarr;</span>
+        </a>
+        <a class="card stage-card" href="canopy.html">
+          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 29 20 22 20 11" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><path d="M20 31 C14 31.5 10 27 10.5 21.5 C16.5 22 19.5 26 20 31 Z" fill="currentColor"/><path d="M20 27 C26 27.5 30 23 29.5 17.5 C23.5 18 20.5 22 20 27 Z" fill="currentColor"/><path d="M20 21 C16 21.5 13 18 13.5 14 C17.5 14.5 19.5 17.5 20 21 Z" fill="currentColor"/><path d="M20 18 C24 18.5 27 15 26.5 11 C22.5 11.5 20.5 14.5 20 18 Z" fill="currentColor"/><circle cx="20" cy="9" r="2.8" fill="currentColor"/><circle cx="12.5" cy="25" r="2.1" fill="#C96F3F"/><circle cx="27.5" cy="20" r="2.1" fill="#C96F3F"/></svg></span>
+          <div class="stagename">The Canopy</div><div class="ages">AGES 30+</div>
+          <p class="stage-desc">Grow, protect, and plan the legacy.</p><span class="arrow">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section class="section band-forest">
     <div class="inner">
-      <span class="eyebrow" style="color:var(--sprout);">How it works</span>
-      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">Start here</h1>
-    </div>
-  </section>
-  <section class="section band-paper">
-    <div class="inner" style="max-width:640px;">
-      <div class="prose">
-      <p>Three steps and you're going.</p>
-      <h3>1. Build your profile</h3>
-      <p>Answer a few quick questions on the <a href="profile.html">profile page</a> — for yourself or your child — and we'll point you to the right stage, lessons, and tools.</p>
-      <h3>2. Read a lesson or two</h3>
-      <p>Every stage has short, plain-language lessons built around real decisions — no jargon, no fluff.</p>
-      <h3>3. Try the tools</h3>
-      <p>Put numbers to it with the <a href="tools.html">calculators</a> — instant help for the decisions you'll actually face.</p>
+      <div class="sec-head"><span class="eyebrow" style="color:var(--sprout);">How it works</span><h2 class="sec-title">Confidence in three steps.</h2></div>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h3>Build your profile</h3><p>Tell us the age, stage, and goals &mdash; for you or your child. We tailor everything to fit.</p></div>
+        <div class="step"><div class="num">2</div><h3>Learn at your stage</h3><p>Bite-size lessons, playful games, and real calculators for exactly where you are in life.</p></div>
+        <div class="step"><div class="num">3</div><h3>Watch your tree grow</h3><p>Track progress, earn badges, and build money habits that last a lifetime.</p></div>
       </div>
-      <p style="margin-top:28px;"><a href="index.html">← Home</a></p>
     </div>
   </section>
+
+  <section class="section band-paper">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow">Play &amp; learn</span><h2 class="sec-title">Money, but make it fun.</h2><p class="muted" style="margin-top:8px;">The fastest way to build confidence is to try it &mdash; no lectures, just play.</p></div>
+      <div class="grid">
+        <a class="card" href="adventure.html"><div class="stagename" style="font-size:17px;">Your Money Journey</div><div class="muted" style="font-size:14px;margin-top:5px;">Make life&rsquo;s big money choices from 16 to 40.</div></a>
+        <a class="card" href="games.html"><div class="stagename" style="font-size:17px;">All the games</div><div class="muted" style="font-size:14px;margin-top:5px;">Interactive games for every age, 5 to 30.</div></a>
+        <a class="card" href="tracks.html"><div class="stagename" style="font-size:17px;">Follow a skill</div><div class="muted" style="font-size:14px;margin-top:5px;">Trace one money skill across every stage.</div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-sand">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow">Tools</span><h2 class="sec-title">Try the numbers.</h2><p class="muted" style="margin-top:8px;">Instant calculators for every money decision.</p></div>
+      <div class="grid">
+        <a class="card" href="compound-interest.html"><div class="stagename" style="font-size:17px;">Compound interest</div><div class="muted" style="font-size:14px;margin-top:5px;">Watch saving grow over time.</div></a>
+        <a class="card" href="budget.html"><div class="stagename" style="font-size:17px;">Budget builder</div><div class="muted" style="font-size:14px;margin-top:5px;">Split your pay with 50/30/20.</div></a>
+        <a class="card" href="debt-payoff.html"><div class="stagename" style="font-size:17px;">Debt payoff</div><div class="muted" style="font-size:14px;margin-top:5px;">Time and interest to clear a balance.</div></a>
+        <a class="card" href="retirement.html"><div class="stagename" style="font-size:17px;">Retirement</div><div class="muted" style="font-size:14px;margin-top:5px;">Project savings to retirement.</div></a>
+        <a class="card" href="net-worth.html"><div class="stagename" style="font-size:17px;">Net worth</div><div class="muted" style="font-size:14px;margin-top:5px;">What you own minus what you owe.</div></a>
+        <a class="card" href="mortgage.html"><div class="stagename" style="font-size:17px;">Mortgage</div><div class="muted" style="font-size:14px;margin-top:5px;">Estimate a monthly payment.</div></a>
+      </div>
+      <p style="margin-top:20px;"><a class="btn" href="tools.html">See all the tools &rarr;</a></p>
+    </div>
+  </section>
+
+  <section class="section band-forest">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow" style="color:var(--sprout);">Why it matters</span><h2 class="sec-title">Bigger than a piggy bank.</h2></div>
+      <div class="statgrid">
+        <div><div class="statnum">Age 7</div><div class="statlbl">when a child&rsquo;s money habits are largely formed</div></div>
+        <div><div class="statnum">$100T+</div><div class="statlbl">passing to heirs in the decades ahead</div></div>
+        <div><div class="statnum">70%+</div><div class="statlbl">of heirs leave the family&rsquo;s advisor</div></div>
+      </div>
+      <p style="text-align:center;color:var(--dim);max-width:62ch;margin:24px auto 0;">Families that prepare the next generation keep their wealth &mdash; and their relationships. That&rsquo;s what Family Tree is built to do, whether you&rsquo;re managing millions or a first allowance.</p>
+      <div style="text-align:center;margin-top:20px;"><a class="btn btn-lg" href="advisors.html" style="background:var(--sprout);color:#12352b;">The approach for advisors &amp; families &rarr;</a></div>
+    </div>
+  </section>
+
+  <section class="section tight band-sprout cta-band">
+    <div class="inner">
+      <h2 class="sec-title">Start with your profile.</h2>
+      <p style="color:#183025; max-width:48ch; margin:10px auto 18px;">A few quick questions &mdash; for you or your child &mdash; and we&rsquo;ll tailor the whole journey to your age, stage, and goals.</p>
+      <a class="btn btn-lg" href="profile.html" style="background:var(--forest);">Build your profile &rarr;</a>
+    </div>
+  </section>
+
+  <footer class="bigfoot">
+    <div class="inner footcols">
+      <div>
+        <div class="fwm">Family <i>Tree</i></div>
+        <p style="color:var(--dim); font-size:14px; margin:10px 0 0; max-width:26ch;">Financial confidence that grows with you, ages 5 to 50.</p>
+      </div>
+      <div>
+        <h4>Stages</h4>
+        <a href="first-roots.html">First Roots</a><a href="growing.html">Growing</a><a href="branching-out.html">Branching Out</a><a href="taking-root.html">Taking Root</a><a href="canopy.html">The Canopy</a>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="profile.html">Build your profile</a><a href="games.html">Games</a><a href="tools.html">Tools</a><a href="tracks.html">Tracks</a><a href="advisors.html">For advisors</a>
+      </div>
+      <div>
+        <h4>More</h4>
+        <a href="about.html">About</a><a href="start-here.html">Start here</a><a href="faq.html">FAQ</a><a href="privacy.html">Privacy</a>
+      </div>
+    </div>
+    <div class="inner legal">&copy; Family Tree &mdash; general financial education, not personalized advice.</div>
+  </footer>
 </body>
 </html>
