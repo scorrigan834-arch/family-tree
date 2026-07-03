@@ -3,31 +3,98 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About — Family Tree</title>
+  <title>About &mdash; Family Tree</title>
+  <meta name="description" content="Why Family Tree exists: to prepare people, not just portfolios. Our mission, our approach, and the standards we hold — for families and advisors alike." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
+  <style>
+    .shero{position:relative;overflow:hidden;}
+    .shero .glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;}
+    .shero .g1{width:460px;height:460px;background:radial-gradient(circle,rgba(47,125,83,.7),transparent 70%);top:-150px;right:-120px;}
+    .shero .g2{width:360px;height:360px;background:radial-gradient(circle,rgba(198,161,91,.4),transparent 70%);bottom:-160px;left:-120px;}
+    .shero .inner{position:relative;z-index:1;}
+    .shero .display{font-size:clamp(36px,7vw,58px)!important;}
+    .val-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 26px;box-shadow:0 10px 28px rgba(15,42,34,.06);}
+    .val-card h3{font-family:var(--serif);font-weight:600;color:var(--forest);font-size:19px;margin:0 0 8px;}
+    .val-card p{color:var(--ink);font-size:15px;line-height:1.55;margin:0;}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px;}
+    @media(max-width:720px){.two{grid-template-columns:1fr;}}
+    .pull{border-left:3px solid #C6A15B;padding:6px 0 6px 20px;margin:24px 0;font-family:var(--serif);font-style:italic;font-size:22px;color:var(--forest);line-height:1.4;}
+  </style>
 </head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
-  <section class="section band-forest">
+
+  <section class="section band-forest shero">
+    <span class="glow g1"></span><span class="glow g2"></span>
     <div class="inner">
-      <span class="eyebrow" style="color:var(--sprout);">Our approach</span>
-      <h1 class="display" style="font-size:clamp(30px,5.5vw,46px);">About</h1>
+      <span class="eyebrow" style="color:var(--sprout);">About Family Tree</span>
+      <h1 class="display">Prepare the person, not just the portfolio.</h1>
+      <p class="subhead" style="max-width:56ch;">Family Tree exists to give every child &mdash; and every adult still learning &mdash; the financial upbringing that sets them up for a lifetime of confident decisions.</p>
     </div>
   </section>
+
   <section class="section band-paper">
-    <div class="inner" style="max-width:640px;">
+    <div class="inner" style="max-width:760px;">
+      <span class="eyebrow">Our mission</span>
+      <h2 class="sec-title">Financial confidence, one life stage at a time.</h2>
       <div class="prose">
-      <p><strong>Prepare the child for the decisions, not just the inheritance.</strong></p>
-      <p>Life doesn't hand anyone a manual before the first paycheck, the first loan, the first home, or the first inheritance. Family Tree is one place that gets a person ready for all of it — at every age, in words that fit where they are.</p>
-      <p>The site is built around five life stages, and it grows with you:</p>
-      <ul><li><strong>First Roots</strong> (5–10) — earning, saving, needs vs. wants.</li><li><strong>Growing</strong> (10–15) — budgeting, goals, how banks work.</li><li><strong>Branching Out</strong> (15–22) — paychecks, credit, first accounts.</li><li><strong>Taking Root</strong> (22–30) — real budgets, debt, investing early.</li><li><strong>The Canopy</strong> (30+) — growing, protecting, and passing it on.</li></ul>
-      <p>It's for the six-year-old earning a first dollar, the graduate facing a first loan, the couple buying a first home, and the family preparing the next generation to inherit well. Because the best thing you can pass down isn't money — it's the judgment to handle it.</p>
+        <p>Most people are handed money responsibilities long before they&rsquo;re taught how to handle them &mdash; a first paycheck, a first credit card, a first inheritance &mdash; and expected to figure it out. The result is stress, avoidable mistakes, and, in families with wealth, a generational gap that dissolves both fortunes and relationships.</p>
+        <p>Family Tree is built on a simple belief: money confidence isn&rsquo;t one talk you have at twenty-five. It&rsquo;s an upbringing &mdash; a series of small, age-appropriate lessons that start with a child&rsquo;s first saved dollar and grow, decade by decade, into the judgment to steward a household, a portfolio, and a legacy.</p>
       </div>
-      <p style="margin-top:28px;"><a href="index.html">← Home</a></p>
+      <p class="pull">Prepare the child for the money, not just the money for the child.</p>
+      <div class="prose">
+        <p>We serve two families of the same tree. For <strong>parents and their kids</strong>, we make the financial upbringing that prepared families work hard to give their heirs available to anyone &mdash; free to start. For <strong>advisors and the families they serve</strong>, we&rsquo;re the education layer beneath the estate plan: the piece that prepares heirs to receive, steward, and grow what they inherit. <a href="advisors.html">See the approach for advisors &amp; families &rarr;</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-sand">
+    <div class="inner">
+      <span class="eyebrow">What we believe</span>
+      <h2 class="sec-title">The principles behind everything here.</h2>
+      <div class="two">
+        <div class="val-card"><h3>Education, never sales</h3><p>We teach; we don&rsquo;t sell. No products, no commissions, no hidden agenda &mdash; just clear, accurate financial education you can trust to share with your kids.</p></div>
+        <div class="val-card"><h3>Grounded in real sources</h3><p>Our lessons and guides are grounded in guidance from the CFPB, IRS, and SEC. It&rsquo;s education, not personalized advice &mdash; and we&rsquo;re always clear about the difference.</p></div>
+        <div class="val-card"><h3>Age-appropriate, always</h3><p>A five-year-old and a fifty-year-old don&rsquo;t need the same thing. Every lesson is written for exactly where someone is in life &mdash; playful for kids, practical for adults.</p></div>
+        <div class="val-card"><h3>Private, with no ads</h3><p>Your family&rsquo;s information stays yours. We don&rsquo;t run ads and we don&rsquo;t sell data. A calm, focused place to learn &mdash; nothing following you around.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-paper">
+    <div class="inner" style="max-width:760px;">
+      <span class="eyebrow">Standards</span>
+      <h2 class="sec-title">Educational, not advice.</h2>
+      <div class="prose">
+        <p>Family Tree provides general financial education to help you make informed decisions. It is not personalized financial, legal, or tax advice, and it isn&rsquo;t a substitute for a professional who knows your specific situation. For decisions that matter, we encourage you to work with a qualified advisor, attorney, or tax professional &mdash; and we&rsquo;re designed to make you a sharper, more confident partner in those conversations.</p>
+        <p>Our content is reviewed for accuracy and grounded in publicly available guidance from U.S. regulators and established financial principles. Where figures or statistics appear, we cite their sources.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-forest">
+    <div class="inner" style="max-width:760px;">
+      <span class="eyebrow" style="color:var(--sprout);">Get in touch</span>
+      <h2 class="sec-title" style="color:#fff;">Working with us.</h2>
+      <div class="prose" style="color:var(--dim);">
+        <p style="color:var(--dim);">Are you an advisor or wealth-management firm interested in offering Family Tree to your client families &mdash; including co-branded and partnership options? Or a parent, educator, or organization with a question or idea? We&rsquo;d love to hear from you.</p>
+        <p style="color:#fff;"><strong>Email:</strong> <a href="mailto:hello@familytree.example" style="color:var(--sprout);">hello@familytree.example</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-sprout">
+    <div class="inner" style="text-align:center;">
+      <h2 class="display" style="font-size:clamp(28px,5vw,44px); color:var(--forest);">Start your family&rsquo;s tree.</h2>
+      <p class="subhead" style="color:var(--forest); max-width:600px; margin-left:auto; margin-right:auto;">A few quick questions &mdash; for you or your child &mdash; and we&rsquo;ll tailor the whole journey to your age, stage, and goals.</p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="btn btn-lg" href="profile.html">Build your profile</a>
+        <a class="btn-ghost btn-lg" href="advisors.html">For advisors &amp; families</a>
+      </div>
     </div>
   </section>
 </body>
