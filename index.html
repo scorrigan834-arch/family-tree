@@ -45,6 +45,20 @@
     @keyframes heroFloat{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-24px) rotate(25deg);}}
     @media (max-width:820px){.hero-cine{min-height:auto;padding:72px 0;}}
     @media (prefers-reduced-motion:reduce){.hero-bg .leaf{animation:none;}}
+    .stageblocks{border-top:1px solid var(--line);}
+    .stageblock{display:block;text-decoration:none;color:inherit;border-bottom:1px solid var(--line);transition:background .2s ease;position:relative;}
+    .stageblock::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(180deg,#C6A15B,#8A4B32);transition:width .2s ease;}
+    .stageblock:hover{background:rgba(198,161,91,.06);}
+    .stageblock:hover::before{width:5px;}
+    .sb-row{display:flex;align-items:center;gap:22px;padding:26px 24px;max-width:1000px;margin:0 auto;}
+    .sb-num{font-family:var(--serif);font-size:34px;color:#D9CBA6;font-weight:600;width:52px;flex:0 0 auto;text-align:center;}
+    .sb-body{flex:1;}
+    .sb-age{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#B8923F;}
+    .sb-name{font-family:var(--serif);font-weight:600;font-size:clamp(24px,4vw,32px);color:var(--forest);margin:2px 0 4px;line-height:1.1;}
+    .sb-desc{color:var(--stone);font-size:15px;margin:0;max-width:62ch;line-height:1.5;}
+    .sb-go{color:#B8923F;font-weight:700;font-size:14px;white-space:nowrap;flex:0 0 auto;transition:transform .2s ease;}
+    .stageblock:hover .sb-go{transform:translateX(4px);}
+    @media(max-width:640px){.sb-row{gap:14px;padding:22px 20px;}.sb-num{font-size:26px;width:36px;}.sb-go{display:none;}}
   </style>
   <script src="site.js" defer></script>
 </head>
@@ -105,36 +119,16 @@
     </div>
   </section>
 
-  <section class="section band-sand" id="stages">
+  <section class="section band-paper" id="stages" style="padding-bottom:8px;">
     <div class="inner">
-      <div class="sec-head"><span class="eyebrow">The journey</span><h2 class="sec-title">Find your stage</h2><p class="muted" style="margin-top:8px;">Five stages, each meeting you exactly where you are.</p></div>
-      <div class="feature-grid">
-        <a class="card stage-card" href="first-roots.html">
-          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 33 20 31 20 26" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 29 C24.5 29.5 27 26 26.5 22 C22.5 22.5 20.5 25.5 20 29 Z" fill="currentColor"/><circle cx="20" cy="24" r="2.2" fill="currentColor"/></svg></span>
-          <div class="stagename">First Roots</div><div class="ages">AGES 5&ndash;10</div>
-          <p class="stage-desc">Earning, saving, and needs versus wants.</p><span class="arrow">&rarr;</span>
-        </a>
-        <a class="card stage-card" href="growing.html">
-          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 32 20 28 20 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 28 C15.5 28.5 13 25 13.5 21 C17.5 21.5 19.5 24.5 20 28 Z" fill="currentColor"/><path d="M20 24 C24.5 24.5 27 21 26.5 17 C22.5 17.5 20.5 20.5 20 24 Z" fill="currentColor"/><circle cx="20" cy="19" r="2.4" fill="currentColor"/></svg></span>
-          <div class="stagename">Growing</div><div class="ages">AGES 10&ndash;15</div>
-          <p class="stage-desc">Budgeting, goals, and how banks work.</p><span class="arrow">&rarr;</span>
-        </a>
-        <a class="card stage-card" href="branching-out.html">
-          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 31 20 26 20 16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 29 C15 29.5 12 25.5 12.5 21 C17 21.5 19.5 25 20 29 Z" fill="currentColor"/><path d="M20 24 C25 24.5 28 20.5 27.5 16 C23 16.5 20.5 20 20 24 Z" fill="currentColor"/><circle cx="20" cy="14" r="2.6" fill="currentColor"/></svg></span>
-          <div class="stagename">Branching Out</div><div class="ages">AGES 15&ndash;22</div>
-          <p class="stage-desc">First jobs, credit, accounts, and college.</p><span class="arrow">&rarr;</span>
-        </a>
-        <a class="card stage-card" href="taking-root.html">
-          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 30 20 24 20 13" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 30 C14.5 30.5 11 26 11.5 21 C17 21.5 19.5 25.5 20 30 Z" fill="currentColor"/><path d="M20 25 C25.5 25.5 29 21 28.5 16 C23 16.5 20.5 20.5 20 25 Z" fill="currentColor"/><circle cx="20" cy="11" r="2.6" fill="currentColor"/><circle cx="13.5" cy="23" r="2" fill="#C96F3F"/></svg></span>
-          <div class="stagename">Taking Root</div><div class="ages">AGES 22&ndash;30</div>
-          <p class="stage-desc">Real budgets, debt, and investing early.</p><span class="arrow">&rarr;</span>
-        </a>
-        <a class="card stage-card" href="canopy.html">
-          <span class="stage-ico"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="color:var(--moss)"><path d="M20 37 C20 29 20 22 20 11" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><path d="M20 31 C14 31.5 10 27 10.5 21.5 C16.5 22 19.5 26 20 31 Z" fill="currentColor"/><path d="M20 27 C26 27.5 30 23 29.5 17.5 C23.5 18 20.5 22 20 27 Z" fill="currentColor"/><path d="M20 21 C16 21.5 13 18 13.5 14 C17.5 14.5 19.5 17.5 20 21 Z" fill="currentColor"/><path d="M20 18 C24 18.5 27 15 26.5 11 C22.5 11.5 20.5 14.5 20 18 Z" fill="currentColor"/><circle cx="20" cy="9" r="2.8" fill="currentColor"/><circle cx="12.5" cy="25" r="2.1" fill="#C96F3F"/><circle cx="27.5" cy="20" r="2.1" fill="#C96F3F"/></svg></span>
-          <div class="stagename">The Canopy</div><div class="ages">AGES 30+</div>
-          <p class="stage-desc">Grow, protect, and plan the legacy.</p><span class="arrow">&rarr;</span>
-        </a>
-      </div>
+      <div class="sec-head"><span class="eyebrow">The journey</span><h2 class="sec-title">Find your stage</h2><p class="muted" style="margin-top:8px;">Five stages, each meeting you exactly where you are in life.</p></div>
+    </div>
+    <div class="stageblocks">
+      <a class="stageblock" href="first-roots.html"><div class="sb-row"><div class="sb-num">01</div><div class="sb-body"><div class="sb-age">Ages 5&ndash;10</div><h3 class="sb-name">First Roots</h3><p class="sb-desc">Earning, saving, and needs versus wants &mdash; a child&rsquo;s very first money lessons.</p></div><span class="sb-go">Start here &rarr;</span></div></a>
+      <a class="stageblock" href="growing.html"><div class="sb-row"><div class="sb-num">02</div><div class="sb-body"><div class="sb-age">Ages 10&ndash;15</div><h3 class="sb-name">Growing</h3><p class="sb-desc">Budgeting, saving toward goals, and how banks really work.</p></div><span class="sb-go">Start here &rarr;</span></div></a>
+      <a class="stageblock" href="branching-out.html"><div class="sb-row"><div class="sb-num">03</div><div class="sb-body"><div class="sb-age">Ages 15&ndash;22</div><h3 class="sb-name">Branching Out</h3><p class="sb-desc">First jobs, credit, bank accounts, and paying for college.</p></div><span class="sb-go">Start here &rarr;</span></div></a>
+      <a class="stageblock" href="taking-root.html"><div class="sb-row"><div class="sb-num">04</div><div class="sb-body"><div class="sb-age">Ages 22&ndash;30</div><h3 class="sb-name">Taking Root</h3><p class="sb-desc">Real budgets, paying down debt, and investing early.</p></div><span class="sb-go">Start here &rarr;</span></div></a>
+      <a class="stageblock" href="canopy.html"><div class="sb-row"><div class="sb-num">05</div><div class="sb-body"><div class="sb-age">Ages 30+</div><h3 class="sb-name">The Canopy</h3><p class="sb-desc">Grow and protect your wealth, and plan the legacy you&rsquo;ll leave.</p></div><span class="sb-go">Start here &rarr;</span></div></a>
     </div>
   </section>
 
