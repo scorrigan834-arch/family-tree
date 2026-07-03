@@ -3,53 +3,138 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>First Roots — Family Tree</title>
+  <title>First Roots &mdash; Family Tree</title>
+  <meta name="description" content="Ages 5 to 10: earning, saving, giving, and needs versus wants. A child's first money lessons, built for a parent and child together." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .shero{position:relative;overflow:hidden;}
+    .shero .glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;}
+    .shero .g1{width:460px;height:460px;background:radial-gradient(circle,rgba(47,125,83,.7),transparent 70%);top:-150px;right:-120px;}
+    .shero .g2{width:360px;height:360px;background:radial-gradient(circle,rgba(198,161,91,.4),transparent 70%);bottom:-160px;left:-120px;}
+    .shero .inner{position:relative;z-index:1;}
+    .shero .display{font-size:clamp(38px,8vw,64px)!important;}
+  </style>
   <script src="site.js" defer></script>
 </head>
 <body>
   <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
-  <section class="section band-forest">
-    <div class="inner hero2">
-      <div class="hero2-copy">
-        <span class="eyebrow" style="color:var(--sprout);">Stage &middot; Ages 5–10</span>
-        <h1 class="display" style="font-size:clamp(32px,6vw,52px);">First Roots</h1>
-        <p class="subhead">Money is something you earn, save, and choose how to use. Playful, concrete, and hands-on — built for a parent and child together.</p>
-        <div class="cta-row">
-          <a class="btn btn-lg" href="#lessons">Start the lessons</a>
-          <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
-        </div>
+
+  <section class="section band-forest shero">
+    <span class="glow g1"></span><span class="glow g2"></span>
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">Stage 01 &middot; Ages 5&ndash;10</span>
+      <h1 class="display">First Roots</h1>
+      <p class="subhead" style="max-width:52ch;">Money is something you earn, save, give, and choose how to use. Playful, concrete, and hands-on &mdash; built for a parent and child together.</p>
+      <div class="cta-row">
+        <a class="btn btn-lg" href="#lessons">Start the lessons</a>
+        <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
       </div>
-      <div class="hero2-art"><svg viewBox="0 0 40 40" fill="none" style="color:var(--sprout);width:150px;max-width:60%;"><path d="M20 37 C20 33 20 31 20 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M20 29 C24.5 29.5 27 26 26.5 22 C22.5 22.5 20.5 25.5 20 29 Z" fill="currentColor"/><circle cx="20" cy="24" r="2.2" fill="currentColor"/></svg></div>
     </div>
   </section>
+
   <section class="section band-paper" id="lessons">
     <div class="inner">
-      <div class="sec-head"><span class="eyebrow">Lessons</span><h2 class="sec-title">What you'll learn</h2></div>
-      <div class="feature-grid">
-        <a class="card stage-card" href="first-roots-earning.html"><div class="stagename">Earning your first dollar</div><p class="stage-desc">Where money comes from.</p><span class="arrow">→</span></a>        <a class="card stage-card" href="first-roots-saving.html"><div class="stagename">Saving for something you want</div><p class="stage-desc">Waiting on purpose, with a clear jar.</p><span class="arrow">→</span></a>        <a class="card stage-card" href="first-roots-needs.html"><div class="stagename">Needs versus wants</div><p class="stage-desc">Telling the two apart.</p><span class="arrow">→</span></a>
+      <div class="sec-head"><span class="eyebrow">Lessons</span><h2 class="sec-title">What you&rsquo;ll learn</h2></div>
+      <div class="lblocks">
+        <a class="lblock" href="first-roots-earning.html"><span class="n">01</span><span><span class="nm">Earning your first dollar</span><span class="ds" style="display:block;">Where money comes from.</span></span><span class="go">Read &rarr;</span></a>
+        <a class="lblock" href="first-roots-saving.html"><span class="n">02</span><span><span class="nm">Saving for something you want</span><span class="ds" style="display:block;">Waiting on purpose, with a clear jar.</span></span><span class="go">Read &rarr;</span></a>
+        <a class="lblock" href="first-roots-needs.html"><span class="n">03</span><span><span class="nm">Needs versus wants</span><span class="ds" style="display:block;">Telling the two apart.</span></span><span class="go">Read &rarr;</span></a>
+        <a class="lblock" href="first-roots-giving.html"><span class="n">04</span><span><span class="nm">Giving and sharing</span><span class="ds" style="display:block;">Why giving a little feels good.</span></span><span class="go">Read &rarr;</span></a>
       </div>
     </div>
   </section>
+
   <section class="section band-sand">
     <div class="inner">
-      <div class="sec-head"><span class="eyebrow">Tools</span><h2 class="sec-title">Put it into practice</h2></div>
+      <div class="sec-head"><span class="eyebrow">Play &amp; practice</span><h2 class="sec-title">Learn by doing</h2></div>
       <div class="grid">
-        <a class="card" href="savings-goal.html"><div class="stagename" style="font-size:17px;">Savings goal</div><div class="muted" style="font-size:14px;margin-top:5px;">How long to reach a goal.</div></a>        <a class="card" href="compound-interest.html"><div class="stagename" style="font-size:17px;">Compound interest</div><div class="muted" style="font-size:14px;margin-top:5px;">How money can grow.</div></a>
+        <a class="card" href="activity-needs-wants.html"><div class="stagename" style="font-size:17px;">Needs &amp; Wants game</div><div class="muted" style="font-size:14px;margin-top:5px;">Tap to sort needs from wants.</div></a>
+        <a class="card" href="activity-jars.html"><div class="stagename" style="font-size:17px;">Spend, Save, Give</div><div class="muted" style="font-size:14px;margin-top:5px;">Split coins into three jars.</div></a>
+        <a class="card" href="savings-goal.html"><div class="stagename" style="font-size:17px;">Savings goal</div><div class="muted" style="font-size:14px;margin-top:5px;">How long to reach a goal.</div></a>
       </div>
     </div>
   </section>
+
   <section class="section tight band-forest">
     <div class="inner">
       <div class="sec-head"><span class="eyebrow" style="color:var(--sprout);">The journey</span><h2 class="sec-title">Explore other stages</h2></div>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));">
-        <a class="card" href="first-roots.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">First Roots</div><div class="ages">5–10</div></a>
-        <a class="card" href="growing.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Growing</div><div class="ages">10–15</div></a>
-        <a class="card" href="branching-out.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Branching Out</div><div class="ages">15–22</div></a>
-        <a class="card" href="taking-root.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Taking Root</div><div class="ages">22–30</div></a>
+        <a class="card" href="first-roots.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">First Roots</div><div class="ages">5&ndash;10</div></a>
+        <a class="card" href="growing.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Growing</div><div class="ages">10&ndash;15</div></a>
+        <a class="card" href="branching-out.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Branching Out</div><div class="ages">15&ndash;22</div></a>
+        <a class="card" href="taking-root.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Taking Root</div><div class="ages">22&ndash;30</div></a>
+        <a class="card" href="canopy.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">The Canopy</div><div clascat > first-roots.html << 'EOF'
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>First Roots &mdash; Family Tree</title>
+  <meta name="description" content="Ages 5 to 10: earning, saving, giving, and needs versus wants. A child's first money lessons, built for a parent and child together." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .shero{position:relative;overflow:hidden;}
+    .shero .glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;}
+    .shero .g1{width:460px;height:460px;background:radial-gradient(circle,rgba(47,125,83,.7),transparent 70%);top:-150px;right:-120px;}
+    .shero .g2{width:360px;height:360px;background:radial-gradient(circle,rgba(198,161,91,.4),transparent 70%);bottom:-160px;left:-120px;}
+    .shero .inner{position:relative;z-index:1;}
+    .shero .display{font-size:clamp(38px,8vw,64px)!important;}
+  </style>
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><div class="bar"><a class="brand" href="index.html" style="text-decoration:none;"><svg width="24" height="24" viewBox="0 0 48 48" fill="none" style="color:var(--sprout)"><path d="M24 43C24 35 24 30 24 17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 31C15 32 9.5 25.5 11 18C18.5 19 23 24.5 24 31Z" fill="currentColor"/><path d="M24 24C32.5 25 38.5 18.5 37 11C29.5 12 24.5 17.5 24 24Z" fill="currentColor"/><circle cx="24" cy="14" r="3.1" fill="currentColor"/></svg><span class="wm">Family <i>Tree</i></span></a></div></header>
+
+  <section class="section band-forest shero">
+    <span class="glow g1"></span><span class="glow g2"></span>
+    <div class="inner">
+      <span class="eyebrow" style="color:var(--sprout);">Stage 01 &middot; Ages 5&ndash;10</span>
+      <h1 class="display">First Roots</h1>
+      <p class="subhead" style="max-width:52ch;">Money is something you earn, save, give, and choose how to use. Playful, concrete, and hands-on &mdash; built for a parent and child together.</p>
+      <div class="cta-row">
+        <a class="btn btn-lg" href="#lessons">Start the lessons</a>
+        <a class="btn-ghost btn-lg" href="profile.html">Build your profile</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-paper" id="lessons">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow">Lessons</span><h2 class="sec-title">What you&rsquo;ll learn</h2></div>
+      <div class="lblocks">
+        <a class="lblock" href="first-roots-earning.html"><span class="n">01</span><span><span class="nm">Earning your first dollar</span><span class="ds" style="display:block;">Where money comes from.</span></span><span class="go">Read &rarr;</span></a>
+        <a class="lblock" href="first-roots-saving.html"><span class="n">02</span><span><span class="nm">Saving for something you want</span><span class="ds" style="display:block;">Waiting on purpose, with a clear jar.</span></span><span class="go">Read &rarr;</span></a>
+        <a class="lblock" href="first-roots-needs.html"><span class="n">03</span><span><span class="nm">Needs versus wants</span><span class="ds" style="display:block;">Telling the two apart.</span></span><span class="go">Read &rarr;</span></a>
+        <a class="lblock" href="first-roots-giving.html"><span class="n">04</span><span><span class="nm">Giving and sharing</span><span class="ds" style="display:block;">Why giving a little feels good.</span></span><span class="go">Read &rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-sand">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow">Play &amp; practice</span><h2 class="sec-title">Learn by doing</h2></div>
+      <div class="grid">
+        <a class="card" href="activity-needs-wants.html"><div class="stagename" style="font-size:17px;">Needs &amp; Wants game</div><div class="muted" style="font-size:14px;margin-top:5px;">Tap to sort needs from wants.</div></a>
+        <a class="card" href="activity-jars.html"><div class="stagename" style="font-size:17px;">Spend, Save, Give</div><div class="muted" style="font-size:14px;margin-top:5px;">Split coins into three jars.</div></a>
+        <a class="card" href="savings-goal.html"><div class="stagename" style="font-size:17px;">Savings goal</div><div class="muted" style="font-size:14px;margin-top:5px;">How long to reach a goal.</div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight band-forest">
+    <div class="inner">
+      <div class="sec-head"><span class="eyebrow" style="color:var(--sprout);">The journey</span><h2 class="sec-title">Explore other stages</h2></div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));">
+        <a class="card" href="first-roots.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">First Roots</div><div class="ages">5&ndash;10</div></a>
+        <a class="card" href="growing.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Growing</div><div class="ages">10&ndash;15</div></a>
+        <a class="card" href="branching-out.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Branching Out</div><div class="ages">15&ndash;22</div></a>
+        <a class="card" href="taking-root.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">Taking Root</div><div class="ages">22&ndash;30</div></a>
         <a class="card" href="canopy.html" style="background:#12352b;border-color:#1d4a3a;"><div class="stagename" style="color:var(--paper);">The Canopy</div><div class="ages">30+</div></a>
       </div>
     </div>
