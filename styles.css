@@ -148,3 +148,22 @@ select{ display:block; width:100%; margin-top:5px; font-family:var(--sans); font
   line-height:1;
   white-space:nowrap;
 }
+/* ---- Header pill + nav dot cleanup ---- */
+.topbar{
+  background:var(--forest);
+}
+.topbar .bar{
+  background:transparent !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  justify-content:flex-start;
+}
+.topbar .brand{
+  background:transparent !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+.nav .row a::after,
+.nav a::after{
+  content:none !important;
+}
