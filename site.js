@@ -27,3 +27,19 @@ cat >> site.js << 'EOF'
   });
 })();
 EOF
+
+/* ---- Accessibility + contrast fixes ---- */
+(function () {
+  if (document.getElementById('ft-a11y-css')) return;
+  var css = [
+    '.eyebrow{color:#9A7A2E!important;}',
+    '.ages{color:#9A7A2E!important;}',
+    '.pathcard .go,.sb-go,.lblock .go{color:#8A6A24!important;}',
+    '.band-forest .eyebrow{color:#D4B36A!important;}',
+    'a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.card:focus-visible,.pathcard:focus-visible,.stageblock:focus-visible,.lblock:focus-visible{outline:3px solid #C6A15B!important;outline-offset:2px;border-radius:4px;}',
+    '.ft-hcta{color:#1a2e22!important;}',
+    '.muted,.stage-desc,.sb-desc,.lblock .ds{color:#4E5A50!important;}'
+  ].join('\n');
+  var s = document.createElement('style'); s.id = 'ft-a11y-css'; s.textContent = css;
+  (document.head || document.documentElement).appendChild(s);
+})();
